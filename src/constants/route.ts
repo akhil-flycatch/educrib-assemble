@@ -1,0 +1,26 @@
+export const ROUTES = {
+  HOME: '/',
+  ACCREDITATIONS: '/accreditations',
+  CATEGORIES: '/categories',
+  CONTACT_TYPES: '/contact-types',
+  COUNTRIES: '/countries',
+  COURSES: '/courses',
+  COURSE_INTAKES: '/course-intakes',
+  COURSE_LEVELS: '/course-levels',
+  CURRENCIES: '/currencies',
+  CURRICULUMS: '/curricula',
+  DESIGNATIONS: '/designations',
+  DURATION_TYPES: '/duration-types',
+  FACILITIES: '/facilities',
+  FREQUENCIES: '/frequencies',
+  MANAGEMENETS: '/managements',
+  MEDIA: '/media',
+  PROFILES: '/profiles',
+  SOCIALS: '/socials',
+  SPECIALIZATIONS: '/specializations',
+  TYPES: '/types',
+  UNIVERSITIES: '/universities',
+  VERTICALS: '/verticals',
+} as const
+
+export const DISCOVER_BASE = "https://www.educrib.com/kerala"

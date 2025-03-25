@@ -1,0 +1,3219 @@
+[
+	{
+		"title": "Amal Jyothi College Of Engineering, Kanjirappally",
+		"code": "AJC",
+		"establishmentYear": "2002",
+		"shortAddress": "Kanjirappally, Kottayam, Kerala",
+		"management": "Catholic Diocese of Kanjirapally",
+		"university": "APJ Abdul Kalam Technological University",
+		"type": "Private/Self Financing",
+		"contact": [
+			"04828305500",
+			"04828305555"
+		],
+		"email": [
+			"principal@amaljyothi.ac.in",
+			"info@amaljyothi.ac.in"
+		],
+		"address": "Kanjirappally, Koovappally P.O. \r\nKottayam, Kerala - 686 518, India.\r\n",
+		"latitude": "9.528645",
+		"longitude": "76.823444",
+		"slug": "amal-jyothi-college-of-engineering-kanjirappally",
+		"views": 25067,
+		"promoted": true,
+		"recommended": false,
+		"country": "India",
+		"region": "Kerala",
+		"accreditations": [
+			"AICTE"
+		],
+		"facilities": [
+			"Basket Ball Court",
+			"Cafeteria",
+			"Chapel",
+			"College Bus",
+			"College Store",
+			"Common Computer Centre",
+			"Communication Lab",
+			"Computer Aided Designing",
+			"Computer Lab",
+			"Computerised Information Management",
+			"Computerized Library",
+			"Conference Hall",
+			"Electrical Workshop",
+			"Foot Ball Ground",
+			"Gymnasium",
+			"Hall Multi-purpose Auditorium",
+			"Indoor And Outdoor Games",
+			"Infrastructural Resources",
+			"Infrastructure",
+			"Library",
+			"Mechanical Engineering Workshop",
+			"Mini Auditorium cum examination hall",
+			"Play Grounds",
+			"Reading Rooms",
+			"Seminar Hall",
+			"Smart Class",
+			"Transportation Facility"
+		],
+		"gallery": [
+			"p189377dlm21l17ub9db1s9fcpp7.jpg",
+			"p189377dlnq801enro7g1peoqto8.jpg",
+			"p189377dln1e1njita1r1vm413n2b.jpg",
+			"p189377dlpe3p1aia1upej0h4kh10.gif",
+			"p1c8cotue287fh9r1jk71tef10mr7.jpg"
+		],
+		"video": "",
+		"website": "http://www.ajce.in/",
+		"virtualTour": "",
+		"featured": "38d1f107556985355bb525a5758eb108ajce_featured.png",
+		"cover": "514691746e9b2624d63a7c5cf8456260Amal_Jyothi_College_of_Engineering_Cover.jpg",
+		"courses": [
+			{
+				"course": "B.Tech",
+				"speicalization": "Automobile Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Mechanical Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electronics and Communication Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electrical and Electronics Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Information Technology",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Chemical Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Civil Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.C.A",
+				"speicalization": null,
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Management"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Power Electronics and Power system",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Structural Engineering and Construction Management",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Machine Designing",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Communication Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Computer Aided Structural Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Energy Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Nano Technology",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			}
+		],
+		"state": "Kerala",
+		"district": "Kottayam",
+		"_geoloc": {
+			"lat": 9.528645,
+			"lng": 76.823444
+		},
+		"manager": "Princy Vipin Das",
+		"update": 1640244885088,
+		"logo": "9e8b206bee008ec9f4a493e26fa2bf5bAMAL-JOYTHI_logo.jpeg",
+		"relationship": 3,
+		"status": true,
+		"created": 1637058308835,
+		"updated": 1644829526292,
+		"eBrochure": null,
+		"objectID": "422",
+		"_highlightResult": {
+			"title": {
+				"value": "Amal Jyothi College Of Engineering, Kanjirappally",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"shortAddress": {
+				"value": "Kanjirappally, Kottayam, Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"university": {
+				"value": "APJ Abdul Kalam Technological University",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"slug": {
+				"value": "amal-jyothi-college-of-engineering-kanjirappally",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"region": {
+				"value": "Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"courses": [
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.C.A",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Management",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				}
+			]
+		}
+	},
+	{
+		"title": "College of Engineering Trivandrum (CET), Thiruvananthapuram",
+		"code": null,
+		"establishmentYear": "1939",
+		"shortAddress": "Thiruvananthapuram, Kerala",
+		"management": "Government of Kerala, Department of Education",
+		"university": "APJ Abdul Kalam Technological University",
+		"type": "Government",
+		"contact": [
+			"04712515556",
+			"04712515502"
+		],
+		"email": [
+			"principal@cet.ac.in"
+		],
+		"address": "Thiruvananthapuram, Kerala - 695 016, India.",
+		"latitude": "8.54668 ",
+		"longitude": "76.905194 ",
+		"slug": "college-of-engineering-trivandrum-cet-thiruvananthapuram",
+		"views": 25115,
+		"promoted": true,
+		"recommended": false,
+		"country": "India",
+		"region": "Kerala",
+		"accreditations": [
+			"NBA"
+		],
+		"facilities": [
+			"Canteen",
+			"Laboratory",
+			"Library",
+			"Sports and Games",
+			"Transportation Facility"
+		],
+		"gallery": [
+			"p18d94cg7p2p2r8qjvl1lf1il44.jpg",
+			"p18dbb3qp0g79178e12qm1u1928o5.jpg",
+			"p18d94cg7p16iajto1shltgn153sb.jpg",
+			"p18d94cg7p1l1i1uea15vh78vo8ba.jpg",
+			"p18d94cg7p84u1jnomb130413789.jpg",
+			"p18d94cg7pbuv67f1o7b1ok6qt48.jpg",
+			"p18d94cg7p1aq71upc1ats1v251jue7.jpg",
+			"p18d94cg7paehh991k3h5io174e6.jpg",
+			"p18d94cg7p3aje0s17q24fm47e5.jpg",
+			"p18dbb3qp0133dd9vsud172t1f314.jpg",
+			"p18dbb3qp01gh16n81bqbc99c3c6.jpg"
+		],
+		"video": null,
+		"website": "http://www.cet.ac.in/",
+		"virtualTour": null,
+		"logo": "5d1491eaced9cfe9ebeeacaa6ef335efLOGO1copy.jpg",
+		"featured": "d68d09212eca441fd0c00bad3ec9f84cfeatured19.jpg",
+		"cover": "82e5bc4d6b3a914b54b05d6731594f41cvr.jpg",
+		"courses": [
+			{
+				"course": "B.Tech (Part Time)",
+				"speicalization": "Electrical and Electronics Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech (Part Time)",
+				"speicalization": "Civil Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech (Part Time)",
+				"speicalization": "Mechanical Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech (Part Time)",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech (Part Time)",
+				"speicalization": "Electronics and Communication Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Arch",
+				"speicalization": null,
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Architecture"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Civil Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electrical and Electronics Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electronics and Communication Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Mechanical Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Industrial Electronics Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Civil Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Mechanical Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Electrical and Electronics Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Electronics and Communication Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			}
+		],
+		"state": "Kerala",
+		"district": "Thiruvananthapuram",
+		"_geoloc": {
+			"lat": 8.54668,
+			"lng": 76.905194
+		},
+		"relationship": 2,
+		"status": true,
+		"created": 1641460426379,
+		"updated": 1641460426379,
+		"manager": "Ancy Praveen",
+		"objectID": "733",
+		"_highlightResult": {
+			"title": {
+				"value": "College of Engineering Trivandrum (CET), Thiruvananthapuram",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"shortAddress": {
+				"value": "Thiruvananthapuram, Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"university": {
+				"value": "APJ Abdul Kalam Technological University",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"slug": {
+				"value": "college-of-engineering-trivandrum-cet-thiruvananthapuram",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"region": {
+				"value": "Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"courses": [
+				{
+					"course": {
+						"value": "B.Tech (Part Time)",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech (Part Time)",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech (Part Time)",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech (Part Time)",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech (Part Time)",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Arch",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Architecture",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				}
+			]
+		}
+	},
+	{
+		"title": "Federal Institute Of Science And Technology (FISAT), Angamaly",
+		"code": "FIT",
+		"establishmentYear": "2002",
+		"shortAddress": "Angamaly, Ernakulam, Kerala",
+		"management": "Federal Bank Officers` Association Educational Society (FBOAES)",
+		"university": "APJ Abdul Kalam Technological University",
+		"type": "Aided",
+		"contact": [
+			"04842616267"
+		],
+		"email": [
+			"mail@fisat.ac.in"
+		],
+		"address": "Hormis Nagar, Mookkannoor P O,\r\nAngamaly, Ernakulam,\r\nKerala - 683 577, India.\r\n",
+		"latitude": "10.231454",
+		"longitude": "76.40884800000003",
+		"slug": "federal-institute-of-science-and-technology-fisat-angamaly",
+		"views": 25064,
+		"promoted": true,
+		"recommended": false,
+		"country": "India",
+		"region": "Kerala",
+		"accreditations": [
+			"AICTE"
+		],
+		"facilities": [
+			"Arts Club",
+			"Basket Ball Court",
+			"Digital Library",
+			"Foot Ball Ground",
+			"Library",
+			"Nature Club",
+			"Smart Class",
+			"Sports Facilities",
+			"Transportation Facility",
+			"Women Empowerment Cell"
+		],
+		"gallery": [
+			"p188lvp6ko12d21eadmpvs691qc74.jpg",
+			"p188lvp6ko10h3dku15ihdl4jj35.jpg",
+			"p188lvp6kolp71h581p9k1tpt6886.jpg",
+			"p188lvp6ko1icr1ir4q6d1h8p1cqg7.jpg",
+			"p188lvp6ko18ltduq1aa81spu1tce8.jpg",
+			"p188lvp6ko1j7hfjv14c1q3o1ngg9.jpg",
+			"p188lvp6kot28km2hd5ip4vcoa.jpg",
+			"p188lvp6koj1etma1ovl4qs1uv9b.jpg",
+			"p188lvp6ko1domlsn1o4j1rdu40jc.jpg",
+			"p188lvp6kolotu221jqi7mql5ud.jpg",
+			"p188lvp6ko1uo8io1a9snp7163ge.jpg",
+			"p188lvp6koeu3qa1o0h1q7jt8sg.gif",
+			"p188lvp6koo26djdc6p1p0m1c26h.gif",
+			"p188lvp6kogddke8v52rrdpv6i.gif",
+			"p188lvp6ko1717fs87vfk4k105cj.gif"
+		],
+		"video": "http://www.youtube.com/watch?feature=player_embedded&v=g5R7hkA_qfM",
+		"website": "http://www.fisat.ac.in/",
+		"virtualTour": null,
+		"logo": "46ebda7fa511da2edf753fb3174ef348FEDERAL-INSTITUTE-OF-SCIENCE-AND-TECHNOLOGYlog.jpg",
+		"featured": "82d40afa3d4e1462858e972c33dc450efisatfeatured.jpg",
+		"cover": "aa2a595f7ba310149e5c572e0d2bed4efisatcover.jpg",
+		"courses": [
+			{
+				"course": "B.Tech",
+				"speicalization": "Mechanical Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Civil Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electronics and Instrumentation Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electrical and Electronics Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electronics and Communication Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.B.A",
+				"speicalization": null,
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Management"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Power Electronics and Power system",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Communication Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Computer Integrated Manufacturing",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Computer Science and Information System",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			}
+		],
+		"state": "Kerala",
+		"district": "Ernakulam",
+		"_geoloc": {
+			"lat": 10.231454,
+			"lng": 76.40884800000003
+		},
+		"relationship": 3,
+		"status": true,
+		"created": 1641368884906,
+		"updated": 1641368884906,
+		"manager": "Princy Vipin Das",
+		"objectID": "200",
+		"_highlightResult": {
+			"title": {
+				"value": "Federal Institute Of Science And Technology (FISAT), Angamaly",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"shortAddress": {
+				"value": "Angamaly, Ernakulam, Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"university": {
+				"value": "APJ Abdul Kalam Technological University",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"slug": {
+				"value": "federal-institute-of-science-and-technology-fisat-angamaly",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"region": {
+				"value": "Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"courses": [
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.B.A",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Management",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				}
+			]
+		}
+	},
+	{
+		"title": "Marian College, Kuttikkanam",
+		"code": null,
+		"establishmentYear": "1995",
+		"shortAddress": "Kuttikkanam, Idukki, Kerala",
+		"management": "Catholic Diocese of Kanjirapally",
+		"university": "Mahatma Gandhi University (MG)",
+		"type": "Autonomous",
+		"contact": [
+			"04869232203",
+			"04869232654"
+		],
+		"email": [
+			"marian@marianonline.com"
+		],
+		"address": "Kuttikanam P.O., Peermade, Idukki, Kerala, India.",
+		"latitude": "9.58352",
+		"longitude": "76.97168699999997",
+		"slug": "marian-college-kuttikkanam",
+		"views": 25134,
+		"promoted": true,
+		"recommended": false,
+		"country": "India",
+		"region": "Kerala",
+		"accreditations": [
+			"NAAC",
+			"UGC"
+		],
+		"facilities": [
+			"Audio Visual Class Rooms",
+			"Auditorium",
+			"Cafeteria",
+			"Computer Lab",
+			"Conference Hall",
+			"Guest House",
+			"Guidance and Counseling Centre",
+			"Gymnasium",
+			"Healthcare",
+			"Hostel",
+			"Language Lab",
+			"Library"
+		],
+		"gallery": [
+			"p18dtgdaamjov102h1uafqjv137n4.jpg",
+			"p18dtgdab5g79mif2oc175rhg65.jpg",
+			"p18dtgdab51q3gp111ume1pave9d6.jpg",
+			"p18dtgdab5v851dc8s7i10oobqb7.jpg",
+			"p18dtgdab51ea6sgohvv1f5v1e1o8.jpg",
+			"p18dtgdab52ep1ck62h51fgc9ne9.jpg",
+			"p18dtgdab5130p13qj1uk3117bue2a.jpg",
+			"p18dtgdab5v2nce319ru17b41uu0b.jpg",
+			"p18dtgdab514lrl0jll9133rsmsc.jpg",
+			"p18dtgdab51bm192r5mq1js6sccd.jpg",
+			"p18dtgdab5cqf3k619prsvhmlpe.jpg",
+			"p18dtgdab5mf58286q4m11l95f.jpg",
+			"p18ef9r5iihneirdjs14v01eja4.gif",
+			"p18ef9r5jhd3r8du35ppho12es5.gif"
+		],
+		"video": null,
+		"website": "http://www.mariancollege.org/",
+		"virtualTour": null,
+		"logo": "628608679a333ea87c8c8fbbc830f85eLOGOcopy.jpg",
+		"featured": "628608679a333ea87c8c8fbbc830f85eFEADcopy.jpg",
+		"cover": "628608679a333ea87c8c8fbbc830f85eCOVERcopy.jpg",
+		"courses": [
+			{
+				"course": "B.S.W",
+				"speicalization": null,
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Management"
+			},
+			{
+				"course": "B.Sc",
+				"speicalization": "Mathematics",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Science"
+			},
+			{
+				"course": "B.C.A",
+				"speicalization": null,
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Management"
+			},
+			{
+				"course": "B.Com",
+				"speicalization": "Finance and Taxation",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Commerce"
+			},
+			{
+				"course": "B.Com",
+				"speicalization": "Co-Operation",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Commerce"
+			},
+			{
+				"course": "B.B.A",
+				"speicalization": null,
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Management"
+			},
+			{
+				"course": "B.A",
+				"speicalization": "Communicative English",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Arts and Science"
+			},
+			{
+				"course": "B.A",
+				"speicalization": "Economics",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Arts and Science"
+			},
+			{
+				"course": "M.M.H",
+				"speicalization": null,
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Others"
+			},
+			{
+				"course": "M.C.A",
+				"speicalization": null,
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Management"
+			},
+			{
+				"course": "M.S.W",
+				"speicalization": null,
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Management"
+			},
+			{
+				"course": "M.Com",
+				"speicalization": "Finance",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Commerce"
+			},
+			{
+				"course": "M.Com",
+				"speicalization": "P.G.D.M",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Commerce"
+			},
+			{
+				"course": "M.C.M.H",
+				"speicalization": null,
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Others"
+			}
+		],
+		"state": "Kerala",
+		"district": "Idukki",
+		"_geoloc": {
+			"lat": 9.58352,
+			"lng": 76.97168699999997
+		},
+		"relationship": 3,
+		"status": true,
+		"created": 1641280156175,
+		"updated": 1641280156175,
+		"manager": "Princy Vipin Das",
+		"objectID": "1336",
+		"_highlightResult": {
+			"title": {
+				"value": "Marian College, Kuttikkanam",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"shortAddress": {
+				"value": "Kuttikkanam, Idukki, Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"university": {
+				"value": "Mahatma Gandhi University (MG)",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"slug": {
+				"value": "marian-college-kuttikkanam",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"region": {
+				"value": "Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"courses": [
+				{
+					"course": {
+						"value": "B.S.W",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Management",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Sc",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Science",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.C.A",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Management",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Com",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Commerce",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Com",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Commerce",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.B.A",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Management",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.A",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Arts and Science",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.A",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Arts and Science",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.M.H",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Others",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.C.A",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Management",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.S.W",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Management",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Com",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Commerce",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Com",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Commerce",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.C.M.H",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Others",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				}
+			]
+		}
+	},
+	{
+		"title": "MES College of Engineering, Kuttippuram",
+		"code": null,
+		"establishmentYear": "1994",
+		"shortAddress": "Kuttippuram, Malappuram, Kerala \r\n",
+		"management": null,
+		"university": "APJ Abdul Kalam Technological University",
+		"type": "Private/Self Financing",
+		"contact": [
+			"04943051234",
+			"04942698081"
+		],
+		"email": [
+			"info@mesce.ac.in",
+			"principal@mesce.ac.in"
+		],
+		"address": "Kuttippuram, Thrikkanapuram P.O., Malappuram, Kerala - 679 573, India.\r\n",
+		"latitude": "10.829765",
+		"longitude": "76.023415",
+		"slug": "mes-college-of-engineering-kuttippuram",
+		"views": 25087,
+		"promoted": true,
+		"recommended": false,
+		"country": "India",
+		"region": "Kerala",
+		"accreditations": [
+			"AICTE"
+		],
+		"facilities": [
+			"Canteen",
+			"Computer Lab",
+			"Hostel",
+			"Instrumentation Lab",
+			"Library",
+			"Sports Facilities",
+			"Sports Facilities",
+			"Transportation Facility"
+		],
+		"gallery": [
+			"p18bj26ire1rhe103e156vuhu1nhu4.png",
+			"p1895vp9lp196k1okh13u01likdro4.jpg",
+			"p18bvivo5gos61gm018hm1etj1b644.jpg",
+			"p18bvislsb30m1idj1bjdhi11s44.jpg"
+		],
+		"video": null,
+		"website": "http://www.mesce.ac.in/",
+		"virtualTour": null,
+		"logo": "79df691602fb7b1fa1d653e5c9a1396amescollegeofengineeringcolleegelogo.jpg",
+		"featured": "4e35086db789b937d94d58f98585bbfcFEADcopy.jpg",
+		"cover": "e7d0dfd71ebdc7560f7b93c9fa019554LOGOcopy.jpg",
+		"courses": [
+			{
+				"course": "B.Arch",
+				"speicalization": null,
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Architecture"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Applied Electronics and Instrumentation Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Civil Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electrical and Electronics Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electronics and Communication Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Information Technology",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Mechanical Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.B.A",
+				"speicalization": null,
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Management"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Thermal Systems",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Instrumentation and Control Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Construction Engineering and Management",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Communication Engineering and Signal Processing",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.C.A",
+				"speicalization": null,
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Management"
+			}
+		],
+		"state": "Kerala",
+		"district": "Malappuram",
+		"_geoloc": {
+			"lat": 10.829765,
+			"lng": 76.023415
+		},
+		"relationship": 2,
+		"status": true,
+		"created": 1644992789955,
+		"updated": 1644992789955,
+		"manager": "Ancy Praveen",
+		"objectID": "528",
+		"_highlightResult": {
+			"title": {
+				"value": "MES College of Engineering, Kuttippuram",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"shortAddress": {
+				"value": "Kuttippuram, Malappuram, Kerala \r\n",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"university": {
+				"value": "APJ Abdul Kalam Technological University",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"slug": {
+				"value": "mes-college-of-engineering-kuttippuram",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"region": {
+				"value": "Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"courses": [
+				{
+					"course": {
+						"value": "B.Arch",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Architecture",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.B.A",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Management",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.C.A",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Management",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				}
+			]
+		}
+	},
+	{
+		"title": "National Institute Of Technology (NIT), Kozhikode \t",
+		"code": null,
+		"establishmentYear": "1961",
+		"shortAddress": "Chathamangalam, Kozhikode, Kerala\r\n",
+		"management": "National Institute of Technology, Calicut (Deemed)",
+		"university": "National Institute of Technology (NIT)",
+		"type": "Government",
+		"contact": [
+			"04952286101"
+		],
+		"email": [
+			"pgadmissions@nitc.ac.in"
+		],
+		"address": "Mukkam Road, Nit Campus P.O., Kozhikode, Kerala - 673 601, India.",
+		"latitude": "11.32164",
+		"longitude": "75.936889",
+		"slug": "national-institute-of-technology-nit-kozhikode",
+		"views": 25086,
+		"promoted": true,
+		"recommended": false,
+		"country": "India",
+		"region": "Kerala",
+		"accreditations": [
+			"AICTE"
+		],
+		"facilities": [
+			"Advanced Electrical Lab",
+			"ATM",
+			"Auditorium",
+			"Canteen",
+			"Common Computer Centre",
+			"Computer Aided Designing",
+			"Computer Hardware Lab",
+			"Computer Lab",
+			"Computerised Information Management",
+			"Computerized Library",
+			"Digital Library",
+			"Electrical Lab",
+			"Electrical Machines Lab",
+			"Electrical Measurement Lab",
+			"Electrical Workshop",
+			"Electronics and Communication Lab",
+			"Electronics and Instrumentation Lab",
+			"Electronics Circuits Lab",
+			"Electronics Workshop",
+			"Guest House",
+			"Health Facilities",
+			"Hostel for Boys and Girls",
+			"Industrial Electronics Lab",
+			"Infrastructure",
+			"Laboratories",
+			"Laboratory",
+			"Library",
+			"Mechanical Engineering Workshop",
+			"Physical Education",
+			"Power Electronics Lab",
+			"Seminar Hall",
+			"Transportation Facility"
+		],
+		"gallery": [
+			"p18b3emi18o0gibc1lhtr4p1188a.jpg",
+			"p18b3emi183nlfjqolmhqg1r969.jpg",
+			"p18b3emi181vtf15c1hl31148ag18.jpg",
+			"p18b3emi181pt91pqnicebrq1rfb7.jpg",
+			"p18b3emi18c1u1htafkg1oj815k6.jpg",
+			"p18b3emi181fubk8em211bd11ght5.jpg",
+			"p18b3emi096jpo9sgovl0s1c874.jpg",
+			"p18djeko7srjam9q1prj1nkr1li54.jpg"
+		],
+		"video": null,
+		"website": "http://www.nitc.ac.in/",
+		"virtualTour": null,
+		"logo": "d6afd0521f38294422337ded4cfb8f2cNIT_calicut_logo.jpg",
+		"featured": "7d418548e51f405624a62369ef4799c4featured4.jpg",
+		"cover": "7d418548e51f405624a62369ef4799c4cover4.jpg",
+		"courses": [
+			{
+				"course": "B.Arch",
+				"speicalization": null,
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Architecture"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Civil Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Chemical Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electrical and Electronics Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electronics and Communication Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Mechanical Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Production Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Sc",
+				"speicalization": null,
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Science"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Civil Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "V.L.S.I Design",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Control and Instrumentation System",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Computer and Communication Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Information Technology",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Environmental Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Telecommunication Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Signal Processing",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Instrumentation and Control Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Power System",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Power Electronics",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Industrial Electronics Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Thermal Science",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Manufacturing Engineering ",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Nano Technology",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Instrumentation and Control Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.C.A",
+				"speicalization": null,
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Management"
+			},
+			{
+				"course": "Ph.D",
+				"speicalization": null,
+				"courseLevel": "Research Programmes",
+				"category": "Others"
+			}
+		],
+		"state": "Kerala",
+		"district": "Kozhikode",
+		"_geoloc": {
+			"lat": 11.32164,
+			"lng": 75.936889
+		},
+		"relationship": 2,
+		"status": true,
+		"created": 1641460372778,
+		"updated": 1641460372778,
+		"manager": "Ancy Praveen",
+		"objectID": "1244",
+		"_highlightResult": {
+			"title": {
+				"value": "National Institute Of Technology (NIT), Kozhikode \t",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"shortAddress": {
+				"value": "Chathamangalam, Kozhikode, Kerala\r\n",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"university": {
+				"value": "National Institute of Technology (NIT)",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"slug": {
+				"value": "national-institute-of-technology-nit-kozhikode",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"region": {
+				"value": "Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"courses": [
+				{
+					"course": {
+						"value": "B.Arch",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Architecture",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Sc",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Science",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.C.A",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Management",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "Ph.D",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Others",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				}
+			]
+		}
+	},
+	{
+		"title": "Rajagiri School Of Engineering and Technology, Kakkanad",
+		"code": "RET",
+		"establishmentYear": "2001",
+		"shortAddress": "Kakkanad, Ernakulam, Kerala\r\n",
+		"management": "The Rajagiri Management",
+		"university": "APJ Abdul Kalam Technological University",
+		"type": "Private/Self Financing",
+		"contact": [
+			"04842427835",
+			"04842428238"
+		],
+		"email": [
+			"office@rajagiritech.ac.in"
+		],
+		"address": "Rajagiri Valley, Kakkanad,\r\nKochi, Kerala - 682 039, India.\r\n",
+		"latitude": "9.993192",
+		"longitude": "76.358302",
+		"slug": "rajagiri-school-of-engineering-and-technology-kakkanad",
+		"views": 25103,
+		"promoted": true,
+		"recommended": false,
+		"country": "India",
+		"region": "Kerala",
+		"accreditations": [
+			"AICTE"
+		],
+		"facilities": [
+			"College Bus",
+			"Computer Lab",
+			"Gymnasium",
+			"Hostel",
+			"Laboratories",
+			"Sports Facilities",
+			"Video Conferencing Room",
+			"Workshop "
+		],
+		"gallery": [
+			"p18au3b8n81lpr1gd4umm1r7c16te6.jpg",
+			"p188p3iuk04fh10hl1mt21bj2a1t4.gif",
+			"p188p3iuk0c41fal32m11eo1i8f5.gif",
+			"p188p3iuk01ap8t5fptal10gug6.gif",
+			"p188p3iuk1op416q1kkmbs93a77.gif",
+			"p18au3b8nof5k126s1fem1ikfjqs7.jpg",
+			"p18au3b8mou50f2mvnuo8j6js4.jpg",
+			"p18au3b8n8v321arh4pfqu623m5.jpg",
+			"p18d6h9dqu1a6f1vnjvvtltr14ro4.jpg",
+			"p18d6h9drd1tjn11ek8itu551qev5.jpg",
+			"p18d6h9drd3db15528kq4ui1fg6.jpg",
+			"p18d979lg5n7515k91emk1u7a1jjj4.jpg",
+			"p18d979lg559q1efhphbb0j11ff5.jpg",
+			"p19g6f8ej11obvb7ic1h8b1bar4.jpg",
+			"p19g6f8ej115ae1sd213os1bng1sju5.jpg",
+			"p19g6f8ej275igpj1meegrei9f6.jpg"
+		],
+		"video": null,
+		"website": "http://www.rajagiritech.ac.in/Home/Index.asp",
+		"virtualTour": null,
+		"logo": "366c31efa05594aa13ff161d15fd14f3RAJAGIRI-CENTRE-FOR-BUSINESS-STUDIES.jpg",
+		"featured": "8be5576fa73eeb852614ab0dd40fab6efeaturedrajagiriengg.jpg",
+		"cover": "dddacba4c18cff14cf1774d2ea869796coverrajagiriengg.jpg",
+		"courses": [
+			{
+				"course": "B.Tech",
+				"speicalization": "Applied Electronics and Instrumentation Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Civil Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electrical and Electronics Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electronics and Communication Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Information Technology",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Mechanical Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Communication Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Communication and Information System",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Industrial Drives and Control",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Network Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Signal Processing",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "V.L.S.I and Embedded System",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			}
+		],
+		"state": "Kerala",
+		"district": "Ernakulam",
+		"_geoloc": {
+			"lat": 9.993192,
+			"lng": 76.358302
+		},
+		"relationship": 2,
+		"status": true,
+		"created": 1641460393024,
+		"updated": 1641460393024,
+		"manager": "Ancy Praveen",
+		"objectID": "286",
+		"_highlightResult": {
+			"title": {
+				"value": "Rajagiri School Of Engineering and Technology, Kakkanad",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"shortAddress": {
+				"value": "Kakkanad, Ernakulam, Kerala\r\n",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"university": {
+				"value": "APJ Abdul Kalam Technological University",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"slug": {
+				"value": "rajagiri-school-of-engineering-and-technology-kakkanad",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"region": {
+				"value": "Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"courses": [
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				}
+			]
+		}
+	},
+	{
+		"title": "SCMS School Of Engineering And Technology (SSET), Ernakulam",
+		"code": "SCM",
+		"establishmentYear": "2001",
+		"shortAddress": "Karukutty, Ernakulam, Kerala\r\n",
+		"management": "SCMS group",
+		"university": "APJ Abdul Kalam Technological University",
+		"type": "Private/Self Financing",
+		"contact": [
+			"04842450330"
+		],
+		"email": [
+			"sset@scmsgoup.org"
+		],
+		"address": "Vidya Nagar, Palissery, Karukutty, \r\nErnakulam, Kerala - 683 582, India. \r\n",
+		"latitude": "10.269852",
+		"longitude": "76.400985",
+		"slug": "scms-school-of-engineering-and-technology-sset-ernakulam",
+		"views": 25317,
+		"promoted": true,
+		"recommended": false,
+		"country": "India",
+		"region": "Kerala",
+		"accreditations": [
+			"AICTE",
+			"NBA"
+		],
+		"facilities": [
+			"College Bus",
+			"Computer Lab",
+			"Hostel",
+			"Laboratories",
+			"Library",
+			"Workshop "
+		],
+		"gallery": [
+			"p188p5ltfqqok1hsh1htq1aa68c74.gif",
+			"p188p5ltfr1lri1q7if9c1a6c1p6f5.gif",
+			"p188p5ltfr1oto1fld13nrisds06.gif",
+			"p188p5ltfr16g11uqjbbt1vgm1ukj7.gif",
+			"p188p5ltfr12or1r3e1rtm7be1vat8.gif",
+			"p188p5ltfr1j0gi5nnq45kou7d9.gif",
+			"p188p5ltfr16jq1vvhjhs1tn11n81a.gif",
+			"p188p5ltfs1q4t1g8bdgvuje1qieb.gif",
+			"p188p5ltfssjqobcp4v11d7muec.gif"
+		],
+		"video": "http://www.facebook.com/l.php?u=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D5KAXK2p-1zk&h=NAQHH0QaeAQGsgahOQXwquxGFbZI3gtzRSF_InGl2c1iw1Q",
+		"website": "http://scmsgroup.org/sset/index.php",
+		"virtualTour": null,
+		"logo": "352adc4fd8759fcd729e0f743345d994SCMSEng.jpg",
+		"featured": "1587f85b491d3fe688c291e21668e3b8featuredscms12.jpg",
+		"cover": "1587f85b491d3fe688c291e21668e3b8coverscms2.jpg",
+		"courses": [
+			{
+				"course": "B.Tech",
+				"speicalization": "Civil Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Mechanical Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electrical and Electronics Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Electronics and Communication Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Computer Science Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "B.Tech",
+				"speicalization": "Automobile Engineering",
+				"courseLevel": "Under Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.C.A",
+				"speicalization": null,
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Management"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Civil Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Computer Aided Structural Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "V.L.S.I and Embedded System",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Electronics and Communication Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Mechanical Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Communication Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Environmental Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Production and Industrial Engineering",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "Computer Science and Information System",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			},
+			{
+				"course": "M.Tech",
+				"speicalization": "V.L.S.I Design and Embedded System",
+				"courseLevel": "Post Graduate Programmes",
+				"category": "Engineering"
+			}
+		],
+		"state": "Kerala",
+		"district": "Ernakulam",
+		"_geoloc": {
+			"lat": 10.269852,
+			"lng": 76.400985
+		},
+		"relationship": 3,
+		"status": true,
+		"created": 1641368869045,
+		"updated": 1641368869045,
+		"manager": "Princy Vipin Das",
+		"objectID": "293",
+		"_highlightResult": {
+			"title": {
+				"value": "SCMS School Of Engineering And Technology (SSET), Ernakulam",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"shortAddress": {
+				"value": "Karukutty, Ernakulam, Kerala\r\n",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"university": {
+				"value": "APJ Abdul Kalam Technological University",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"slug": {
+				"value": "scms-school-of-engineering-and-technology-sset-ernakulam",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"region": {
+				"value": "Kerala",
+				"matchLevel": "none",
+				"matchedWords": []
+			},
+			"courses": [
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "B.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.C.A",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Management",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				},
+				{
+					"course": {
+						"value": "M.Tech",
+						"matchLevel": "none",
+						"matchedWords": []
+					},
+					"category": {
+						"value": "Engineering",
+						"matchLevel": "none",
+						"matchedWords": []
+					}
+				}
+			]
+		}
+	}
+]

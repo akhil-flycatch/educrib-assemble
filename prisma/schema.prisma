@@ -1,0 +1,979 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres.vrhpopcshfgabaunvpht:Educrib2025@aws-0-ap-south-1.pooler.supabase.com:5432/postgres"
+}
+
+model vertical {
+  id           String     @id @default(cuid())
+  status       Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  title        String     @unique
+  slug         String     @unique
+  icon         String?
+  thumbnail    String?
+  isFoundation Boolean    @default(true)
+  createdById  BigInt?
+  updatedById  String?
+  categories   category[]
+  profiles     profile[]
+  types        type[]
+  createdBy    user?      @relation("createdBy", fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model category {
+  id                 String              @id @default(cuid())
+  status             Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  title              String              @unique
+  slug               String              @unique
+  icon               String?
+  thumbnail          String?
+  verticalId         String?
+  vertical           vertical?           @relation(fields: [verticalId], references: [id])
+  profileCategories  profileCategory[]
+  profileEvents      profileEvent[]
+  profileHostels     profileHostel[]
+  profileInternships profileInternship[]
+  profileJobs        profileJob[]
+}
+
+model type {
+  id                 String              @id @default(cuid())
+  status             Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  title              String              @unique
+  slug               String              @unique
+  icon               String?
+  thumbnail          String?
+  verticalId         String?
+  createdById        String?
+  updatedById        String?
+  profiles           profile[]
+  profileEvents      profileEvent[]
+  profileHostels     profileHostel[]
+  profileInternships profileInternship[]
+  profileJobs        profileJob[]
+  vertical           vertical?           @relation(fields: [verticalId], references: [id])
+}
+
+model country {
+  id        String     @id @default(cuid())
+  status    Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  title     String     @unique
+  slug      String     @unique
+  alias     String?
+  code      String?
+  locale    String?
+  currency  String?
+  flag      String?
+  locations location[]
+}
+
+model location {
+  id           String   @id @default(cuid())
+  status       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  title        String   @unique
+  slug         String   @unique
+  alias        String?
+  shortAddress String
+  area         String?
+  region       String?
+  state        String?
+  countryId    String?
+  profileId    String   @unique
+  country      country? @relation(fields: [countryId], references: [id])
+  profile      profile  @relation(fields: [profileId], references: [id])
+}
+
+model currency {
+  id                   String                @id @default(cuid())
+  status               Boolean               @default(true)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  title                String                @unique
+  code                 String                @unique
+  slug                 String                @unique
+  icon                 String?
+  createdById          String?
+  updatedById          String?
+  profileEvent         profileEvent[]
+  profileEventTickets  profileEventTicket[]
+  profileHostels       profileHostel[]
+  profileHostelFees    profileHostelFee[]
+  profileInternships   profileInternship[]
+  profileJobs          profileJob[]
+  profileProgrammeFees profileProgrammeFee[]
+}
+
+model contactType {
+  id                    String                 @id @default(cuid())
+  status                Boolean                @default(true)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  title                 String                 @unique
+  slug                  String                 @unique
+  icon                  String?
+  thumbnail             String?
+  createdById           String?
+  updatedById           String?
+  profileContacts       profileContact[]
+  profileHostelContacts profileHostelContact[]
+  profileStaffContacts  profileStaffContact[]
+}
+
+model curriculum {
+  id        String    @id @default(cuid())
+  status    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  title     String    @unique
+  slug      String    @unique
+  icon      String?
+  thumbnail String?
+  profiles  profile[]
+}
+
+model accreditation {
+  id                   String                 @id @default(cuid())
+  status               Boolean                @default(true)
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  title                String                 @unique
+  slug                 String                 @unique
+  icon                 String?
+  thumbnail            String?
+  description          String?
+  link                 String?
+  createdById          String?
+  updatedById          String?
+  profile              profile[]
+  profileAccreditation profileAccreditation[]
+}
+
+model university {
+  id          String    @id @default(cuid())
+  status      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  title       String    @unique
+  slug        String    @unique
+  icon        String?
+  thumbnail   String?
+  description String?
+  link        String?
+  createdById String?
+  updatedById String?
+  profiles    profile[]
+}
+
+model management {
+  id          String    @id @default(cuid())
+  status      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  title       String    @unique
+  slug        String    @unique
+  icon        String?
+  thumbnail   String?
+  description String?
+  link        String?
+  createdById String?
+  updatedById String?
+  profiles    profile[]
+}
+
+model facility {
+  id                      String                  @id @default(cuid())
+  status                  Boolean                 @default(true)
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  title                   String                  @unique
+  slug                    String                  @unique
+  icon                    String?
+  thumbnail               String?
+  createdById             String?
+  updatedById             String?
+  profileFacilities       profileFacility[]
+  profileHostelFacilities profileHostelFacility[]
+}
+
+model designation {
+  id            String         @id @default(cuid())
+  status        Boolean        @default(true)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  title         String         @unique
+  slug          String         @unique
+  icon          String?
+  thumbnail     String?
+  profileStaffs profileStaff[]
+}
+
+model media {
+  id               String         @id @default(cuid())
+  status           Boolean        @default(true)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  title            String         @unique
+  slug             String         @unique
+  icon             String?
+  thumbnail        String?
+  isSocialLink     Boolean?
+  ismediaVideoType Boolean?
+  profileMedia     profileMedia[]
+}
+
+model social {
+  id            String          @id @default(cuid())
+  status        Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  title         String          @unique
+  slug          String          @unique
+  icon          String?
+  thumbnail     String?
+  profileSocial profileSocial[]
+}
+
+model durationType {
+  id                 String              @id @default(cuid())
+  status             Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  title              String              @unique
+  slug               String              @unique
+  icon               String?
+  thumbnail          String?
+  createdById        String?
+  updatedById        String?
+  profileInternships profileInternship[]
+  profileJobs        profileJob[]
+  profileProgrammes  profileProgramme[]
+}
+
+model frequency {
+  id                   String                @id @default(cuid())
+  status               Boolean               @default(true)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  title                String                @unique
+  slug                 String                @unique
+  icon                 String?
+  thumbnail            String?
+  createdById          String?
+  updatedById          String?
+  profileHostelFees    profileHostelFee[]
+  profileProgrammeFees profileProgrammeFee[]
+}
+
+model intake {
+  id                String             @id @default(cuid())
+  status            Boolean            @default(true)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  title             String             @unique
+  slug              String             @unique
+  icon              String?
+  thumbnail         String?
+  createdById       String?
+  updatedById       String?
+  profileProgrammes profileProgramme[]
+}
+
+model level {
+  id                String             @id @default(cuid())
+  status            Boolean            @default(true)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  title             String             @unique
+  slug              String             @unique
+  icon              String?
+  thumbnail         String?
+  createdById       String?
+  updatedById       String?
+  profileProgrammes profileProgramme[]
+}
+
+model course {
+  id                String             @id @default(cuid())
+  status            Boolean            @default(true)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  title             String             @unique
+  slug              String             @unique
+  icon              String?
+  thumbnail         String?
+  description       String?
+  link              String?
+  createdById       String?
+  updatedById       String?
+  profileProgrammes profileProgramme[]
+}
+
+model specialization {
+  id                String             @id @default(cuid())
+  status            Boolean            @default(true)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  title             String             @unique
+  slug              String             @unique
+  icon              String?
+  thumbnail         String?
+  description       String?
+  link              String?
+  updatedById       String?
+  createdById       String?
+  profileProgrammes profileProgramme[]
+}
+
+model profile {
+  id                    String                 @id @default(cuid())
+  status                Boolean                @default(true)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  title                 String                 @unique
+  alias                 String?
+  slug                  String                 @unique
+  avatar                String?
+  thumbnail             String?
+  description           String?
+  code                  String?
+  establishedYear       Int?
+  verticalId            String?
+  managementId          String?
+  universityId          String?
+  typeId                String?
+  curriculumId          String?
+  profileImages         String[]
+  featured              Boolean                @default(false)
+  recommended           Boolean                @default(false)
+  verified              Boolean                @default(false)
+  published             Boolean                @default(false)
+  views                 Int                    @default(1)
+  createdById           String?
+  updatedById           String?
+  userId                String?
+  registrationNumber    String?
+  countryId             String[]
+  services              String[]
+  yearsOfExperience     String?
+  subjects              String[]
+  qualifications        String?
+  modeOfClassess        String?
+  availability          String?
+  companyName           String?
+  eligibilty            String?
+  stipend               Decimal?               @db.Decimal
+  address               String?
+  city                  String?
+  state                 String?
+  district              String?
+  pincode               String?
+  email                 String?
+  phone                 String?
+  accreditationId       String?
+  website               String?
+  location              location?
+  accreditation         accreditation?         @relation(fields: [accreditationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  curriculum            curriculum?            @relation(fields: [curriculumId], references: [id])
+  management            management?            @relation(fields: [managementId], references: [id])
+  type                  type?                  @relation(fields: [typeId], references: [id])
+  university            university?            @relation(fields: [universityId], references: [id])
+  vertical              vertical?              @relation(fields: [verticalId], references: [id])
+  profileAccreditations profileAccreditation[]
+  profileArticles       profileArticle[]
+  profileCategories     profileCategory[]
+  profileContacts       profileContact[]
+  profileEvents         profileEvent[]
+  profileFacilities     profileFacility[]
+  profileHostels        profileHostel[]
+  profileInternships    profileInternship[]
+  profileJobs           profileJob[]
+  profileMedia          profileMedia[]
+  profileNews           profileNews[]
+  profilePlacements     profilePlacement[]
+  profileProgrammes     profileProgramme[]
+  profileRelations      profileRelation[]
+  profileReports        profileReport[]
+  profileRequests       profileRequest[]
+  profileReviews        profileReview[]
+  profileRoutes         profileRoute[]
+  profileScholarships   profileScholarship[]
+  profileSocials        profileSocial[]
+  profileStaffs         profileStaff[]
+  profileSeo            seo?
+}
+
+model seo {
+  id          String   @id @default(cuid())
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String?
+  description String?
+  keywords    String[]
+  canonical   String?
+  thumbnail   String?
+  profileId   String   @unique
+  profile     profile  @relation(fields: [profileId], references: [id])
+}
+
+model profileCategory {
+  id         String    @id @default(cuid())
+  status     Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  profileId  String?
+  categoryId String?
+  category   category? @relation(fields: [categoryId], references: [id])
+  profile    profile?  @relation(fields: [profileId], references: [id])
+}
+
+model profileAccreditation {
+  id              String         @id @default(cuid())
+  status          Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  profileId       String?
+  accreditationId String?
+  createdById     String?
+  updatedById     String?
+  accreditation   accreditation? @relation(fields: [accreditationId], references: [id])
+  profile         profile?       @relation(fields: [profileId], references: [id])
+}
+
+model profileContact {
+  id            String       @id @default(cuid())
+  status        Boolean      @default(true)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  title         String?
+  phone         String?
+  email         String?
+  website       String?
+  contactTypeId String?
+  profileId     String?
+  createdById   String?
+  updatedById   String?
+  avatar        String?
+  contactType   contactType? @relation(fields: [contactTypeId], references: [id])
+  profile       profile?     @relation(fields: [profileId], references: [id])
+}
+
+model profileStaff {
+  id                   String                @id @default(cuid())
+  status               Boolean               @default(true)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  avatar               String?
+  title                String
+  designationId        String?
+  profileId            String?
+  designation          designation?          @relation(fields: [designationId], references: [id])
+  profile              profile?              @relation(fields: [profileId], references: [id])
+  profileStaffContacts profileStaffContact[]
+}
+
+model profileStaffContact {
+  id             String        @id @default(cuid())
+  status         Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  title          String?
+  phone          String?
+  email          String?
+  website        String?
+  contactTypeId  String?
+  profileStaffId String?
+  contactType    contactType?  @relation(fields: [contactTypeId], references: [id])
+  profileStaff   profileStaff? @relation(fields: [profileStaffId], references: [id])
+}
+
+model profileProgramme {
+  id                   String                @id @default(cuid())
+  status               Boolean               @default(true)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  avatar               String?
+  thumbnail            String?
+  courseId             String?
+  specializationId     String?
+  profileId            String?
+  intakeId             String?
+  capacity             Int?
+  levelId              String?
+  duration             Int?
+  durationTypeId       String?
+  createdById          String?
+  updatedById          String?
+  upatedBy             BigInt?
+  course               course?               @relation(fields: [courseId], references: [id])
+  durationType         durationType?         @relation(fields: [durationTypeId], references: [id])
+  intake               intake?               @relation(fields: [intakeId], references: [id])
+  level                level?                @relation(fields: [levelId], references: [id])
+  profile              profile?              @relation(fields: [profileId], references: [id])
+  specialization       specialization?       @relation(fields: [specializationId], references: [id])
+  user                 user?                 @relation(fields: [upatedBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  profileProgrammeFees profileProgrammeFee[]
+}
+
+model profileProgrammeFee {
+  id                 String            @id @default(cuid())
+  status             Boolean           @default(true)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  title              String?
+  amount             Float?
+  currencyId         String?
+  frequencyId        String?
+  profileProgrammeId String?
+  createdById        String?
+  updatedById        String?
+  currency           currency?         @relation(fields: [currencyId], references: [id])
+  frequency          frequency?        @relation(fields: [frequencyId], references: [id])
+  profileProgramme   profileProgramme? @relation(fields: [profileProgrammeId], references: [id])
+}
+
+model profileMedia {
+  id               String   @id @default(cuid())
+  status           Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  link             String?
+  profileId        String?
+  mediaId          String?
+  isSocialLink     Boolean?
+  ismediaVideoType Boolean?
+  media            media?   @relation(fields: [mediaId], references: [id])
+  profile          profile? @relation(fields: [profileId], references: [id])
+}
+
+model profileSocial {
+  id        String   @id @default(cuid())
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profileId String?
+  socialId  String?
+  link      String?
+  profile   profile? @relation(fields: [profileId], references: [id])
+  social    social?  @relation(fields: [socialId], references: [id])
+}
+
+model profileFacility {
+  id          String    @id @default(cuid())
+  status      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  profileId   String?
+  facilityId  String?
+  updatedById String?
+  createdById String?
+  facility    facility? @relation(fields: [facilityId], references: [id])
+  profile     profile?  @relation(fields: [profileId], references: [id])
+}
+
+model profileReport {
+  id          String   @id @default(cuid())
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  description String
+  name        String?  @default("Anonymous")
+  phone       String?
+  email       String?
+  location    String?
+  profileId   String?
+  profile     profile? @relation(fields: [profileId], references: [id])
+}
+
+model profileRequest {
+  id          String   @id @default(cuid())
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String?
+  description String?
+  name        String?
+  phone       String?
+  email       String
+  location    String?
+  profileId   String?
+  profile     profile? @relation(fields: [profileId], references: [id])
+}
+
+model profileRelation {
+  id          String   @id @default(cuid())
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String
+  name        String?
+  phone       String?
+  email       String?
+  location    String?
+  rating      Int      @default(0)
+  profileId   String?
+  profile     profile? @relation(fields: [profileId], references: [id])
+}
+
+model profileReview {
+  id          String   @id @default(cuid())
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String?
+  description String?
+  name        String?
+  phone       String?
+  email       String
+  location    String?
+  profileId   String?
+  rating      Int      @default(0)
+  profile     profile? @relation(fields: [profileId], references: [id])
+}
+
+model profileEvent {
+  id                  String               @id @default(cuid())
+  status              Boolean              @default(true)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  title               String
+  profileId           String?
+  avatar              String?
+  categoryId          String?
+  currencyId          String?
+  description         String?
+  endDate             DateTime?
+  featured            Boolean              @default(false)
+  images              String[]
+  location            String?
+  published           Boolean              @default(false)
+  recommended         Boolean              @default(false)
+  slug                String               @unique
+  startDate           DateTime?
+  thumbnail           String?
+  ticket              Int?
+  typeId              String?
+  verified            Boolean              @default(false)
+  views               Int                  @default(1)
+  website             String?
+  category            category?            @relation(fields: [categoryId], references: [id])
+  currency            currency?            @relation(fields: [currencyId], references: [id])
+  profile             profile?             @relation(fields: [profileId], references: [id])
+  type                type?                @relation(fields: [typeId], references: [id])
+  profileEventTickets profileEventTicket[]
+}
+
+model profileEventTicket {
+  id             String        @id @default(cuid())
+  status         Boolean       @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  title          String?
+  amount         Float?
+  currencyId     String?
+  profileEventId String?
+  currency       currency?     @relation(fields: [currencyId], references: [id])
+  profileEvent   profileEvent? @relation(fields: [profileEventId], references: [id])
+}
+
+model profileHostel {
+  id                      String                  @id @default(cuid())
+  status                  Boolean                 @default(true)
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  title                   String
+  profileId               String?
+  admissionFees           Float?
+  avatar                  String?
+  categoryId              String?
+  cautionDeposit          Float?
+  currencyId              String?
+  description             String?
+  email                   String[]
+  facilities              String[]
+  featured                Boolean                 @default(false)
+  images                  String[]
+  laundryFees             Float?
+  location                String?
+  messFees                Float?
+  phone                   String[]
+  published               Boolean                 @default(false)
+  recommended             Boolean                 @default(false)
+  slug                    String                  @unique
+  thumbnail               String?
+  typeId                  String?
+  verified                Boolean                 @default(false)
+  views                   Int                     @default(1)
+  website                 String?
+  category                category?               @relation(fields: [categoryId], references: [id])
+  currency                currency?               @relation(fields: [currencyId], references: [id])
+  profile                 profile?                @relation(fields: [profileId], references: [id])
+  type                    type?                   @relation(fields: [typeId], references: [id])
+  profileHostelContacts   profileHostelContact[]
+  profileHostelFacilities profileHostelFacility[]
+  profileHostelFees       profileHostelFee[]
+}
+
+model profileHostelFee {
+  id              String         @id @default(cuid())
+  status          Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  title           String?
+  amount          Float?
+  currencyId      String?
+  frequencyId     String?
+  profileHostelId String?
+  currency        currency?      @relation(fields: [currencyId], references: [id])
+  frequency       frequency?     @relation(fields: [frequencyId], references: [id])
+  profileHostel   profileHostel? @relation(fields: [profileHostelId], references: [id])
+}
+
+model profileHostelFacility {
+  id              String         @id @default(cuid())
+  status          Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  profileHostelId String?
+  facilityId      String?
+  facility        facility?      @relation(fields: [facilityId], references: [id])
+  profileHostel   profileHostel? @relation(fields: [profileHostelId], references: [id])
+}
+
+model profileHostelContact {
+  id              String         @id @default(cuid())
+  status          Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  contactTypeId   String?
+  profileHostelId String?
+  contactType     contactType?   @relation(fields: [contactTypeId], references: [id])
+  profileHostel   profileHostel? @relation(fields: [profileHostelId], references: [id])
+}
+
+model profileJob {
+  id                 String              @id @default(cuid())
+  status             Boolean             @default(true)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  title              String
+  profileId          String?
+  accomodation       Boolean             @default(false)
+  avatar             String?
+  benefits           String[]
+  categoryId         String?
+  currencyId         String?
+  description        String?
+  domain             String?
+  duration           Int?
+  durationTypeId     String?
+  featured           Boolean             @default(false)
+  location           String?
+  published          Boolean             @default(false)
+  recommended        Boolean             @default(false)
+  remuneration       Int?
+  slug               String              @unique
+  thumbnail          String?
+  typeId             String?
+  verified           Boolean             @default(false)
+  views              Int                 @default(1)
+  website            String
+  category           category?           @relation(fields: [categoryId], references: [id])
+  currency           currency?           @relation(fields: [currencyId], references: [id])
+  durationType       durationType?       @relation(fields: [durationTypeId], references: [id])
+  profile            profile?            @relation(fields: [profileId], references: [id])
+  type               type?               @relation(fields: [typeId], references: [id])
+  profileJobRequests profileJobRequest[]
+}
+
+model profileJobRequest {
+  id           String      @id @default(cuid())
+  status       Boolean     @default(true)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  name         String?
+  phone        String?
+  email        String
+  location     String?
+  cv           String
+  profileJobId String?
+  profileJob   profileJob? @relation(fields: [profileJobId], references: [id])
+}
+
+model profileInternship {
+  id                        String                     @id @default(cuid())
+  status                    Boolean                    @default(true)
+  createdAt                 DateTime                   @default(now())
+  updatedAt                 DateTime                   @updatedAt
+  title                     String
+  slug                      String                     @unique
+  avatar                    String?
+  thumbnail                 String?
+  description               String?
+  profileId                 String?
+  accomodation              Boolean                    @default(false)
+  benefits                  String[]
+  categoryId                String?
+  currencyId                String?
+  domain                    String?
+  duration                  Int?
+  durationTypeId            String?
+  featured                  Boolean                    @default(false)
+  location                  String?
+  published                 Boolean                    @default(false)
+  recommended               Boolean                    @default(false)
+  remuneration              Int?
+  typeId                    String?
+  verified                  Boolean                    @default(false)
+  views                     Int                        @default(1)
+  website                   String
+  category                  category?                  @relation(fields: [categoryId], references: [id])
+  currency                  currency?                  @relation(fields: [currencyId], references: [id])
+  durationType              durationType?              @relation(fields: [durationTypeId], references: [id])
+  profile                   profile?                   @relation(fields: [profileId], references: [id])
+  type                      type?                      @relation(fields: [typeId], references: [id])
+  profileInternshipRequests profileInternshipRequest[]
+}
+
+model profileInternshipRequest {
+  id                  String             @id @default(cuid())
+  status              Boolean            @default(true)
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  name                String?
+  phone               String?
+  email               String
+  location            String?
+  cv                  String
+  profileInternshipId String?
+  profileInternship   profileInternship? @relation(fields: [profileInternshipId], references: [id])
+}
+
+model profileNews {
+  id          String   @id @default(cuid())
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  profileId   String?
+  avatar      String?
+  description String?
+  featured    Boolean  @default(false)
+  published   Boolean  @default(false)
+  recommended Boolean  @default(false)
+  slug        String   @unique
+  thumbnail   String?
+  verified    Boolean  @default(false)
+  views       Int      @default(1)
+  website     String
+  profile     profile? @relation(fields: [profileId], references: [id])
+}
+
+model profileArticle {
+  id          String   @id @default(cuid())
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  profileId   String?
+  avatar      String?
+  description String?
+  featured    Boolean  @default(false)
+  published   Boolean  @default(false)
+  recommended Boolean  @default(false)
+  slug        String   @unique
+  thumbnail   String?
+  verified    Boolean  @default(false)
+  views       Int      @default(1)
+  website     String
+  profile     profile? @relation(fields: [profileId], references: [id])
+}
+
+model profileScholarship {
+  id          String   @id @default(cuid())
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  profileId   String?
+  avatar      String?
+  description String?
+  featured    Boolean  @default(false)
+  published   Boolean  @default(false)
+  recommended Boolean  @default(false)
+  slug        String   @unique
+  thumbnail   String?
+  verified    Boolean  @default(false)
+  views       Int      @default(1)
+  website     String
+  profile     profile? @relation(fields: [profileId], references: [id])
+}
+
+model profilePlacement {
+  id          String   @id @default(cuid())
+  status      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  profileId   String?
+  avatar      String?
+  description String?
+  featured    Boolean  @default(false)
+  published   Boolean  @default(false)
+  recommended Boolean  @default(false)
+  slug        String   @unique
+  thumbnail   String?
+  verified    Boolean  @default(false)
+  views       Int      @default(1)
+  website     String
+  profile     profile? @relation(fields: [profileId], references: [id])
+}
+
+model profileRoute {
+  id          String    @id @default(cuid())
+  status      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  title       String
+  slug        String    @unique
+  avatar      String?
+  thumbnail   String?
+  description String?
+  code        String?
+  time        DateTime?
+  plate       String?
+  profileId   String?
+  profile     profile?  @relation(fields: [profileId], references: [id])
+}
+
+model user {
+  id                  BigInt             @id @default(autoincrement())
+  created_at          DateTime           @default(now()) @db.Timestamptz(6)
+  name                String?
+  phone               Decimal?           @db.Decimal
+  email               String?            @db.VarChar
+  profileProgramme    profileProgramme[]
+  veriticalsCreatedAt vertical[]         @relation("createdBy")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model test {
+  test_col Int? @default(1) @db.SmallInt
+
+  @@ignore
+}

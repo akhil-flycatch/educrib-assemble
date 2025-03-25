@@ -1,0 +1,14 @@
+export { articlesFormFields } from "./articles";
+export { contactFormFields } from "./contactForm";
+export { eventsFormFields } from "./events";
+export { hostelFormFields } from "./hostel";
+export { internshipFormFields } from "./internships";
+export { jobFormFields } from "./jobs";
+export { newsFormFields } from "./news";
+export { placementFormFields } from "./placement";
+export { profileFormFields } from "./profile";
+export { programmesFormFields } from "./programmes";
+export { relationsFormFields } from "./relations";
+export { reviewsFormFields } from "./reviews";
+export { scholarshipFormFields } from "./scholarship";
+export { staffFormFields } from "./staffs";
