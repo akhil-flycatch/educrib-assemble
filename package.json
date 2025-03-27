@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "prisma generate && npm run build",
     "start": "next start",
     "lint": "next lint"
   },
@@ -33,7 +33,7 @@
     "input-otp": "^1.4.2",
     "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.424.0",
-    "next": "15.1.6",
+    "next": "^15.1.6",
     "prisma": "^6.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -41,7 +41,7 @@
     "react-hot-toast": "^2.5.1",
     "react-select": "^5.8.0",
     "recharts": "^2.15.1",
-    "sharp": "^0.33.0",
+    "sharp": "^0.33.5",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^9.0.1",
