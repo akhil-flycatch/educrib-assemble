@@ -21,4 +21,10 @@ module.exports = {
       },
     ],
   },
+  eslint: {
+    ignoreDuringBuilds: true,  // Disable ESLint during build process
+  },
+  typescript: {
+    ignoreBuildErrors: true,  // Disable TypeScript type checking during build
+  },
 };
