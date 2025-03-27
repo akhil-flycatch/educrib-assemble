@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "prisma generate && npm run build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "npm rebuild sharp"
   },
   "dependencies": {
     "@educrib/tailwind": "^0.1.0",
