@@ -1,9 +1,7 @@
 name: Sync with Client Private Repository
 
 on:
-  schedule:
-    - cron: '0 * * * *' # Runs every hour; adjust as needed
-  workflow_dispatch: # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -18,6 +16,13 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
+
+      - name: Debug PAT
+        run: |
+          echo "PAT length: ${#PAT}"
+          echo "PAT starts with: ${PAT:0:3}"  # Prints first 3 chars (e.g., "ghp")
+        env:
+          PAT: ${{ secrets.PAT }}
 
       - name: Add client private repository as remote
         run: |
