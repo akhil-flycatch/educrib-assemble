@@ -1,7 +1,9 @@
 name: Sync with Client Private Repository
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
   sync:
@@ -17,22 +19,20 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
 
-      - name: Debug PAT
+      - name: Clone Client Repo
         run: |
-          echo "PAT length: ${#PAT}"
-          echo "PAT starts with: ${PAT:0:3}"  # Prints first 3 chars (e.g., "ghp")
-        env:
-          PAT: ${{ secrets.PAT }}
-
-      - name: Add client private repository as remote
-        run: |
-          git remote add upstream https://${{ secrets.PAT }}@github.com/educrib-platform/educrib-assemble-new.git || true
-          git fetch upstream
+          git clone https://${{ secrets.MY_PERSONAL_PAT }}@github.com/educrib-platform/educrib-assemble-new.git client-repo
 
       - name: Merge changes from phase1/DEV
         run: |
-          git checkout master
-          git merge upstream/phase1/DEV --allow-unrelated-histories || true
+          cd client-repo
+          git checkout phase1/DEV
+          git pull origin phase1/DEV
+          cd ..
+          rsync -av --exclude='.git' client-repo/ .
+          git add .
+          git commit -m "Merged changes from client repo"
           git push origin master
         env:
-          PAT: ${{ secrets.PAT }}
+          PAT: ${{ secrets.MY_PERSONAL_PAT }}
+
