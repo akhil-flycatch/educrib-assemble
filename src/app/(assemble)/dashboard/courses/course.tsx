@@ -28,6 +28,7 @@ import { ProfileProgramme } from "@/types/profileProgramme";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import CourseGrid from "@/components/dashboard/courses/grid";
 import useIntersectionObserver from "@react-hook/intersection-observer";
+export const dynamic = "force-dynamic";
 
 export default function Courses() {
   const [visible, setVisible] = useState(false);
