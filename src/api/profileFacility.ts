@@ -52,20 +52,22 @@ export async function upsertProfileFacility(formData: FormData) {
   }
 }
 
-export async function createMultipleProfileFacilities(formData: FormData) {
+export async function createMultipleProfileFacilities(facilities: any) {
   try {
-    const profileSlug = formData.get("profileId") as string;
-    const facilities =
-      JSON.parse(formData.get("facilityId") as string) || undefined;
+     const supabase = await createRouteHandlerClient({ cookies });
+        const user = await supabase.auth.getUser();
+    // const profileSlug = formData.get("profileId") as string;
+    // const facilities =
+    //   JSON.parse(formData.get("facilityId") as string) || undefined;
 
     const profile = await prisma.profile.findFirst({
       where: {
         OR: [
           {
-            id: profileSlug,
+            id: user.data.user?.user_metadata.profileId ,
           },
           {
-            slug: profileSlug,
+            slug:  user.data.user?.user_metadata.profileslug,
           },
         ],
       },
@@ -213,9 +215,9 @@ export async function deleteProfileFacilityByProfileId(
   });
 }
 
-export async function deleteProfileFacility(formData: FormData) {
+export async function deleteProfileFacility(id: any) {
   try {
-    const id = formData.get("id") as string;
+    // const id = formData.get("id") as string;
     await prisma.profileFacility.delete({
       where: {
         id,

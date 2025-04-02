@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const AddButtonComon = ({ setVisible }: any) => {
+const AddButtonComon = ({ setVisible , icon,text}: any) => {
   return (
     <>
       <div onClick={() => setVisible(true)}>
@@ -16,18 +16,19 @@ const AddButtonComon = ({ setVisible }: any) => {
             paddingRight: "14px",
             paddingBottom: "8px",
             paddingLeft: "14px",
-            background: "#C2C7D0",
+            // background: "#C2C7D0",
             color: "#6129FE",
           }}
+          className="bg-light-100"
         >
           <Image // onClick={onDelete}
-            src="/add.svg"
+            src={icon}
             alt="addlogo"
             width={40}
             height={48}
             priority
           />
-          Add
+         {text}
         </div>
       </div>
     </>

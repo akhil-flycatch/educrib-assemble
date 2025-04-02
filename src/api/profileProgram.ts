@@ -31,6 +31,7 @@ export async function upsertProfileProgram(formData: FormData) {
     const levelId = formData.get("levelId") as string;
     const duration = formData.get("duration") as string;
     const durationTypeId = formData.get("durationTypeId") as string;
+    const studyModeIdId = formData.get("mode") as string;
     const profileProgrammeFees =
       JSON.parse(formData.get("profileProgrammeFees") as string) || [];
 
@@ -312,6 +313,7 @@ export async function upsertProfileProgramNew(formData: CourseFormValues) {
     const duration = formData.duration;
     const durationTypeId = formData.durationType;
     const profileProgrammeFees = formData.fee;
+    const studyModeId = formData.mode;
 
     const profile = await prisma.profile.findFirst({
       where: {
@@ -328,31 +330,54 @@ export async function upsertProfileProgramNew(formData: CourseFormValues) {
     if (!profile) return { message: "profileSlug is invalid" };
 
     await prisma.$transaction(async (tx) => {
-      const profileProgram = await prisma.profileProgramme.create({
-        data: {
-          courseId,
-          specializationId,
-          profileId: profile.id,
-          intakeId,
-          capacity,
-          levelId,
-          duration,
-          durationTypeId,
-        },
-      });
+      let profileProgram;
+      if (id) {
+        profileProgram = await prisma.profileProgramme.update({
+          where: {
+            id,
+          },
+          data: {
+            courseId,
+            specializationId,
+            intakeId,
+            capacity,
+            levelId,
+            duration,
+            durationTypeId,
+            studyModeId,
+          },
+        });
+      } else {
+        profileProgram = await prisma.profileProgramme.create({
+          data: {
+            courseId,
+            specializationId,
+            profileId: profile.id,
+            intakeId,
+            capacity,
+            levelId,
+            duration,
+            durationTypeId,
+            studyModeId,
+          },
+        });
+      }
 
       const profileProgrammeFeeObjects: Prisma.profileProgrammeFeeCreateInput[] =
         profileProgrammeFees.map((profileProgrammeFee: any) => {
           return {
-            profileProgrammeId: profileProgram.id,
+            profileProgrammeId: profileProgram.id ?? id,
             title: profileProgrammeFee.title,
             amount: parseFloat(profileProgrammeFee.amount),
             currencyId: "01fceaa1-f89e-4076-abbf-e807569cd2b7",
             frequencyId: profileProgrammeFee.frequencyId,
+            description: profileProgrammeFee.description,
           };
         });
 
-      await deleteProfileProgrammeFeeByProgrammeId(profileProgram.id, { tx });
+      await deleteProfileProgrammeFeeByProgrammeId(profileProgram.id ?? id, {
+        tx,
+      });
       await createMultipleProfileProgrammeFee(profileProgrammeFeeObjects, {
         tx,
       });

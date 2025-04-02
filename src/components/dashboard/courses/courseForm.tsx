@@ -27,6 +27,7 @@ import * as z from "zod";
 import { v4 as uuidv4 } from "uuid";
 
 export const courseFormSchema = z.object({
+  id: z.string().optional().nullable(),
   courseId: z.string(),
   levelId: z.string(),
   specializationId: z.string(),
@@ -177,155 +178,207 @@ const CourseForm: React.FC<Props> = ({ errors, register, control }) => {
   return (
     <div className="flex-1 w-[756px] flex flex-col gap-6">
       <div className="w-full grid grid-cols-1">
-        <Select
-          id="courseId"
-          label="Course Name"
-          options={courseOptions}
-          error={errors?.courseId}
-          required
-          {...register("courseId")}
+        <Controller
+          control={control}
+          name="courseId"
+          render={({ field }) => (
+            <Select
+              id="courseId"
+              label="Course Name"
+              options={courseOptions}
+              {...field}
+              error={errors?.courseId}
+            />
+          )}
         />
       </div>
 
       <div className="w-full grid grid-cols-1">
-        <Select
-          id="levelId"
-          label="Course Type"
-          options={levelOptions}
-          error={errors?.levelId}
-          required
-          {...register("levelId")}
+        <Controller
+          control={control}
+          name="levelId"
+          render={({ field }) => (
+            <Select
+              id="levelId"
+              label="Course Type"
+              options={levelOptions}
+              {...field}
+              error={errors?.levelId}
+            />
+          )}
         />
       </div>
 
       <div className="w-full grid grid-cols-1">
-        <Select
-          id="specializationId"
-          label="Category"
-          options={specializationOptions}
-          error={errors?.specializationId}
-          required
-          {...register("specializationId")}
+        <Controller
+          control={control}
+          name="specializationId"
+          render={({ field }) => (
+            <Select
+              id="specializationId"
+              label="Category"
+              options={specializationOptions}
+              {...field}
+              error={errors?.specializationId}
+            />
+          )}
         />
       </div>
 
       <div className="w-full grid grid-cols-1">
-        <Select
-          id="intakeId"
-          label="Intake"
-          options={intakeOptions}
-          error={errors?.intakeId}
-          required
-          {...register("intakeId")}
+        <Controller
+          control={control}
+          name="intakeId"
+          render={({ field }) => (
+            <Select
+              id="intakeId"
+              label="Intake"
+              options={intakeOptions}
+              {...field}
+              error={errors?.intakeId}
+            />
+          )}
         />
       </div>
 
       <div className="w-full grid grid-cols-2 gap-6">
-        <Input
-          id="duration"
-          type="number"
-          label="Duration"
-          error={errors?.duration}
-          {...register("duration", { valueAsNumber: true })}
+        <Controller
+          control={control}
+          name="duration"
+          render={({ field }) => (
+            <Input
+              id="duration"
+              type="number"
+              label="Duration"
+              {...field}
+              error={errors?.duration}
+              {...register("duration", { valueAsNumber: true })}
+            />
+          )}
         />
-        <Select
-          id="durationType"
-          label="Duration Type"
-          options={durationTypeOptions}
-          error={errors?.durationType}
-          required
-          {...register("durationType")}
+
+        <Controller
+          control={control}
+          name="durationType"
+          render={({ field }) => (
+            <Select
+              id="durationType"
+              label="Duration Type"
+              options={durationTypeOptions}
+              {...field}
+              error={errors?.durationType}
+            />
+          )}
         />
       </div>
 
       <div className="w-full grid grid-cols-2 gap-6">
-        <Input
-          id="capacity"
-          type="number"
-          label="Number of Seats"
-          error={errors?.capacity}
-          {...register("capacity", { valueAsNumber: true })}
+        <Controller
+          control={control}
+          name="capacity"
+          render={({ field }) => (
+            <Input
+              id="capacity"
+              type="number"
+              label="Number of Seats"
+              {...field}
+              error={errors?.capacity}
+              {...register("capacity", { valueAsNumber: true })}
+            />
+          )}
         />
-        <Select
-          id="mode"
-          label="Mode of Study"
-          options={studyModeOptions}
-          error={errors?.mode}
-          required
-          {...register("mode")}
+
+        <Controller
+          control={control}
+          name="mode"
+          render={({ field }) => (
+            <Select
+              id="mode"
+              label="Mode of Study"
+              options={studyModeOptions}
+              {...field}
+              error={errors?.mode}
+            />
+          )}
         />
       </div>
 
-      {/* <div className="w-full grid grid-cols-1">
-        <Input
-          id="fee"
-          type="number"
-          label="Fee (₹)"
-          error={errors?.fee}
-          {...register("fee")}
-        />
-      </div> */}
       {fields.map((field, index) => (
-        <div className="w-full grid grid-cols-2 gap-6" key={field.id}>
-          <Controller
-            control={control}
-            name={`fee[${index}].amount`}
-            render={({ field }) => (
-              <Input
-                id={`fee[${index}].amount`}
-                type="number"
-                label={`Amount ${index + 1}`}
-                {...field}
-                error={errors?.fee?.[index]?.amount}
-                {...register(`fee[${index}].amount`, { valueAsNumber: true })}
-              />
-            )}
-          />
+        <div key={field.id} className="w-full flex gap-6 items-center">
+          <div className="w-full grid grid-cols-2 gap-6 flex-1">
+            <Controller
+              control={control}
+              name={`fee[${index}].amount`}
+              render={({ field }) => (
+                <Input
+                  id={`fee[${index}].amount`}
+                  type="number"
+                  label={`Amount ${index + 1}`}
+                  {...field}
+                  error={errors?.fee?.[index]?.amount}
+                  {...register(`fee[${index}].amount`, { valueAsNumber: true })}
+                />
+              )}
+            />
 
-          <Controller
-            control={control}
-            name={`fee[${index}].title`}
-            render={({ field }) => (
-              <Input
-                id={`fee[${index}].title`}
-                label={`Fee Title ${index + 1}`}
-                {...field}
-                error={errors?.fee?.[index]?.title}
-              />
-            )}
-          />
+            <Controller
+              control={control}
+              name={`fee[${index}].title`}
+              render={({ field }) => (
+                <Input
+                  id={`fee[${index}].title`}
+                  label={`Fee Title ${index + 1}`}
+                  {...field}
+                  error={errors?.fee?.[index]?.title}
+                />
+              )}
+            />
 
-          <Controller
-            control={control}
-            name={`fee[${index}].description`}
-            render={({ field }) => (
-              <Input
-                id={`fee[${index}].description`}
-                label={`Description ${index + 1}`}
-                {...field}
-                error={errors?.fee?.[index]?.description}
-              />
-            )}
-          />
+            <Controller
+              control={control}
+              name={`fee[${index}].description`}
+              render={({ field }) => (
+                <Input
+                  id={`fee[${index}].description`}
+                  label={`Description ${index + 1}`}
+                  {...field}
+                  error={errors?.fee?.[index]?.description}
+                />
+              )}
+            />
 
-          <Controller
-            control={control}
-            name={`fee[${index}].frequencyId`}
-            render={({ field }) => (
-              <Select
-                id={`fee[${index}].frequencyId`}
-                label={`Frequency ${index + 1}`}
-                options={frequencyOptions}
-                {...field}
-                error={errors?.fee?.[index]?.frequencyId}
-              />
-            )}
-          />
+            <Controller
+              control={control}
+              name={`fee[${index}].frequencyId`}
+              render={({ field }) => (
+                <Select
+                  id={`fee[${index}].frequencyId`}
+                  label={`Frequency ${index + 1}`}
+                  options={frequencyOptions}
+                  {...field}
+                  error={errors?.fee?.[index]?.frequencyId}
+                />
+              )}
+            />
+          </div>
+          <button
+            className="h-10 w-10 rounded-full bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-600 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={fields.length === 1}
+            onClick={() => remove(index)}
+          >
+            <Image
+              src="/images/delete.svg"
+              alt="delete"
+              width={24}
+              height={24}
+            />
+            <span className="sr-only">Delete</span>
+          </button>
         </div>
       ))}
-      <div className="w-full grid grid-cols-6">
+      <div className="w-full flex jusify-start items-center">
         <button
-          className="py-2 px-3.5 rounded-lg border border-primary bg-white text-primary hover:bg-light hover:border-[#B3B9C4] font-medium flex items-center gap-2"
+          className="py-2 px-3.5 rounded-lg border border-primary bg-white text-primary hover:bg-light hover:border-[#B3B9C4] font-medium flex items-center gap-2 w-fit"
           onClick={() =>
             append({
               id: uuidv4(),

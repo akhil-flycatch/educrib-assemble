@@ -1,5 +1,3 @@
-// pages/api/profileProgramme.ts
-
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { PrismaClient } from "@prisma/client";
@@ -11,49 +9,113 @@ export async function GET(request: Request) {
   const supabase = createRouteHandlerClient<any>({
     cookies: () => cookieStore,
   });
+
   const user = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getUser();
+  const { profileId } = data?.user?.user_metadata;
 
   try {
-    // Fetch profileProgrammes with related data using Prisma
-    const profileProgrammes = await prisma.profileProgramme.findMany({
-      where: {
-        status: true,
-        profileId: "clrpz6nnn000mlf08dy5aqjdm",
-      },
-      include: {
-        course: true,
-        durationType: true,
-        intake: true,
-        level: true,
-        specialization: true,
-        programmeStudyMode: true,
-        profileProgrammeFees: {
-          where: {
-            status: true,
-          },
-          include: {
-            currency: true,
-            frequency: true,
+    const { searchParams } = new URL(request.url);
+
+    const limit = parseInt(searchParams.get("limit") || "5", 10);
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const search = searchParams.get("search") || "";
+    const cursor = searchParams.get("cursor");
+
+    if (limit < 1 || page < 1) {
+      return new Response(
+        JSON.stringify({ message: "Invalid limit or page value" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    const whereClause = {
+      status: true,
+      profileId,
+      OR: search
+        ? [
+            { course: { title: { contains: search, mode: "insensitive" } } },
+            {
+              specialization: {
+                title: { contains: search, mode: "insensitive" },
+              },
+            },
+            { level: { title: { contains: search, mode: "insensitive" } } },
+          ]
+        : undefined,
+    };
+
+    let profileProgrammes;
+    let nextCursor = null;
+    let totalCount = 0;
+
+    if (cursor) {
+      profileProgrammes = await prisma.profileProgramme.findMany({
+        where: whereClause,
+        include: {
+          course: true,
+          durationType: true,
+          intake: true,
+          level: true,
+          specialization: true,
+          programmeStudyMode: true,
+          profileProgrammeFees: {
+            where: { status: true },
+            include: { currency: true, frequency: true },
           },
         },
-      },
-    });
+        take: limit + 1,
+        cursor: { id: cursor },
+      });
+      console.log(limit, "testLog1");
+      console.log(profileProgrammes.length, "testLog2");
+      nextCursor =
+        profileProgrammes.length > limit ? profileProgrammes.pop()?.id : null;
+    } else {
+      profileProgrammes = await prisma.profileProgramme.findMany({
+        where: whereClause,
+        include: {
+          course: true,
+          durationType: true,
+          intake: true,
+          level: true,
+          specialization: true,
+          programmeStudyMode: true,
+          profileProgrammeFees: {
+            where: { status: true },
+            include: { currency: true, frequency: true },
+          },
+        },
+        skip: (page - 1) * limit,
+        take: limit + 1,
+      });
 
-    const result = profileProgrammes.map((programme) => {
-      const filteredFees = programme.profileProgrammeFees.filter(
-        (fee) => fee.profileProgrammeId === programme.id
-      );
+      nextCursor =
+        profileProgrammes.length > limit ? profileProgrammes.pop()?.id : null;
 
-      return {
-        ...programme,
-        profileProgrammeFees: filteredFees,
-      };
-    });
+      totalCount = await prisma.profileProgramme.count({
+        where: {
+          status: true,
+          profileId,
+        },
+      });
+    }
 
-    return new Response(JSON.stringify({ message: "Success", data: result }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({
+        message: "Success",
+        data: profileProgrammes,
+        nextCursor,
+        pagination: cursor
+          ? null
+          : {
+              currentPage: page,
+              totalPages: Math.ceil(totalCount / limit),
+              totalItems: totalCount,
+            },
+      }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
   } catch (error) {
     console.error("Error during GET request:", error);
     return new Response(

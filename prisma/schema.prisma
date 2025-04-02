@@ -542,6 +542,7 @@ model profileProgrammeFee {
   profileProgrammeId String?
   createdById        String?
   updatedById        String?
+  description        String?           @default("")
   currency           currency?         @relation(fields: [currencyId], references: [id])
   frequency          frequency?        @relation(fields: [frequencyId], references: [id])
   profileProgramme   profileProgramme? @relation(fields: [profileProgrammeId], references: [id])
@@ -722,12 +723,11 @@ model profileHostel {
   views                   Int                     @default(1)
   website                 String?
   capacity                String?
-  roomRent                String?
-  hostelTypeId            BigInt?
+  roomRent                Float?
   contactName             String?
+  hostelType              String?
   category                category?               @relation(fields: [categoryId], references: [id])
   currency                currency?               @relation(fields: [currencyId], references: [id])
-  hostelType              hostelType?             @relation(fields: [hostelTypeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   profile                 profile?                @relation(fields: [profileId], references: [id])
   type                    type?                   @relation(fields: [typeId], references: [id])
   profileHostelContacts   profileHostelContact[]
@@ -988,11 +988,10 @@ model test {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model hostelType {
-  id            BigInt          @id @default(autoincrement())
-  created_at    DateTime        @default(now()) @db.Timestamptz(6)
-  title         String?
-  status        Boolean?
-  profileHostel profileHostel[]
+  id         BigInt   @id @default(autoincrement())
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  title      String?
+  status     Boolean?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

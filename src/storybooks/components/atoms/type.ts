@@ -51,4 +51,6 @@ export type AutoCompleteProps = {
   navComponent?: boolean;
   navTitle?: string;
   creatable?: boolean;
+  onSelect?:any;
+  selectedOptions?:any
 };

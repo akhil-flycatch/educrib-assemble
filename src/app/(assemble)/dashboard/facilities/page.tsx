@@ -7,32 +7,134 @@ import { useEffect, useState } from "react";
 import AddButtonComon from "@/elements/addButton";
 import CommonSearchInTabs from "@/elements/CommonSearchInTabs";
 import CtaCommon from "@/elements/ctaCommon";
-import { Coffee } from "lucide-react";
+import { Coffee, Loader, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import FacilitiesList from "./list";
-import { getProfileFacilitiesByProfileId, searchProfileFacilities } from "@/api";
-import Image from "next/image"
+import {
+  createMultipleProfileFacilities,
+  deleteProfileFacility,
+  getAllFacilities,
+  getProfileFacilitiesByProfileId,
+  searchProfileFacilities,
+} from "@/api";
+import FacilitySearch from "@entry/forms/facilities";
+import Image from "next/image";
 
 export default function Facilities({ facilities }: any) {
   const [visible, setVisible] = useState(false);
   const [profileFacility, setProfileFacility] = useState<any>();
+  const [defaultFacilityData, setDefaultFacilityData] = useState<any>();
+  const [allProfiles, setAllProfiles] = useState<any>();
   const { register, handleSubmit, getValues } = useForm();
+  const [loading, setLoading] = useState(false)
+  const [facilitieslist, setFacilities] = useState<any[]>([]);
 
   useEffect(() => {
-    const fetchData = async() => {
+    const fetchData = async () => {
+      setLoading(true)
       const facilitiesById = await getProfileFacilitiesByProfileId();
-      console.log("the facilitie by id", facilitiesById)
-    }
-    fetchData()
-  },[])
-  // useEffect
-  const searchProfileFacility = async( event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log("the",e);
-    const response = await searchProfileFacilities(event.target.value)
-    console.log("the repsonse", response)
-  }
+      let arr: any = [];
+      facilitiesById?.map((option: any) => {
+        arr.push({
+          label: option.facility.title,
+          value: option.facility.slug,
+          image: option.facility.icon,
+        });
+      });
+      setDefaultFacilityData(arr);
+      const allFacility = await getAllFacilities();
+      setAllProfiles(allFacility);
+      setProfileFacility(facilitiesById);
+      setLoading(false)
+    };
+
+     fetchData();
+    
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+    
+      const facilitiesById = await getProfileFacilitiesByProfileId();
+      let arr: any = [];
+      facilitiesById?.map((option: any) => {
+        arr.push({
+          label: option.facility.title,
+          value: option.facility.slug,
+          image: option.facility.icon,
+        });
+      });
+      setDefaultFacilityData(arr);
+    };
+
+     fetchData();
+  },[facilitieslist])
+
+  const searchProfileFacility = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const response = await searchProfileFacilities(event.target.value);
+
+    setProfileFacility(response);
+  };
+
+  const saveEditFacilities = async () => {
+    let facilitiesIds: any[] = [];
+    console.log("the deket", facilitieslist)
+    // Iterate over the facilities list
+    facilitieslist?.forEach((data: any) => {
+      // Find all matching profiles (not just the first match)
+      const matchingProfiles = allProfiles?.filter(
+        (allData: any) => allData.title === data.label
+      );
+      console.log("the uds", allProfiles)
+      if (matchingProfiles && matchingProfiles.length > 0) {
+        // Push all the matching profile IDs into the facilitiesIds array
+        matchingProfiles.forEach((profile: any) => {
+          facilitiesIds.push(profile.id);
+        });
+      } // Log data for debugging
+    }); // Log final ids array
+
+    // Uncomment the following line if you want to call the API or perform the save action
+    
+    const response = await createMultipleProfileFacilities(facilitiesIds);
+    setFacilities([]);
+    const facilitiesById = await getProfileFacilitiesByProfileId();
+    setProfileFacility(facilitiesById);
+    setVisible(false);
+  };
+
+  const onDeleteById = async (title: any) => {
+   
+    const deletedfacility = profileFacility.find(
+      (facility: any) => facility.facility.slug === title
+    );
+    await setProfileFacility((l:any) => l.filter((item:any) => item.facility.slug === title));
+  
+    const response =  deletedfacility && await deleteProfileFacility(deletedfacility.id);
+  
+    const facilitiesById = await getProfileFacilitiesByProfileId();
+    setProfileFacility(facilitiesById);
+    let arr: any = [];
+    await facilitiesById?.map((option: any) => {
+      arr.push({
+        label: option.facility.title,
+        value: option.facility.slug,
+        image: option.facility.icon,
+      });
+    });
+    await setDefaultFacilityData(arr);
+    const allFacility = await getAllFacilities();
+    setAllProfiles(allFacility);
+  };
+
+  // Callback function to receive the updated facilities
+  const handleFacilitiesChange = (updatedFacilities: any[]) => {
+    console.log("the update faiclites", updatedFacilities)
+    setFacilities(updatedFacilities); // Store the updated facilities
+  };
   return (
-    <div className="flex flex-col space-y-4 bg-white">  
+    <div className="flex flex-col space-y-4 bg-white">
       <CtaCommon
         text={
           <>
@@ -60,43 +162,88 @@ export default function Facilities({ facilities }: any) {
                 paddingLeft: "10px",
               }}
             >
-              {facilities?.length > 0 ? facilities?.length : 0}
+              {profileFacility?.length > 0 ? profileFacility?.length : 0}
             </div>
           </>
         }
-        action={<AddButtonComon setVisible={setVisible} />}
+        action={
+          profileFacility?.length === 0 ? (
+            <AddButtonComon
+              setVisible={setVisible}
+              text={"Add"}
+              icon={"/add.svg"}
+            />
+          ) : (
+            <AddButtonComon
+              setVisible={setVisible}
+              text={"Edit"}
+              icon={"/images/edit.svg"}
+            />
+          )
+        }
         icon={Coffee}
       />
-      <CommonSearchInTabs handleFileChange={searchProfileFacility} />
-      <div className="flex flex-wrap gap-[16px] pt-[16px] pr-[24px] pb-[16px] pl-[24px]">
-        <div className="flex flex-col justify-between h-[166px] w-[151px] border rounded-[8px] pl-[15px] pt-[15px] pb-[15px] pr-[30px]">
-          <Image
-            src="/images/Frames.png"
-            alt="hostel"
-            width={33}
-            height={33}
-            // props={}
-          />
-          <p className="font-medium text-base">Basket Ball Court</p>
-        </div>
-        <div className="flex flex-col justify-between h-[166px] w-[151px] border rounded-[8px] pl-[15px] pt-[15px] pb-[15px] pr-[30px]">
-          <Image
-            src="/images/Frames.png"
-            alt="hostel"
-            width={33}
-            height={33}
-          />
-          <p className="font-medium text-base">Cafeteria</p>
-        </div>
-      </div>
-      <FacilitiesList facilities={facilities} />
+      <CommonSearchInTabs
+        handleFileChange={searchProfileFacility}
+        isFilter={false}
+      />
+
+      {profileFacility?.length > 0 ? (
+        <FacilitiesList facilities={profileFacility} />
+      ) : profileFacility?.length === 0 ? (
+        <>
+          <div style={{ height: "150px" }}>
+            <div className="flex flex-col items-center justify-center flex-1">
+              <Image
+                src="/images/book.svg"
+                alt="hostel"
+                width={44}
+                height={44}
+              />
+              <span className="text-[15px] leading-6 text-center text-label">
+                No courses added yet. Please add
+              </span>
+              <span className="text-[15px] leading-6 text-center text-label">
+                make them available for users.
+              </span>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "200px",
+            }}
+          >
+            {" "}
+            <Loader />
+          </div>
+        </>
+      )}
       <Modal
         visible={visible}
         onClose={() => setVisible(false)}
-        onSave={() => console.log("te eve", getValues())}
+        onSave={() => saveEditFacilities()}
         title="Edit Facilities"
       >
-        <FacilitiesForm register={register} />
+  
+  {loading ? <Loader2/> : (
+    <FacilitySearch
+          onDeleteById={onDeleteById}
+          defaultValue={defaultFacilityData?.length > 0  ? defaultFacilityData : undefined}
+          handleFacilitiesChange={handleFacilitiesChange}
+          register={register}
+          searchEntity={(e: any) => console.log("thee ee", e)}
+          placeholder={"Facility"}
+          verticalId={""}
+          baseRoute={""}
+        />
+  )}
+        
       </Modal>
     </div>
   );

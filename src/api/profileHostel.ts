@@ -19,18 +19,35 @@ import {
 } from ".";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
-export async function upsertProfileHostel(formData: FormData) {
+export async function upsertProfileHostel(formData: FormData, avatar:any) {
   try {
+    // const avatar = (formData.get("avatar") as string) || null;
+    const capacity = (formData.get("capacity") as string) || undefined;
+    const cautionDeposit = (formData.get("cautionDeposit") as string) || null;
+    const admissionFees = (formData.get("admissionFees") as string) || null;
+    const roomRent = (formData.get("roomRent") as string) || null;
+    const messFees = (formData.get("messFees") as string) || null;
+    const laundryFees = (formData.get("messFees") as string) || null;
+    const contactName = (formData.get("contactName") as string) || null;
+    const phone = (formData.get("phone") as string) || undefined;
+    const facilityId = JSON.parse((formData.get("facilityId") as any) )|| undefined;
+    const hostelTypeId = formData.get("hostelTypeId") ? (formData.get("hostelTypeId") as string) : undefined;
+
+    const supabase = await createRouteHandlerClient({ cookies });
+    const user = await supabase.auth.getUser();
+
+    // user.data.user?.user_metadata.profileId 
+
     const id = formData.get("id") as string;
     const status = formData.get("status") === "on";
     const profileSlug = (formData.get("profileId") as string) || undefined;
     const title = (formData.get("title") as string) || "NA";
     const description = (formData.get("description") as string) || undefined;
-    const avatar = (formData.get("avatar") as string) || null;
+ 
     const thumbnail = (formData.get("thumbnail") as string) || null;
     const location = (formData.get("location") as string) || "NA";
     const typeId = (formData.get("typeId") as string) || "NA";
-    const categoryId = (formData.get("categoryId") as string) || "NA";
+    // const hostelTypeId = (formData.get("hostelTypeId") as string) || "NA";
     // const currencyId = formData.get("currencyId") as string || "NA";
     const facilities =
       JSON.parse(formData.get("facilities") as string) || undefined;
@@ -52,107 +69,102 @@ export async function upsertProfileHostel(formData: FormData) {
       where: {
         OR: [
           {
-            slug: profileSlug,
+            slug: user.data.user?.user_metadata.profileSlug,
           },
           {
-            id: profileSlug,
+            id:  user.data.user?.user_metadata.profileId ,
           },
         ],
       },
     });
     if (!profile) return { message: "profileSlug is invalid" };
-    await prisma.$transaction(async (tx) => {
-      const profileHostel = await tx.profileHostel.upsert({
-        where: {
-          id,
-        },
-        create: {
-          title,
-          slug: slugify(title),
-          profileId: profile.id,
-          description,
-          avatar,
-          thumbnail,
-          location,
-          typeId,
-          categoryId,
-          // currencyId,
-          website,
-          facilities,
-          images,
-          featured,
-          recommended,
-          verified,
-          published,
-          views,
-          status,
-        },
-        update: {
-          title,
-          slug: slugify(title),
-          profileId: profile.id,
-          description,
-          avatar,
-          thumbnail,
-          location,
-          typeId,
-          categoryId,
-          // currencyId,
-          website,
-          facilities,
-          images,
-          featured,
-          recommended,
-          verified,
-          published,
-          views,
-          status,
-        },
-      });
-
-      const profileHostelFeeObjects: Prisma.profileHostelFeeCreateInput[] =
-        profileHostelFees.map((profileHostelFee: any) => {
-          return {
-            profileHostelId: profileHostel.id,
-            title: (profileHostelFee.title as string) || undefined,
-            frequencyId: (profileHostelFee.frequencyId as string) || undefined,
-            currencyId: (profileHostelFee.currencyId as string) || undefined,
-            amount: parseFloat(profileHostelFee.amount) as number,
-          };
-        });
-
-      const profileHostelFacilityObjects: Prisma.profileHostelFacilityCreateInput[] =
-        profileHostelFacilities.map((profileHostelFacility: any) => {
-          return {
-            profileHostelId: profileHostel.id,
-            facilityId:
-              (profileHostelFacility.facilityId as string) || undefined,
-          };
-        });
-
-      const profileHostelContactObjects: Prisma.profileHostelContactCreateInput[] =
-        profileHostelContacts.map((profileHostelContact: any) => {
-          return {
-            profileHostelId: profileHostel.id,
-            contactTypeId:
-              (profileHostelContact.contactTypeId as string) || undefined,
-          };
-        });
-
-      await deleteProfileHostelFeeByHostelId(profileHostel.id, { tx });
-      await createMultipleProfileHostelFee(profileHostelFeeObjects, { tx });
-
-      await deleteProfileHostelFacilityByHostelId(profileHostel.id, { tx });
-      await createMultipleProfileHostelFacility(profileHostelFacilityObjects, {
-        tx,
-      });
-
-      await deleteProfileHostelContactByHostelId(profileHostel.id, { tx });
-      await createMultipleProfileHostelContact(profileHostelContactObjects, {
-        tx,
-      });
+    console.log("the vlae", hostelTypeId, avatar)
+    const profileHostel = await prisma.profileHostel.upsert({
+      where: {
+        id:id ? id : "",
+      },
+      create: {
+        // title,
+        // slug: slugify(title),
+        avatar,
+        capacity,
+        profileId:  user.data.user?.user_metadata.profileId,
+        cautionDeposit:parseFloat(cautionDeposit ? cautionDeposit : ""),
+        admissionFees:parseFloat(admissionFees? admissionFees :""),
+        messFees:parseFloat(messFees ? messFees : ""),
+        roomRent: parseFloat(roomRent? roomRent: ""),
+        laundryFees:parseFloat(laundryFees ? laundryFees : ""),
+        contactName:contactName,
+        phone,
+        facilities:facilityId,
+        hostelType:hostelTypeId,
+        status:true,
+      },
+      update: {
+      // title,
+        // slug: slugify(title),
+        avatar,
+        capacity,
+        profileId:  user.data.user?.user_metadata.profileId,
+        cautionDeposit:parseFloat(cautionDeposit ? cautionDeposit : ""),
+        roomRent: parseFloat(roomRent? roomRent: ""),
+        admissionFees:parseFloat(admissionFees? admissionFees :""),
+        messFees:parseFloat(messFees ? messFees : ""),
+        laundryFees:parseFloat(laundryFees ? laundryFees : ""),
+        contactName:contactName,
+        phone,
+        facilities:facilityId,
+        hostelType:hostelTypeId,
+        status:true,
+      },
     });
+    // await prisma.$transaction(async (tx) => {
+    
+
+      // const profileHostelFeeObjects: Prisma.profileHostelFeeCreateInput[] =
+      //   profileHostelFees.map((profileHostelFee: any) => {
+      //     return {
+      //       profileHostelId: profileHostel.id,
+      //       title: (profileHostelFee.title as string) || undefined,
+      //       frequencyId: (profileHostelFee.frequencyId as string) || undefined,
+      //       currencyId: (profileHostelFee.currencyId as string) || undefined,
+      //       amount: parseFloat(profileHostelFee.amount) as number,
+      //     };
+      //   });
+
+      // const profileHostelFacilityObjects: Prisma.profileHostelFacilityCreateInput[] =
+      //   profileHostelFacilities.map((profileHostelFacility: any) => {
+      //     return {
+      //       profileHostelId: profileHostel.id,
+      //       facilityId:
+      //         (profileHostelFacility.facilityId as string) || undefined,
+      //     };
+      //   });
+
+      // const profileHostelContactObjects: Prisma.profileHostelContactCreateInput[] =
+      //   profileHostelContacts.map((profileHostelContact: any) => {
+      //     return {
+      //       profileHostelId: profileHostel.id,
+      //       contactTypeId:
+      //         (profileHostelContact.contactTypeId as string) || undefined,
+      //     };
+      //   });
+
+      // await deleteProfileHostelFeeByHostelId(profileHostel.id, { tx });
+      // await createMultipleProfileHostelFee(profileHostelFeeObjects, { tx });
+
+      // await deleteProfileHostelFacilityByHostelId(profileHostel.id, { tx });
+      // await createMultipleProfileHostelFacility(profileHostelFacilityObjects, {
+      //   tx,
+      // });
+
+      // await deleteProfileHostelContactByHostelId(profileHostel.id, { tx });
+      // await createMultipleProfileHostelContact(profileHostelContactObjects, {
+      //   tx,
+      // });
+    // });
     revalidatePath("/profileHostel");
+    return {message:"Upserted the Profile Hostel Successfully"}
   } catch (e: any) {
     const { errMessage } = errorMessageGenerator(e);
     return { message: errMessage || "Failed to upsert profileHostel" };
@@ -170,6 +182,7 @@ export async function getAllProfileHostels(
       profile: true,
       category: true,
       type: true,
+      hostelType: true,
       // currency: true,
       profileHostelFees: {
         include: {
@@ -231,14 +244,24 @@ export async function getProfileHostelsByProfileSlug(
   });
   return profileHostels;
 }
-
+export async function getAllHostelTypes(filter:{active: true}){
+ 
+   const hostelsList = await prisma.hostelType.findMany({
+      where:{
+        status: filter.active ? true : undefined,
+      },
+    });
+  return hostelsList
+}
 export async function getProfileHostelsByProfileId(
-  profileId: string,
+ 
   filter: { active: boolean } = { active: false }
 ) {
+  const supabase = await createRouteHandlerClient({ cookies });
+        const user = await supabase.auth.getUser();
   const profileHostels = await prisma.profileHostel.findMany({
     where: {
-      profileId,
+      profileId:user.data.user?.user_metadata.profileId ,
       status: filter.active ? true : undefined,
     },
     include: {
@@ -414,18 +437,21 @@ export async function deleteProfileHostelByProfileId(
   await deleteProfileHostelFeeByHostelId(profileId, { tx });
 }
 
-export async function deleteProfileHostel(formData: FormData) {
+export async function deleteProfileHostel(id: any) {
   try {
-    const id = formData.get("id") as string;
-    await prisma.$transaction(async (tx) => {
+    // const id = formData.get("id") as string;
+   const repsonse =  await prisma.$transaction(async (tx) => {
       await tx.profileHostel.delete({
         where: {
           id,
         },
       });
-      await deleteProfileHostelFeeByHostelId(id, { tx });
+      // await deleteProfileHostelFeeByHostelId(id, { tx });
+      
     });
+    
     revalidatePath("/profileHostel");
+    return {message:"Deleted Successfully"};
   } catch (e: any) {
     const { errMessage } = errorMessageGenerator(e);
     return { message: errMessage || "Failed to delete profileHostel" };

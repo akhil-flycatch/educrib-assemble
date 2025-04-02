@@ -11,17 +11,19 @@ export interface ProfileProgramme {
   intakeId: string;
   capacity: number;
   levelId: string;
+  studyModeId: string;
   duration: number;
   durationTypeId: string;
   createdById?: null;
   updatedById?: null;
   upatedBy?: null;
+  programmeStudyMode?: ProgrammeStudyMode;
   course: CourseOrSpecialization;
   durationType: FrequencyOrDurationTypeOrIntakeOrLevel;
   intake: FrequencyOrDurationTypeOrIntakeOrLevel;
   level: FrequencyOrDurationTypeOrIntakeOrLevel;
   specialization: CourseOrSpecialization;
-  profileProgrammeFees?: ProfileProgrammeFeesEntity[] | null;
+  profileProgrammeFees: ProfileProgrammeFeesEntity[];
 }
 export interface CourseOrSpecialization {
   id: string;
@@ -59,6 +61,7 @@ export interface ProfileProgrammeFeesEntity {
   currencyId: string;
   frequencyId: string;
   profileProgrammeId: string;
+  description?: string;
   createdById?: null;
   updatedById?: null;
   currency: Currency;
@@ -75,4 +78,12 @@ export interface Currency {
   icon?: null;
   createdById?: null;
   updatedById?: null;
+}
+
+export interface ProgrammeStudyMode {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  title: string;
+  slug: string;
 }

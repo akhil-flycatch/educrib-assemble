@@ -1,5 +1,6 @@
 import Image from "next/image";
 const CapsuleWithIcons = ({ name, onEdit, onDelete, id }: any) => {
+  console.log("the alue")
   return (
     <div
       className="relative group flex items-center   py-2 px-4 rounded-facilities cursor-pointer"
@@ -23,22 +24,22 @@ const CapsuleWithIcons = ({ name, onEdit, onDelete, id }: any) => {
         // style={{ backgroundColor: "#EBEDF0 " }}
       >
         <div style={{ display: "flex" }}>
-          <Image
-            // onClick={onDelete}
+         { onDelete && <Image
+            onClick={() => onDelete(name)}
             src="/facility-delete.svg"
             alt="Next.js logo"
             width={40}
             height={48}
             priority
-          />
-          <Image
+          />}
+         {onEdit && <Image
             // onClick={onEdit}
             src="/faciliy-edit.svg"
             alt="Next.js logo"
             width={40}
             height={48}
             priority
-          />
+          />}
         </div>
       </div>
     </div>

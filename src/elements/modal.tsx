@@ -27,7 +27,7 @@ const Modal: FC<ModalProps> = ({
   onSave,
 }) => {
   return (
-    <Dialog open={visible} onClose={onClose} className="relative z-50">
+    <Dialog open={visible} onClose={onClose} className="relative z-50" style={{overflow:"scroll"}}>
       <div className="fixed inset-0 bg-dark/50" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <DialogPanel className="bg-white rounded-md">
@@ -57,7 +57,7 @@ const Modal: FC<ModalProps> = ({
             </div>
           </DialogTitle>
           <Description
-            className="min-w-[500px] p-12 max-h-[70vh] overflow-y-scroll"
+            className="min-w-[40vw] p-12 max-h-[70vh] overflow-y-scroll"
             as="div"
           >
             {children}

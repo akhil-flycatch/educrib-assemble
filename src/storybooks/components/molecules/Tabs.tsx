@@ -9,10 +9,13 @@ type TabProps = {
     content: ReactNode;
   }[];
   defaultTab: string;
+ 
 };
 
 export default function Tabs({ tabList, defaultTab }: TabProps) {
   const [activeTab, setActiveTab] = useState(defaultTab || tabList[0]?.name || "");
+
+ 
   return (
     // <RadixTabs.Root defaultValue={defaultTab}>
     //   <RadixTabs.List>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import {
   Popover,
@@ -18,24 +18,38 @@ import {
 import { coursesData } from "./courseMock";
 import Image from "next/image";
 import { ProfileProgramme } from "@/types/profileProgramme";
+import CourseFee from "./courseFee";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function CourseTable({
   deleteCourse,
   data,
+  editCourse,
+  paginationDetails,
+  currentPage,
+  setCurrentPage,
+  itemsPerPage,
+  setItemsPerPage,
 }: {
   deleteCourse: (id: string) => void;
   data: ProfileProgramme[];
+  editCourse: (course: ProfileProgramme) => void;
+  paginationDetails: {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+  };
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  itemsPerPage: number;
+  setItemsPerPage: (itemsPerPage: number) => void;
 }) {
   // State for sorting
-  const [sortField, setSortField] = useState<keyof Course>("courseName");
+  const [sortField, setSortField] = useState<keyof ProfileProgramme>("course");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
-  // State for pagination
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-
   // Function to handle sorting
-  const handleSort = (field: keyof Course) => {
+  const handleSort = (field: keyof ProfileProgramme) => {
     if (field === sortField) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {
@@ -46,8 +60,8 @@ export default function CourseTable({
 
   // Function to sort data
   const sortedData = [...data].sort((a, b) => {
-    const aValue = a[sortField];
-    const bValue = b[sortField];
+    const aValue = a[sortField].title;
+    const bValue = b[sortField].title;
 
     if (aValue === null) return sortDirection === "asc" ? 1 : -1;
     if (bValue === null) return sortDirection === "asc" ? -1 : 1;
@@ -66,14 +80,15 @@ export default function CourseTable({
   });
 
   // Calculate pagination
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = sortedData.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  // const indexOfLastItem = currentPage * itemsPerPage;
+  // const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  // const currentItems = sortedData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = sortedData;
+  const totalPages = paginationDetails.totalPages;
 
   // Generate page numbers
   const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
+  for (let i = 1; i <= paginationDetails.totalPages; i++) {
     pageNumbers.push(i);
   }
 
@@ -88,12 +103,6 @@ export default function CourseTable({
     );
   };
 
-  // Function to format currency
-  const formatCurrency = (amount: number | null) => {
-    if (amount === null) return "";
-    return `₹${amount.toLocaleString()}`;
-  };
-
   // Update the getCategoryColor function to handle more categories
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -103,15 +112,15 @@ export default function CourseTable({
         return "bg-blue-100 text-blue-800 hover:bg-blue-100";
       case "Management":
         return "bg-green-100 text-green-800 hover:bg-green-100";
-      case "Commerce":
+      case "Information Technology":
         return "bg-purple-100 text-purple-800 hover:bg-purple-100";
-      case "Architecture":
+      case "Medical & Health Sciences":
         return "bg-orange-100 text-orange-800 hover:bg-orange-100";
-      case "Humanities":
+      case "Arts & Humanities":
         return "bg-pink-100 text-pink-800 hover:bg-pink-100";
-      case "Education":
+      case "Commerce & Finance":
         return "bg-teal-100 text-teal-800 hover:bg-teal-100";
-      case "Design":
+      case "Social Sciences":
         return "bg-indigo-100 text-indigo-800 hover:bg-indigo-100";
       default:
         return "bg-gray-100 text-gray-800 hover:bg-gray-100";
@@ -127,28 +136,28 @@ export default function CourseTable({
               <TableHead className="w-[250px]">
                 <button
                   className="flex items-center w-full font-bold text-xs sm:text-sm text-labels"
-                  onClick={() => handleSort("courseName")}
+                  onClick={() => handleSort("course")}
                 >
                   <span className="uppercase">COURSE NAME</span>
-                  {renderSortIndicator("courseName")}
+                  {renderSortIndicator("course")}
                 </button>
               </TableHead>
               <TableHead className="w-[200px]">
                 <button
                   className="flex items-center w-full font-bold text-xs sm:text-sm text-label"
-                  onClick={() => handleSort("programmeType")}
+                  onClick={() => handleSort("level")}
                 >
                   <span className="truncate">PROGRAMME TYPE</span>
-                  {renderSortIndicator("programmeType")}
+                  {renderSortIndicator("level")}
                 </button>
               </TableHead>
               <TableHead className="w-[120px]">
                 <button
                   className="flex items-center w-full font-bold text-xs sm:text-sm text-label"
-                  onClick={() => handleSort("category")}
+                  onClick={() => handleSort("specialization")}
                 >
                   <span className="truncate">CATEGORY</span>
-                  {renderSortIndicator("category")}
+                  {renderSortIndicator("specialization")}
                 </button>
               </TableHead>
               <TableHead className="w-[100px]">
@@ -176,78 +185,52 @@ export default function CourseTable({
           </TableHeader>
           <TableBody>
             {currentItems.map((course) => (
-              <TableRow key={course.id} className="hover:bg-light">
+              <TableRow key={course?.id} className="hover:bg-light">
                 <TableCell className="font-normal py-4 text-base text-[#42526D]">
                   <div className="truncate max-w-[250px]">
-                    {course.course.title}
+                    {course?.course?.title}
                   </div>
                 </TableCell>
                 <TableCell className="font-normal py-4 text-base text-[#42526D]">
                   <div className="truncate max-w-[200px]">
-                    {course.level.title}
+                    {course?.level?.title}
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className="truncate max-w-[120px]">
                     <div
                       className={`rounded-[4px] py-0.5 px-2.5 text-sm font-medium w-fit max-w-full ${getCategoryColor(
-                        course.specialization.title
+                        course?.specialization?.title
                       )}`}
                     >
-                      {course.specialization.title}
+                      {course?.specialization?.title}
                     </div>
                   </div>
                 </TableCell>
                 <TableCell className="font-normal py-4 text-base text-[#42526D]">
                   <div className="truncate max-w-[100px]">
-                    {`${course.duration} ${course.durationType.title}`}
+                    {`${course?.duration} ${course?.durationType?.title}`}
                   </div>
                 </TableCell>
                 <TableCell className="font-normal py-4 text-base text-[#42526D]">
                   <div className="truncate max-w-[100px]">
-                    {course.capacity} Seats
+                    {course?.capacity} Seats
                   </div>
                 </TableCell>
                 <TableCell className="font-normal py-4 text-base text-[#42526D]">
                   <div className="truncate max-w-[120px]">
-                    {course.programmeStudyMode.title}
+                    {course?.programmeStudyMode?.title}
                   </div>
                 </TableCell>
                 <TableCell>
-                  {course.annualFee ? (
+                  {course?.profileProgrammeFees?.length === 1 &&
+                  course?.profileProgrammeFees[0]?.frequency?.slug ===
+                    "yearly" ? (
                     <div className="truncate max-w-[120px] font-medium text-[#42526D] text-base py-4">
-                      {formatCurrency(course.annualFee)}
+                      {`₹${course?.profileProgrammeFees[0]?.amount}`}
                     </div>
                   ) : (
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <div className="text-hover text-sm p-0 h-auto font-medium flex gap-2 items-center cursor-pointer">
-                          <span className="truncate">View All</span>{" "}
-                          <ChevronDown className="h-4 w-4 ml-1 flex-shrink-0" />
-                        </div>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[350px] p-0" align="end">
-                        <div className="p-4 space-y-4">
-                          {course.fees?.map((fee, index) => (
-                            <div key={index} className="space-y-1">
-                              <div className="flex justify-between items-start gap-2">
-                                <div className="flex flex-col gap-3">
-                                  <span className="font-bold text-[#354764]">
-                                    {fee.name}
-                                  </span>
-                                  <p className="text-sm text-secondary">
-                                    {fee.description}
-                                  </p>
-                                </div>
-                                <span className="text-[#6B2EEA] font-bold whitespace-nowrap">
-                                  {formatCurrency(fee.amount)}
-                                </span>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </PopoverContent>
-                    </Popover>
+                    <CourseFee data={course?.profileProgrammeFees} />
                   )}
                 </TableCell>
                 <TableCell>
@@ -263,7 +246,10 @@ export default function CourseTable({
                     </PopoverTrigger>
                     <PopoverContent className="w-[160px] p-0" align="end">
                       <div className="px-4 py-3">
-                        <div className="w-full rounded-lg flex items-center h-9 gap-3 text-[#354764] p-3 cursor-pointer hover:bg-light">
+                        <div
+                          className="w-full rounded-lg flex items-center h-9 gap-3 text-[#354764] p-3 cursor-pointer hover:bg-light"
+                          onClick={() => editCourse(course)}
+                        >
                           <Image
                             src="/images/edit-gray.svg"
                             alt="edit"
@@ -274,7 +260,7 @@ export default function CourseTable({
                         </div>
                         <div
                           className="w-full rounded-lg flex items-center gap-3 h-9 text-[#E9755D] p-3 cursor-pointer hover:bg-light"
-                          onClick={() => deleteCourse(course.id)}
+                          onClick={() => deleteCourse(course?.id)}
                         >
                           <Image
                             src="/images/delete.svg"
@@ -306,7 +292,7 @@ export default function CourseTable({
             </PopoverTrigger>
             <PopoverContent className="w-[140px] p-0" align="center">
               <div className="p-2 flex flex-col gap-1">
-                {[5, 10, 20, 50].map((item) => (
+                {[5, 10, 15].map((item) => (
                   <div
                     key={item}
                     className={`w-full rounded flex items-center h-8 gap-3 text-[#354764] p-3 cursor-pointer ${

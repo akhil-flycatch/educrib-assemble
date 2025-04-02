@@ -14,7 +14,7 @@ const useFileUpload = () => {
 
   const uploadFilesToStorage = useCallback(
     async (
-      files: FileList | File[],
+      files: FileList | File[] | any,
       bucket: string,
       supabase: any,
       onError?: (_: Record<number, string>) => void,

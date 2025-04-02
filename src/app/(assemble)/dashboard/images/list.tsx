@@ -5,7 +5,7 @@ import cuid from 'cuid';
 
 interface GalleryProps {
 	gallery: string[],
-	title: string;
+	title: string; 
 }
 
 export default function GalleryList({

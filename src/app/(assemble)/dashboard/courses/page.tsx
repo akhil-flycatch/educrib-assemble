@@ -3,15 +3,11 @@ import {
   deleteProfileProgram,
   upsertProfileProgramNew,
 } from "@/api/profileProgram";
-// import { cookies } from "next/headers";
-import ProgrammeForm from "./courseForm";
-import CoursesList from "./list";
 import DashboardIntroSectionWrapper from "@/components/dashboard/Introduction/sectionWrapper";
 import Image from "next/image";
-import CourseCard from "@/components/dashboard/courses/card";
 import EmptyCoursePage from "@/components/dashboard/courses/empty";
 import CourseTable from "@/components/dashboard/courses/table";
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import CourseForm, {
   courseFormSchema,
@@ -23,45 +19,127 @@ import { v4 as uuidv4 } from "uuid";
 import { upsertAction } from "@/api";
 import ConfirmationModal from "@/elements/modalConfirm";
 import { ProfileProgramme } from "@/types/profileProgramme";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import CourseGrid from "@/components/dashboard/courses/grid";
+import useIntersectionObserver from "@react-hook/intersection-observer";
 
 export default function Courses() {
-  // "use server";
-  // const cookieStore = cookies();
-  // const supabase = createServerComponentClient({ cookies: () => cookieStore });
-  // const user = await supabase.auth.getUser();
-  // const program = await getProfilePrograms(
-  //   { active: true },
-  //   user.data.user?.user_metadata.profileId
-  // );
-  // console.log("the projes", program);
-
   const [visible, setVisible] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [toEdit, setToEdit] = useState<ProfileProgramme | null>(null);
   const [profileProgrammes, setProfileProgrammes] = useState<
     ProfileProgramme[]
   >([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [nextCursorId, setNextCursorId] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+  const [paginationDetails, setPaginationDetails] = useState<{
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+  }>({
+    currentPage: 1,
+    totalPages: 1,
+    totalItems: 0,
+  });
   const [isLoading, setIsLoading] = useState(true);
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const view = searchParams.get("view") === "grid" ? "grid" : "table";
+  const loadMoreRef = useRef<HTMLElement>(null);
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const fetchProfileProgrammes = async () => {
+    setIsLoading(true);
+    let queryParams = new URLSearchParams({
+      search: debouncedSearchTerm.length > 2 ? debouncedSearchTerm : "",
+    });
+    try {
+      if (view === "grid") {
+        if (nextCursorId) {
+          queryParams.append("cursor", nextCursorId || "");
+          queryParams.append("limit", "6");
+        } else {
+          queryParams.append("page", currentPage.toString());
+          queryParams.append("limit", "6");
+        }
+      } else {
+        queryParams.append("page", currentPage.toString());
+        queryParams.append("limit", itemsPerPage.toString());
+      }
+      const response = await fetch(`/api/profiles?${queryParams.toString()}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch data");
+      }
+      const { data, pagination, nextCursor } = await response.json();
+      if (view === "grid") {
+        if (nextCursorId)
+          setProfileProgrammes((prevProfileProgrammes) => [
+            ...prevProfileProgrammes,
+            ...(data as ProfileProgramme[]),
+          ]);
+        else setProfileProgrammes(data as ProfileProgramme[]);
+      } else {
+        setProfileProgrammes(data as ProfileProgramme[]);
+        setPaginationDetails(pagination);
+      }
+      setNextCursorId(nextCursor);
+      // setProfileProgrammes(data as ProfileProgramme[]);
+    } catch (error: any) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchProfileProgrammes = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch("/api/profiles");
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const { data } = await response.json();
-        console.log(data, "dataLog");
-        setProfileProgrammes(data as ProfileProgramme[]);
-      } catch (error: any) {
-        // setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    if (searchTerm.length > 2) {
+      const debounceTimeout = setTimeout(() => {
+        setDebouncedSearchTerm(searchTerm);
+        setNextCursorId(null);
+      }, 500);
+      return () => {
+        clearTimeout(debounceTimeout);
+      };
+    } else setDebouncedSearchTerm("");
+  }, [searchTerm]);
 
+  useEffect(() => {
     fetchProfileProgrammes();
-  }, []);
+  }, [itemsPerPage, currentPage, debouncedSearchTerm]);
+
+  useEffect(() => {
+    if (!loadMoreRef.current) return;
+
+    // console.log("Observer attaching...");
+    // console.log(loadMoreRef.current, "loadMoreRef.current");
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && nextCursorId && view === "grid") {
+          // console.log(entry.isIntersecting, "Observer triggered!");
+          fetchProfileProgrammes();
+        }
+      },
+      { rootMargin: "100px" }
+    );
+
+    observer.observe(loadMoreRef.current);
+
+    return () => observer.disconnect(); // Cleanup observer
+  }, [nextCursorId]);
 
   const {
     register,
@@ -72,9 +150,15 @@ export default function Courses() {
   } = useForm<CourseFormValues>({
     resolver: zodResolver(courseFormSchema),
     defaultValues: {
+      courseId: "",
+      levelId: "",
+      specializationId: "",
+      intakeId: "",
+      mode: "",
+      durationType: "",
       fee: [
         {
-          amount: 0,
+          amount: "",
           description: "",
           frequencyId: "",
           title: "",
@@ -84,21 +168,86 @@ export default function Courses() {
     },
   });
 
+  useEffect(() => {
+    if (toEdit) {
+      const {
+        capacity,
+        courseId,
+        levelId,
+        specializationId,
+        intakeId,
+        duration,
+        durationTypeId: durationType,
+        studyModeId: mode,
+        profileProgrammeFees,
+      } = toEdit;
+      const toEditFee = profileProgrammeFees?.map((fee) => {
+        return {
+          amount: fee.amount,
+          description: fee.description,
+          frequencyId: fee.frequencyId,
+          title: fee.title,
+          id: fee.id,
+        };
+      });
+
+      reset({
+        courseId,
+        capacity,
+        levelId,
+        specializationId,
+        intakeId,
+        duration,
+        durationType,
+        mode,
+        fee: toEditFee,
+      });
+
+      setVisible(true);
+    }
+  }, [toEdit]);
+
   const onCourseFormSubmit = async (data: CourseFormValues) => {
-    console.log(data);
-    reset();
-    setVisible(false);
+    if (toEdit) {
+      const { id } = toEdit;
+      upsertAction(
+        { ...data, id },
+        upsertProfileProgramNew,
+        "Profile programme updated successfully",
+        () => {
+          reset();
+          setVisible(false);
+          setToEdit(null);
+          fetchProfileProgrammes();
+        }
+      );
+    } else {
+      upsertAction(
+        data,
+        upsertProfileProgramNew,
+        "Profile programme saved successfully",
+        () => {
+          reset();
+          setVisible(false);
+          fetchProfileProgrammes();
+        }
+      );
+    }
+  };
+
+  const onCourseDelete = async (id: string) => {
     upsertAction(
-      data,
-      upsertProfileProgramNew,
-      "Profile Programme saved successfully",
+      id,
+      deleteProfileProgram,
+      "Profile programme deleted successfully",
       () => {
-        console.log("done");
+        setDeleteId(null);
+        fetchProfileProgrammes();
       }
     );
   };
 
-  const searchAndFilter = (
+  const searchAndFilterCourses = (
     <div className="bg-light flex items-center justify-between rounded-[10px] p-3">
       <div className="w-[434px]">
         <div className="relative flex items-center w-full flex-1">
@@ -118,24 +267,63 @@ export default function Courses() {
           <input
             style={{ width: "100%" }}
             className="bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-10 pr-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-            placeholder="Search Facilities"
+            placeholder="Search by course name, type, and category..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </div>
       <div className="flex items-center gap-6">
         <div className="flex gap-2">
-          <Image
-            src="/images/row-view.svg"
-            alt="row-view"
-            width={32}
-            height={32}
-          />
-          <Image
-            src="/images/grid-view.svg"
-            alt="grid-view"
-            width={32}
-            height={32}
-          />
+          <button
+            onClick={() => {
+              setProfileProgrammes([]);
+              setCurrentPage(1);
+              setItemsPerPage(10);
+              router.push(pathname + "?" + createQueryString("view", "table"));
+            }}
+          >
+            {view === "table" ? (
+              <Image
+                src="/images/row-view-active.svg"
+                alt="row-view"
+                width={32}
+                height={32}
+              />
+            ) : (
+              <Image
+                src="/images/row-view.svg"
+                alt="row-view"
+                width={32}
+                height={32}
+              />
+            )}
+          </button>
+
+          <button
+            onClick={() => {
+              setProfileProgrammes([]);
+              setCurrentPage(1);
+              setItemsPerPage(9);
+              router.push(pathname + "?" + createQueryString("view", "grid"));
+            }}
+          >
+            {view === "grid" ? (
+              <Image
+                src="/images/grid-view-active.svg"
+                alt="grid-view"
+                width={32}
+                height={32}
+              />
+            ) : (
+              <Image
+                src="/images/grid-view.svg"
+                alt="grid-view"
+                width={32}
+                height={32}
+              />
+            )}
+          </button>
         </div>
         {/* <div>filter button</div> */}
       </div>
@@ -148,12 +336,12 @@ export default function Courses() {
         <div className="flex gap-3 items-center">
           <span>Courses</span>
           <div className="rounded-full px-2.5 py-1 bg-[#EAEBEE] text-sm text-[#505F79]">
-            12
+            {paginationDetails?.totalItems.toString()}
           </div>
         </div>
       }
       wrapperClass="flex-1 h-full"
-      secondaryComponent={searchAndFilter}
+      secondaryComponent={searchAndFilterCourses}
       primaryButton={{
         type: "Add",
         onClick: () => {
@@ -161,26 +349,47 @@ export default function Courses() {
         },
       }}
     >
-      {isLoading && <div>Loading.....</div>}
-      {!isLoading && !!profileProgrammes.length && (
+      {!isLoading && !!profileProgrammes.length && view === "table" && (
         <CourseTable
           deleteCourse={(id) => {
             setDeleteId(id);
           }}
+          editCourse={(course) => {
+            setToEdit(course);
+          }}
           data={profileProgrammes}
+          paginationDetails={paginationDetails}
+          currentPage={currentPage}
+          setCurrentPage={(page) => {
+            setCurrentPage(page);
+          }}
+          itemsPerPage={itemsPerPage}
+          setItemsPerPage={(itemsPerPage) => {
+            setItemsPerPage(itemsPerPage);
+          }}
         />
       )}
       {!isLoading && !profileProgrammes.length && <EmptyCoursePage />}
-      {/* <div className="grid grid-cols-3 gap-4">
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-      </div> */}
+      {!!profileProgrammes.length && view === "grid" && (
+        <React.Fragment>
+          <CourseGrid
+            deleteCourse={(id) => {
+              setDeleteId(id);
+            }}
+            editCourse={(course) => {
+              setToEdit(course);
+            }}
+            data={profileProgrammes}
+          />
+        </React.Fragment>
+      )}
+      <div ref={loadMoreRef} className="h-2 mt-4" />
+      {isLoading && <div className="w-full text-center">Loading.....</div>}
       <Modal
         visible={visible}
         onClose={() => {
           setVisible(false);
+          setToEdit(null);
           reset();
         }}
         onSave={() => {
@@ -196,10 +405,7 @@ export default function Courses() {
         title="Delete Course"
         message="Are you sure you want to delete this course? This action cannot be undone."
         type="Delete"
-        onConfirm={() => {
-          deleteProfileProgram(deleteId);
-          setDeleteId(null);
-        }}
+        onConfirm={() => onCourseDelete(deleteId!)}
       />
     </DashboardIntroSectionWrapper>
   );

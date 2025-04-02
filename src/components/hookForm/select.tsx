@@ -101,8 +101,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
             className={`
               w-full px-4 py-4 text-base text-gray-700 appearance-none
               border rounded-md transition-all duration-200
-              focus:outline-none
-              ${isActive ? "pt-6 pb-2" : ""}
+              focus:outline-none pt-6 pb-2
               ${
                 hasError
                   ? "border-red-500 focus:border-red-500"
@@ -110,7 +109,7 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
                   ? "border-blue-500"
                   : "border-gray-300"
               }
-              ${disabled ? "bg-gray-100 text-gray-400 cursor-not-allowed" : ""}
+              ${disabled ? "bg-gray-100 text-gray-400 cursor-not-allowed" : "bg-white"}
               ${startIcon ? "pl-10" : ""}
               pr-10
               ${className}
@@ -132,9 +131,8 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
             htmlFor={id}
             className={`
               absolute left-4 transition-all duration-200
-              pointer-events-none
+              pointer-events-none text-xs top-2
               ${startIcon ? "left-10" : "left-4"}
-              ${isActive ? "text-xs top-2" : "text-base top-4"}
               ${
                 hasError
                   ? "text-red-500"

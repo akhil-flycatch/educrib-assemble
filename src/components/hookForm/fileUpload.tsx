@@ -5,6 +5,9 @@ import type React from "react";
 import { forwardRef, useEffect, useState } from "react";
 import type { FieldError } from "react-hook-form";
 import Image from "next/image";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import useFileUpload from "@/utils/hooks/useFileUpload";
+import { v4 as uuidv4 } from "uuid";
 
 export interface FileUploadProps {
   id: string;
@@ -17,6 +20,7 @@ export interface FileUploadProps {
   className?: string;
   accept?: string;
   maxSize?: number; // in bytes
+  ImageUrlChange?:any
 }
 
 const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
@@ -26,6 +30,7 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       onChange,
       onUpload,
       value,
+      ImageUrlChange,
       defaultValue,
       error,
       disabled = false,
@@ -39,6 +44,11 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     const [preview, setPreview] = useState<string>(value || defaultValue || "");
     const [isUploading, setIsUploading] = useState(false);
     const [uploadError, setUploadError] = useState<string>("");
+    // const [ImageUrl, setImageUrl] = useState<any>()
+
+    const { globalLoading, filesData, uploadFilesToStorage, removeFile } =
+      useFileUpload();
+    const supabase = createClientComponentClient();
 
     useEffect(() => {
       if (value) {
@@ -59,6 +69,30 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       }
 
       try {
+        const uuid = uuidv4().replace(/-/g, "");
+        const fileName = `${uuid}_${file.name}`;
+
+        const { data, error } = await supabase.storage
+          .from("educrib-test")
+          .upload(fileName, file);
+
+        if (error) {
+          console.log("the er", error);
+        } else {
+          const resUrlData = await supabase.storage
+            .from("educrib-test")
+            .getPublicUrl(data.path);
+          console.log("the value in url", resUrlData);
+          const publicUrl = resUrlData.data.publicUrl;
+          await ImageUrlChange(publicUrl)
+        }
+
+        const value = await uploadFilesToStorage(
+          [file],
+          "educrib-test",
+          supabase
+        );
+        console.log(">>>>>>>vlaues", value);
         setIsUploading(true);
         setUploadError("");
         const objectUrl = URL.createObjectURL(file);

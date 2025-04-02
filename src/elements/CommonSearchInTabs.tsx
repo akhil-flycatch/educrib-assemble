@@ -1,10 +1,11 @@
 import Image from "next/image";
 interface CommonSearchInTabsProps {
   handleFileChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isFilter?:any;
 }
 
-const CommonSearchInTabs: React.FC<CommonSearchInTabsProps> = ({ handleFileChange }) => {
-  const test = () => { console.log("the value"); };
+const CommonSearchInTabs: React.FC<CommonSearchInTabsProps> = ({ handleFileChange, isFilter }:any) => {
+ 
 
   return (
     <>
@@ -40,7 +41,7 @@ const CommonSearchInTabs: React.FC<CommonSearchInTabsProps> = ({ handleFileChang
             onChange={(e) => handleFileChange && handleFileChange(e)} // Make sure handleFileChange exists
           />
         </div>
-        <div
+       {isFilter && ( <div
           style={{
             background: "white",
             width: "96px",
@@ -59,7 +60,7 @@ const CommonSearchInTabs: React.FC<CommonSearchInTabsProps> = ({ handleFileChang
             priority
           />
           <span>Filter</span>
-        </div>
+        </div>)}
       </div>
     </>
   );
