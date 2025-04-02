@@ -1,0 +1,33 @@
+name: Sync with Client Private Repository
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour; adjust as needed
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+
+      - name: Add client private repository as remote
+        run: |
+          git remote add upstream https://${{ secrets.PAT }}@github.com/educrib-platform/educrib-assemble-new.git || true
+          git fetch upstream
+
+      - name: Merge changes from phase1/DEV
+        run: |
+          git checkout master
+          git merge upstream/phase1/DEV --allow-unrelated-histories || true
+          git push origin master
+        env:
+          PAT: ${{ secrets.PAT }}
