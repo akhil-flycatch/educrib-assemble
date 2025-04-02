@@ -21,7 +21,7 @@ jobs:
 
       - name: Clone Client Repo
         run: |
-          git clone https://${{ secrets.MY_PERSONAL_PAT }}@github.com/educrib-platform/educrib-assemble-new.git client-repo
+          git clone https://${{ secrets.PAT }}@github.com/educrib-platform/educrib-assemble-new.git client-repo
 
       - name: Merge changes from phase1/DEV
         run: |
