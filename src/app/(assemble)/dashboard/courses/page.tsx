@@ -7,7 +7,7 @@ import DashboardIntroSectionWrapper from "@/components/dashboard/Introduction/se
 import Image from "next/image";
 import EmptyCoursePage from "@/components/dashboard/courses/empty";
 import CourseTable from "@/components/dashboard/courses/table";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import CourseForm, {
   courseFormSchema,
@@ -29,10 +29,10 @@ export default function Courses() {
     ProfileProgramme[]
   >([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [view, setCurrentView] = useState("table");
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [nextCursorId, setNextCursorId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [view, setView] = useState("table");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [paginationDetails, setPaginationDetails] = useState<{
     currentPage: number;
@@ -55,10 +55,10 @@ export default function Courses() {
       if (view === "grid") {
         if (nextCursorId) {
           queryParams.append("cursor", nextCursorId || "");
-          queryParams.append("limit", "6");
+          queryParams.append("limit", "9");
         } else {
           queryParams.append("page", currentPage.toString());
-          queryParams.append("limit", "6");
+          queryParams.append("limit", "9");
         }
       } else {
         queryParams.append("page", currentPage.toString());
@@ -265,8 +265,7 @@ export default function Courses() {
               setProfileProgrammes([]);
               setCurrentPage(1);
               setItemsPerPage(10);
-              // router.push(pathname + "?" + createQueryString("view", "table"));
-              setCurrentView("table");
+              setView("table");
             }}
           >
             {view === "table" ? (
@@ -291,8 +290,7 @@ export default function Courses() {
               setProfileProgrammes([]);
               setCurrentPage(1);
               setItemsPerPage(9);
-              // router.push(pathname + "?" + createQueryString("view", "grid"));
-              setCurrentView("grid");
+              setView("grid");
             }}
           >
             {view === "grid" ? (
