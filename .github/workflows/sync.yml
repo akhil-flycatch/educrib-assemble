@@ -21,25 +21,20 @@ jobs:
 
       - name: Clone Client Repo (Private)
         run: |
-          git clone https://${{ secrets.PAT }}@github.com/educrib-platform/educrib-assemble-new.git client-repo
+          git clone https://${{ secrets.PAT }}@github.com/educrib-platform/educrib-assemble-new.git /tmp/client-repo
         env:
           MY_PERSONAL_PAT: ${{ secrets.PAT }}
 
-      - name: Merge changes from phase1/DEV
+      - name: Copy Client Repo Files
         run: |
-          cd client-repo
-          git checkout phase1/DEV
-          git pull origin phase1/DEV
-          cd ..
-          
-          rsync -av --exclude='.git' client-repo/ .
-
+          rsync -av --exclude='.git' /tmp/client-repo/ .
           git add .
           git commit -m "Merged changes from client repo" || echo "No changes to commit"
 
-          # Use GITHUB_TOKEN for pushing to your public repo
-          git remote set-url origin https://github.com/akhil-flycatch/educrib-assemble.git
+      - name: Push Changes to Public Repo
+        run: |
+          git remote set-url origin https://${{ secrets.PAT }}@github.com/akhil-flycatch/educrib-assemble.git
           git push origin master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MY_PERSONAL_PAT: ${{ secrets.PAT }}
 
