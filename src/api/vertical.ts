@@ -92,9 +92,10 @@ export async function getVerticalBySlug(slug: string) {
 export async function getVerticalById() {
    const supabase = await createRouteHandlerClient({ cookies });
     const user = await supabase.auth.getUser();
+
   const vertical = await prisma.vertical.findUnique({
     where: {
-      id: user.data.user?.user_metadata.profileId,
+      id: user.data.user?.user_metadata.verticalId,
     },
   });
   return vertical;

@@ -9,7 +9,7 @@ import Image from "next/image";
 import { Toaster } from "react-hot-toast";
 
 export const dynamic = "force-dynamic";
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -48,7 +48,6 @@ export default async function RootLayout({
             <div
               className="flex items-center gap-2 text-[#2D344F] font-medium cursor-pointer"
               onClick={logOut}
-              
             >
               <Image
                 src="/images/logout.svg"

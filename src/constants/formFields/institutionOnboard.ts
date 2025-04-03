@@ -1,7 +1,7 @@
 import * as z from "zod";
 
 export const InstitutionOnboardFieldMapping: { [key: string]: string[] } = {
-  college: ["title", "establishedYear", "accreditationId", "type", "universityId"],
+  colleges: ["title", "establishedYear", "accreditationId", "type", "universityId"],
   school: [
     "title",
     "establishedYear",
@@ -57,7 +57,7 @@ export const InstitutionOnboardFieldMapping: { [key: string]: string[] } = {
 };
 
 export const LabelMapping = {
-  college: {
+  colleges: {
     title: "College Name",
     establishedYear: "Established Year",
     accreditationId: "Accreditation",
@@ -119,7 +119,7 @@ export const LabelMapping = {
 };
 
 export const ZodValidations = {
-  college: z.object({
+  colleges: z.object({
     title: z.string().optional(),
     establishedYear: z
       .number()

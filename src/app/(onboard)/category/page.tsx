@@ -9,9 +9,9 @@ import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
 
 const page = () => {
-  const [categories, setCategories] = useState<{ title: string; id: string ; icon:string}[]>(
-    []
-  );
+  const [categories, setCategories] = useState<
+    { title: string; id: string; icon: string }[]
+  >([]);
   const [loading, setLoading] = useState<null | "FETCH" | "SUBMIT">(null);
 
   useEffect(() => {
@@ -26,40 +26,38 @@ const page = () => {
   }, []);
 
   const handleSubmit = async (formData: FormData) => {
-    setLoading("SUBMIT");
     const data = new FormData();
     const verticalId = formData.get("verticalId") as string;
     if (!verticalId) {
       toast.error("Please select a category before proceeding");
       return;
     }
-    const [categoryId, vertical] = verticalId.split("-");
+    setLoading("SUBMIT");
+    const categoryId = verticalId.split("-").slice(0, -1).join("-");
     data.append("verticalId", categoryId);
     await selectCategory(data);
-    redirect(
-      "/choose-institute?verticalId=" +
-        categoryId +
-        "&label=" +
-        encodeURIComponent(vertical)
-    );
+    redirect("/choose-institute?verticalId=" + categoryId);
   };
-console.log(categories,"categories")
+  
   return (
     <div className="bg-white">
-     
-      <form className="bg-white flex flex-col justify-center items-center gap-[28px]" action={handleSubmit}>
-      <p className=" font-semibold text-[36px] leading-[57.6px] tracking-[0.01em] text-center text-[#354764]">Select category</p>
-            <p className=" font-normal text-[20px] leading-[32px] tracking-[0.01em] text-center text-[#505F79]">
-            Please select your institution   </p>
+      <form
+        className="bg-white flex flex-col justify-center items-center gap-[28px]"
+        action={handleSubmit}
+      >
+        <p className=" font-semibold text-[36px] leading-[57.6px] tracking-[0.01em] text-center text-[#354764]">
+          Select category
+        </p>
+        <p className=" font-normal text-[20px] leading-[32px] tracking-[0.01em] text-center text-[#505F79]">
+          Please select your institution{" "}
+        </p>
         {!categories.length && loading === "FETCH" ? (
           <div className="flex items-center justify-center">
             <Loader2 className="animate-spin text-primary" />
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-8 items-center justify-center max-h-[470px] overflow-y-scroll ">
-          
-           
-             {categories.map((category) => (
+            {categories.map((category) => (
               <div key={category.id}>
                 <input
                   type="radio"
@@ -68,16 +66,15 @@ console.log(categories,"categories")
                   className="hidden peer"
                   id={category.id}
                 />
-               
+
                 <label
                   htmlFor={category?.id}
                   className="px-2  py-2 w-[182px]  justify-center cursor-pointer bg-white  text-dark h-[130px] peer-checked:border-[#6129FE] rounded-[16px] flex flex-col border-[1px] border-[#DFE2E6] items-center"
                 >
-                   <img src={category?.icon} alt={category?.title}/>
+                  <img src={category?.icon} alt={category?.title} />
                   {category?.title}
                 </label>
               </div>
-
             ))}
           </div>
         )}
@@ -85,9 +82,8 @@ console.log(categories,"categories")
           <Button
             type="submit"
             intent="primary"
-            className="w-[388px] h-[60px] rounded-[10px] bg-[#6129FE] text-white  font-[500] text-[20px] leading-[20px]" 
+            className="w-[388px] h-[60px] rounded-[10px] bg-[#6129FE] text-white  font-[500] text-[20px] leading-[20px] flex justify-center items-center"
             disabled={Boolean(loading)}
-            
           >
             {loading === "SUBMIT" ? (
               <div className="flex items-center justify-center w-[8ch]">

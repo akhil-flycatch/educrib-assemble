@@ -61,13 +61,13 @@ const OnboardForm: React.FC = () => {
     const fetchVerticals = async () => {
       const response = await fetch("/api/my/vertical");
       const { data } = await response.json();
+      console.log("data", data);
       setCurrentVertical(data);
     };
     fetchVerticals();
   }, []);
 
   const onFormSubmit = async (data: any) => {
-    console.log("the data", data);
     var form_data = new FormData();
 
     for (var key in data) {
