@@ -10,44 +10,86 @@ import ConatctForm, {
   contactFormSchema,
   ContactFormValues,
 } from "./contactForm";
-import { getProfileContactsByProfileId } from "@/api";
+import { getProfile, getProfileContactsByProfileId, upsertProfileContact } from "@/api";
+import { addProfileContact } from "@/api/profileContact";
 
 const Contacts: React.FC = () => {
   const isEmpty = false;
-  const [visible, setVisible] = useState<"Add" | string | null>(null);
+
+  const [defaultValue, setDefaultValue] = useState<ContactFormValues | null>(null);
+  const [visible, setVisible] = useState<"Add" | "Edit" | string | null>(null);
+  const [contacts, setContacts] = useState<any[]>([]);
+  const [profile, setProfile] = useState<any>(null);
+
+  const handleEdit = (data: any) => {
+    setVisible("Edit");
+    setDefaultValue({
+      name: data.title,
+      email: data.email,
+      phone: data.phone,
+      type: data.contactTypeId,
+      avatar: data.avatar || null,
+    });
+  };
 
   const {
     register,
     handleSubmit,
     reset,
     setValue,
+    control,
+    watch,
+    
     formState: { errors },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
-      phone: "",
-      name: "",
-      type: "",
-      email: "",
+      phone: defaultValue?.phone || "",
+      name: defaultValue?.name || "",
+      type: defaultValue?.type || "",
+      email: defaultValue?.email || "",
     },
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      if (defaultValue) {
+        reset({
+          phone: defaultValue?.phone || "",
+          name: defaultValue?.name || "",
+          type: defaultValue?.type || "",
+          email: defaultValue?.email || "",
+        });
+      }
+      const profile = await getProfile();
+      setProfile(profile);
+      const data = await getProfileContactsByProfileId(profile?.id);
+      setContacts(data);
+    };
+
+    fetchData();
+  }, [defaultValue, reset]);
+
   const onContactFormSubmit = async (data: ContactFormValues) => {
-    console.log(data);
+
+    console.log("entered here");
+    console.log("the data in contact form", data);
+    const formData = new FormData();
+    formData.append("title", data.name);
+    formData.append("email", data.email);
+    formData.append("phone", data.phone);
+    formData.append("type", data.type);
+    formData.append("profileId", profile?.id);
+    formData.append("avatar", data?.avatar || "");
+    console.log("the data in contact formdata", formData);
+
+    await addProfileContact(formData);
     reset();
     setVisible(null);
+    // Refresh contacts after submission
+    const updatedContacts = await getProfileContactsByProfileId(profile?.id);
+    setContacts(updatedContacts);
   };
-
-  const [contacts, setContacts] = useState(null);
-    useEffect(() => {
-      const fetchData = async () => {
-        const data = await getProfileContactsByProfileId("clrpz6nnn000mlf08dy5aqjdm");
-        setContacts(data);
-      };
-  
-      fetchData();
-    }, []);
-    console.log(contacts,"contacts")
 
   return (
     <React.Fragment>
@@ -58,6 +100,7 @@ const Contacts: React.FC = () => {
           type: "Add",
           onClick: () => {
             setVisible("Add");
+            setDefaultValue(null); // Reset default values for "Add" mode
           },
         }}
       >
@@ -75,21 +118,19 @@ const Contacts: React.FC = () => {
           </div>
         ) : (
           <div className="flex flex-col gap-2.5">
-            <ContactCard
-              name="Manoj T Joy"
-              email="manojt@gmail.com"
-              phone="+91 9343 433 543"
-              department="Admission"
-              image="/images/mocks/avatar.png"
-              onEdit={setVisible}
-            />
-            <ContactCard
-              name="Rakesh M"
-              email="rakeshm@gmail.com"
-              phone="+91 9343 433 543"
-              department="Vice Principal"
-              onEdit={setVisible}
-            />
+            {contacts?.map((contact, index) => (
+              <ContactCard
+                key={index}
+                name={contact.title}
+                email={contact.email}
+                phone={contact.phone}
+                department={contact.contactType.title}
+                id={contact.id}
+                image={contact.avatar}
+                data={contact}
+                onEdit={handleEdit}
+              />
+            ))}
           </div>
         )}
       </DashboardIntroSectionWrapper>
@@ -99,11 +140,15 @@ const Contacts: React.FC = () => {
         onSave={handleSubmit(onContactFormSubmit)}
         title={`${visible === "Add" ? "Add" : "Edit"} Contact`}
       >
-        <form
-          className="w-full"
-          onSubmit={handleSubmit(onContactFormSubmit)}
-        >
-          <ConatctForm register={register} errors={errors} setValue={setValue} />
+        <form className="w-full" onSubmit={handleSubmit(onContactFormSubmit)}>
+          <ConatctForm
+            register={register}
+            errors={errors}
+            setValue={setValue}
+            defaultValues={defaultValue || {}} // Pass default values to the form
+            control={control}
+            watch={watch}
+          />
         </form>
       </Modal>
     </React.Fragment>

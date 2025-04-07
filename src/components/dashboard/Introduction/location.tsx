@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import DashboardIntroSectionWrapper from "./sectionWrapper";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "@/elements/modal";
 import LocationForm, {
   locationFormSchema,
@@ -9,10 +9,16 @@ import LocationForm, {
 } from "./locationForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import Map from "@/elements/map";
+import MyGoogleMap from "./map";
+import { getProfile } from "@/api";
 
 const Location: React.FC = () => {
-  const isEmpty = true;
+  const isEmpty = false;
   const [isLocationMosdalVisible, setIsLocationModalVisible] = useState(false);
+  const [cordinates, setCordinates] = useState<{ lat: number; lng: number } | null>(null);
+
+  console.log(cordinates, "the cordinates");
 
   const {
     register,
@@ -22,6 +28,31 @@ const Location: React.FC = () => {
   } = useForm<LocationFormValues>({
     resolver: zodResolver(locationFormSchema),
   });
+
+  function extractCoordinatesFromUrl(url: string): { lat: number; lng: number } | null {
+    const regex = /@(-?\d+\.\d+),(-?\d+\.\d+)/;
+    const match = url.match(regex);
+    if (match) {
+      const lat = parseFloat(match[1]);
+      const lng = parseFloat(match[2]);
+      return { lat, lng };
+    }
+    return null;
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const profileData = await getProfile();
+      console.log("Profile map Data:", profileData?.mapUrl); // Debug profile data
+      if (profileData?.mapUrl) {
+        const coordinates = extractCoordinatesFromUrl(profileData.mapUrl);
+      console.log("Cordinates Data:", cordinates); // Debug profile data
+      setCordinates(coordinates);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const onLocationFormSubmit = async (data: LocationFormValues) => {
     console.log(data);
@@ -67,7 +98,7 @@ const Location: React.FC = () => {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              <div className="flex flex-col capitalize text-heading">
+              <div className="flex flex-col capitalize text-heading w-full">
                 <span className="text-label mb-2">Address</span>
                 <span>Amal Jyothi College of Engineering</span>
                 <span>Kanjirappally, Koovappally (P.O)</span>
@@ -76,6 +107,8 @@ const Location: React.FC = () => {
                 <span>Kerala</span>
               </div>
               <div className="flex-1 bg-[url('/images/mocks/map.png')] bg-cover bg-center min-h-[260px] max-w-[750px]" />
+<MyGoogleMap lat={cordinates?.lat} lng={cordinates?.lng} />
+              
             </React.Fragment>
           )}
         </div>

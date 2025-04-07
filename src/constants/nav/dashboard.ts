@@ -22,7 +22,7 @@ export const DASHBOARD_NAV: Record<
     { name: "Hostel", url: `${DASHBOARD_ROUTE}/hostel` },
     { name: "Staff & Management", url: `${DASHBOARD_ROUTE}/staffs` },
   ],
-  Playschool: [
+  playschool: [
     { name: "Introduction", url: DASHBOARD_ROUTE },
     { name: "Curriculum", url: `${DASHBOARD_ROUTE}/curriculum` },
     { name: "Facilities", url: `${DASHBOARD_ROUTE}/facilities` },
@@ -31,7 +31,7 @@ export const DASHBOARD_NAV: Record<
     { name: "Hostel", url: `${DASHBOARD_ROUTE}/hostel` },
     { name: "Staff & Management", url: `${DASHBOARD_ROUTE}/staffs` },
   ],
-  Institutes: [
+  institutes: [
     { name: "Introduction", url: DASHBOARD_ROUTE },
     { name: "Courses", url: `${DASHBOARD_ROUTE}/courses` },
     { name: "Facilities", url: `${DASHBOARD_ROUTE}/facilities` },
@@ -39,21 +39,21 @@ export const DASHBOARD_NAV: Record<
     { name: "Media", url: `${DASHBOARD_ROUTE}/media` },
     { name: "Staff & Management", url: `${DASHBOARD_ROUTE}/staffs` },
   ],
-  Consultants: [
+  consultants: [
     { name: "Introduction", url: DASHBOARD_ROUTE },
     { name: "Services", url: `${DASHBOARD_ROUTE}/services` },
   ],
-  Tutors: [
+  tutors: [
     { name: "Introduction", url: DASHBOARD_ROUTE },
     { name: "Subjects", url: `${DASHBOARD_ROUTE}/subjects` },
     { name: "Services", url: `${DASHBOARD_ROUTE}/services` },
   ],
-  Classes: [
+  classes: [
     { name: "Introduction", url: DASHBOARD_ROUTE },
     { name: "Skills", url: `${DASHBOARD_ROUTE}/skills` },
     { name: "Services", url: `${DASHBOARD_ROUTE}/services` },
   ],
-  Internships: [
+  internships: [
     { name: "Introduction", url: DASHBOARD_ROUTE },
     { name: "Internships", url: `${DASHBOARD_ROUTE}/internships` },
   ],

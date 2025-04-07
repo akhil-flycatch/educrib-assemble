@@ -6,8 +6,10 @@ const ContactCard: React.FC<{
   phone: string;
   name: string;
   department: string;
+  id?: string;
+  data?: any;
   onEdit: (name: string) => void;
-}> = ({ image, email, phone, name, department, onEdit }) => (
+}> = ({ image, email, phone, name, department, onEdit,data }) => (
   <div className="w-full bg-white border border-accent-2 rounded-lg px-4 py-3 flex flex-col gap-2 hover:shadow-md">
     <div className="w-full bg-[#818CF84A] rounded px-2 py-0.5 font-medium text-[#453FAB] text-[10px] leading-[18px]">
       {department}
@@ -39,7 +41,7 @@ const ContactCard: React.FC<{
       </div>
       <button
         className={`flex items-center justify-center bg-light-100 size-6 border-2 border-accent gap-2  rounded-full hover:border-hover hover:bg-hover hover:text-hover`}
-        onClick={() => onEdit(name)}
+        onClick={() => onEdit(data)}
       >
         <Image src="/images/edit.svg" width={13} height={13} alt="edit" />
       </button>

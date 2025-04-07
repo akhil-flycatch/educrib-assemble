@@ -11,6 +11,8 @@ import {
   createMultipleProfileStaffContact,
   deleteProfileStaffContactByStaffId,
 } from ".";
+import { StaffFormValues } from "@/components/dashboard/staff/staffForm";
+import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
 export async function upsertProfileStaff(formData: FormData) {
   try {
@@ -102,10 +104,6 @@ export async function getProfileStaffsByProfileId(
     where: {
       profileId,
       status: filter.active ? true : undefined,
-    },
-    include: {
-      designation: true,
-      profileStaffContacts: { include: { contactType: true } },
     },
     orderBy: {
       createdAt: "desc",
@@ -202,9 +200,8 @@ export async function deleteProfileStaffByProfileId(
   });
 }
 
-export async function deleteProfileStaff(formData: FormData) {
+export async function deleteProfileStaff(id: string) {
   try {
-    const id = formData.get("id") as string;
     await prisma.profileStaff.delete({
       where: {
         id,
@@ -214,5 +211,56 @@ export async function deleteProfileStaff(formData: FormData) {
   } catch (e: any) {
     const { errMessage } = errorMessageGenerator(e);
     return { message: errMessage || "Failed to delete profileStaff" };
+  }
+}
+
+export async function createProfileStaff(staff: StaffFormValues) {
+  try {
+    const cookieStore = await cookies();
+    const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+    const user = await supabase.auth.getUser();
+    const profileId = user.data.user?.user_metadata.profileId;
+    await prisma.profileStaff.create({
+      data: {
+        title: staff.title,
+        profileId,
+        designation: staff.designation,
+        avatar: staff.avatar,
+        status: true,
+        email: staff.email,
+        phone: staff.phone,
+      },
+    });
+    revalidatePath("/staffs");
+  } catch (e: any) {
+    const { errMessage } = errorMessageGenerator(e);
+    return { message: errMessage || "Failed to create profileStaff" };
+  }
+}
+
+export async function editProfileStaff(staff: StaffFormValues) {
+  try {
+    const cookieStore = await cookies();
+    const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
+    const user = await supabase.auth.getUser();
+    const profileId = user.data.user?.user_metadata.profileId;
+    await prisma.profileStaff.update({
+      where: {
+        id: staff.id ?? '',
+      },
+      data: {
+        title: staff.title,
+        profileId,
+        designation: staff.designation,
+        avatar: staff.avatar,
+        status: true,
+        email: staff.email,
+        phone: staff.phone,
+      },
+    });
+    revalidatePath("/staffs");
+  } catch (e: any) {
+    const { errMessage } = errorMessageGenerator(e);
+    return { message: errMessage || "Failed to update profileStaff" };
   }
 }

@@ -8,10 +8,10 @@ datasource db {
 }
 
 model vertical {
-  id           String     @id @default(cuid())
+  id           String     @id @default(dbgenerated("gen_random_uuid()"))
   status       Boolean    @default(true)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime   @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  updatedAt    DateTime   @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @db.Timestamptz(6)
   title        String     @unique
   slug         String     @unique
   icon         String?
@@ -44,7 +44,7 @@ model category {
 }
 
 model type {
-  id                 String              @id @default(cuid())
+  id                 String              @id @default(dbgenerated("gen_random_uuid()"))
   status             Boolean             @default(true)
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
@@ -117,7 +117,7 @@ model currency {
 }
 
 model contactType {
-  id                    String                 @id @default(cuid())
+  id                    String                 @id @default(dbgenerated("gen_random_uuid()"))
   status                Boolean                @default(true)
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
@@ -145,7 +145,7 @@ model curriculum {
 }
 
 model accreditation {
-  id                   String                 @id @default(cuid())
+  id                   String                 @id @default(dbgenerated("gen_random_uuid()"))
   status               Boolean                @default(true)
   createdAt            DateTime               @default(now())
   updatedAt            DateTime               @updatedAt
@@ -162,7 +162,7 @@ model accreditation {
 }
 
 model university {
-  id          String    @id @default(cuid())
+  id          String    @id @default(dbgenerated("gen_random_uuid()"))
   status      Boolean   @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -209,15 +209,14 @@ model facility {
 }
 
 model designation {
-  id            String         @id @default(cuid())
-  status        Boolean        @default(true)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  title         String         @unique
-  slug          String         @unique
-  icon          String?
-  thumbnail     String?
-  profileStaffs profileStaff[]
+  id        String   @id @default(cuid())
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String   @unique
+  slug      String   @unique
+  icon      String?
+  thumbnail String?
 }
 
 model media {
@@ -338,10 +337,10 @@ model specialization {
 }
 
 model profile {
-  id                    String                 @id @default(cuid())
+  id                    String                 @id @default(dbgenerated("gen_random_uuid()"))
   status                Boolean                @default(true)
   createdAt             DateTime               @default(now())
-  updatedAt             DateTime               @updatedAt
+  updatedAt             DateTime               @default(now()) @updatedAt
   title                 String                 @unique
   alias                 String?
   slug                  String                 @unique
@@ -384,6 +383,7 @@ model profile {
   phone                 String?
   accreditationId       String?
   website               String?
+  mapUrl                String?
   location              location?
   accreditation         accreditation?         @relation(fields: [accreditationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curriculum            curriculum?            @relation(fields: [curriculumId], references: [id])
@@ -472,15 +472,16 @@ model profileContact {
 }
 
 model profileStaff {
-  id                   String                @id @default(cuid())
+  id                   String                @id @default(dbgenerated("gen_random_uuid()"))
   status               Boolean               @default(true)
-  createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @updatedAt
+  createdAt            DateTime              @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  updatedAt            DateTime              @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @db.Timestamptz(6)
   avatar               String?
   title                String
-  designationId        String?
+  designation          String?
   profileId            String?
-  designation          designation?          @relation(fields: [designationId], references: [id])
+  phone                String?
+  email                String?
   profile              profile?              @relation(fields: [profileId], references: [id])
   profileStaffContacts profileStaffContact[]
 }
@@ -542,7 +543,6 @@ model profileProgrammeFee {
   profileProgrammeId String?
   createdById        String?
   updatedById        String?
-  description        String?           @default("")
   currency           currency?         @relation(fields: [currencyId], references: [id])
   frequency          frequency?        @relation(fields: [frequencyId], references: [id])
   profileProgramme   profileProgramme? @relation(fields: [profileProgrammeId], references: [id])
@@ -723,9 +723,9 @@ model profileHostel {
   views                   Int                     @default(1)
   website                 String?
   capacity                String?
-  roomRent                Float?
   contactName             String?
   hostelType              String?
+  roomRent                Float?
   category                category?               @relation(fields: [categoryId], references: [id])
   currency                currency?               @relation(fields: [currencyId], references: [id])
   profile                 profile?                @relation(fields: [profileId], references: [id])
@@ -988,8 +988,8 @@ model test {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model hostelType {
-  id         BigInt   @id @default(autoincrement())
-  created_at DateTime @default(now()) @db.Timestamptz(6)
+  id         String   @id @default(dbgenerated("gen_random_uuid()"))
+  created_at DateTime @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
   title      String?
   status     Boolean?
 }
@@ -1003,7 +1003,3 @@ model programmeStudyMode {
   slug             String?
   profileProgramme profileProgramme[]
 }
-
-/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
-// model studyMode {
-// }

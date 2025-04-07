@@ -32,10 +32,12 @@ import {
   updateActivity,
 } from ".";
 import { deleteProfileScholarshipByProfileId } from "./profileScholarship";
+import { universityId } from "@/storybooks/forms/validations/base";
 
 export async function upsertProfile(formData: any) {
   try {
-    const id = formData?.id;
+    const id = formData.get("id") as string;
+    console.log("the id in upsert profile", formData.get("universityId"));
     const title = (formData.get("title") as string) || "NA";
     const thumbnail = (formData.get("thumbnail") as string) || null;
     const status = formData.get("status") === "on";
@@ -49,6 +51,8 @@ export async function upsertProfile(formData: any) {
     const verticalId = (formData.get("verticalId") as string) || undefined;
     const managementId = (formData.get("managementId") as string) || undefined;
     const universityId = (formData.get("universityId") as string) || undefined;
+    const accreditationId =
+      (formData.get("accreditationId") as string) || undefined;
     const typeId = (formData.get("typeId") as string) || undefined;
     const curriculumId = (formData.get("curriculumId") as string) || undefined;
     // const profileImages = (formData.get("profileImages") as unknown as string[]) || undefined;
@@ -56,11 +60,23 @@ export async function upsertProfile(formData: any) {
     const recommended = formData.get("recommended") === "on";
     const verified = formData.get("verified") === "on";
     const published = formData.get("published") === "on";
+    const phone=formData.get("phone")
+    const website=formData.get("website")
+const email =formData.get("email")
+    // // Validate that the typeId exists
+    // const typeExists = await prisma.type.findUnique({
+    //   where: { id: typeId },
+    // });
+
+    // if (!typeExists) {
+    //   throw new Error(`Invalid typeId: ${typeId}. It does not exist.`);
+    // }
 
     // console.log(title, "published", formData.get("title"));
     const profile = await prisma.profile.upsert({
       where: {
-        id: id,
+        id
+
       },
       create: {
         // yearsOfExperience,
@@ -83,6 +99,10 @@ export async function upsertProfile(formData: any) {
         recommended,
         verified,
         published,
+        accreditationId,
+        phone,
+        email,
+        website
       },
       update: {
         yearsOfExperience: "1",
@@ -105,10 +125,14 @@ export async function upsertProfile(formData: any) {
         recommended,
         verified,
         published,
+        accreditationId,
+        phone,
+        email,
+        website
       },
     });
     console.log("the pros", profile);
-    await updateActivity(profile.id);
+    // await updateActivity(profile.id);
     revalidatePath(ROUTES.PROFILES);
   } catch (e: any) {
     const { errMessage } = errorMessageGenerator(e);
@@ -144,12 +168,25 @@ export async function upsertProfileOfUser(formData: FormData) {
     const district = (formData.get("district") as string) || undefined;
     const email = (formData.get("email") as string) || undefined;
     const phone = (formData.get("phone") as string) || undefined;
+    console.log(phone,"phone number")
     const pincode = (formData.get("pincode") as string) || undefined;
     const registrationNumber =
       (formData.get("registrationNumber") as string) || undefined;
     const state = (formData.get("state") as string) || undefined;
     const website = (formData.get("website") as string) || undefined;
     console.log(title, "published");
+
+    console.log(website,email,phone,"website")
+
+
+    // Validate that the typeId exists
+    const typeExists = await prisma.type.findUnique({
+      where: { id: typeId },
+    });
+
+    if (!typeExists) {
+      throw new Error(`Invalid typeId: ${typeId}. It does not exist.`);
+    }
 
     const supabase = createServerActionClient({ cookies });
     const user = await supabase.auth.getUser();
@@ -305,7 +342,7 @@ export const updateavatarImage = async (formData: any) => {
       console.log("published", profile);
       return { message: "Profile not found" };
     }
-
+    console.log("the avatar", formData.get("avatar") as string);
     const resp = await prisma.profile.update({
       where: {
         id: id,
@@ -375,7 +412,7 @@ export async function getProfile() {
   const profile = await prisma.profile.findUnique({
     where: {
       // id: "2",
-      id: user.data.user?.user_metadata.profileId || "profileId",
+      id: user.data.user?.user_metadata.profileId || "",
     },
     include: {
       vertical: true,
@@ -426,17 +463,21 @@ export async function getProfileById(id?: string) {
   const supabase = createServerActionClient({ cookies });
   const user = await supabase.auth.getUser();
   console.log("id", id);
+
+  console.log("usermetaId", user.data.user?.user_metadata.profileId);
   const profile = await prisma.profile.findUnique({
     where: {
       id:user.data.user?.user_metadata.profileId || id,
     },
     include: {
+      
       vertical: true,
       management: true,
       university: true,
       type: true,
       curriculum: true,
-      profileAccreditations: { include: { accreditation: true } },
+      // profileAccreditations: { include: { accreditation: true } },
+      accreditation: true,
       profileProgrammes: { include: { course: true } },
       profileContacts: true,
       // address:true,

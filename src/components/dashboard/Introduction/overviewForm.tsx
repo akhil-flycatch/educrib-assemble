@@ -1,14 +1,16 @@
+import { getAllAccreditations, getAllTypes, getAllUniversities } from "@/api";
 import Input from "@/components/hookForm/input";
 import Select from "@/components/hookForm/select";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Controller, FieldErrors, FieldValues, UseFormControl } from "react-hook-form";
 import * as z from "zod";
 
 export const overviewFormSchema = z.object({
-  name: z.string(),
-  university: z.string(),
-  accreditation: z.string(),
-  type: z.string(),
-  establishedYear: z.number() || z.string(),
+  title: z.string(),
+  university: z.any(),
+  accreditation: z.any(),
+  type: z.any(),
+  establishedYear: z.string(),
   website: z.string().regex(
     /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
   ),
@@ -20,93 +22,171 @@ export type OverviewFormValues = z.infer<typeof overviewFormSchema>;
 
 interface Props {
   errors: FieldErrors<FieldValues>;
-  register: UseFormRegister<FieldValues>;
+  control: UseFormControl<FieldValues>;
 }
-const OverviewForm: React.FC<Props> = ({ errors, register }) => {
+const OverviewForm: React.FC<Props> = ({ errors, control }) => {
+  const [universities, setUniversities] = useState([]);
+  const [accreditations, setAccreditations] = useState([]);
+  const[types,setTypes]=useState([]);
+  console.log(types,"the types");
+
+  useEffect(() => {
+    const fetchUniversities = async () => {
+      const university = await getAllUniversities();
+      const accredition = await getAllAccreditations();
+      const types=await getAllTypes();
+      setTypes(types);
+
+      console.log("accreditation", accredition);
+      setUniversities(university);
+      setAccreditations(accredition);
+    };
+    fetchUniversities();
+  }, []);
+
   return (
     <div className="flex-1 w-[756px] flex flex-col gap-6">
       <div className="w-full grid grid-cols-1">
-        <Input
-          id="name"
-          label="College Name"
-          error={errors?.name}
-          {...register("name")}
+        <Controller
+          name="title"
+          control={control}
+          render={({ field }) => (
+            <Input
+              id="title"
+              label="College Name"
+              error={errors?.title}
+              {...field}
+            />
+          )}
         />
       </div>
 
       <div className="w-full grid grid-cols-1">
-        <Select
-          id="university"
-          label="University"
-          options={[
-            { label: "University1", value: "university1" },
-            { label: "University2", value: "university2" },
-          ]}
-          error={errors?.university}
-          required
-          {...register("university")}
+        <Controller
+          name="university"
+          control={control}
+          render={({ field }) => {
+            console.log("Field value:", field.value); // Debug field value
+            return (
+              <Select
+                id="university"
+                label="University"
+                options={universities.map((university: any) => ({
+                  label: university.title,
+                  value: university.id,
+                }))}
+                value={field.value}
+                onChange={(value) => {
+                  console.log("Selected value:", value); // Debug selected value
+                  field.onChange(value);
+                }}
+                error={errors?.university}
+                required
+              />
+            );
+          }}
         />
       </div>
 
       <div className="w-full grid grid-cols-1">
-        <Input
-          id="establishedYear"
-          label="Established Year"
-          type="number"
-          error={errors?.establishedYear}
-          {...register("establishedYear")}
+        <Controller
+          name="establishedYear"
+          control={control}
+          render={({ field }) => (
+            <Input
+              id="establishedYear"
+              label="Established Year"
+              type="number"
+              error={errors?.establishedYear}
+              {...field}
+            />
+          )}
         />
       </div>
+
       <div className="w-full grid grid-cols-2 gap-6">
-        <Select
-          id="accreditation"
-          label="Accreditation"
-          options={[
-            { label: "Accreditation1", value: "accreditation1" },
-            { label: "Accreditation2", value: "accreditation2" },
-          ]}
-          error={errors?.accreditation}
-          required
-          {...register("accreditation")}
+        <Controller
+          name="accreditation"
+          control={control}
+          render={({ field }) => (
+            <Select
+              id="accreditation"
+              label="Accreditation"
+              options={accreditations.map((accreditation: any) => ({
+                label: accreditation.title,
+                value: accreditation.id,
+              }))}
+              error={errors?.accreditation}
+              required
+              {...field}
+            />
+          )}
         />
-        <Select
-          id="type"
-          label="Type"
-          options={[
-            { label: "Type1", value: "type1" },
-            { label: "Type2", value: "type2" },
-          ]}
-          error={errors?.type}
-          required
-          {...register("type")}
-        />
-      </div>
-
-      <div className="w-full grid grid-cols-1">
-        <Input
-          id="website"
-          label="Website"
-          error={errors?.website}
-          {...register("website")}
-        />
-      </div>
-
-      <div className="w-full grid grid-cols-1">
-        <Input
-          id="phone"
-          label="Phone Number"
-          type="tel"
-          error={errors?.phone}
-          {...register("phone")}
+        <Controller
+          name="type"
+          control={control}
+          render={({ field }) => (
+            <Select
+              id="type"
+              label="Type"
+              options={types?.map((type: any) => {
+                console.log("Mapped Type:", { label: type.title, value: type.id }); // Debugging the mapped values
+                return {
+                  label: type.title, // Display the title in the dropdown
+                  value: type.id,    // Use the id as the value
+                };
+              })}
+              error={errors?.type}
+              required
+              {...field}
+            />
+          )}
         />
       </div>
 
       <div className="w-full grid grid-cols-1">
-        <Input
-          id="email"
-          label="Email"
-          error={errors?.email}
-          {...register("email")}
+        <Controller
+          name="website"
+          control={control}
+          render={({ field }) => (
+            <Input
+              id="website"
+              label="Website"
+              error={errors?.website}
+              {...field}
+            />
+          )}
+        />
+      </div>
+
+      <div className="w-full grid grid-cols-1">
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <Input
+              id="phone"
+              label="Phone Number"
+              type="tel"
+              error={errors?.phone}
+              {...field}
+            />
+          )}
+        />
+      </div>
+
+      <div className="w-full grid grid-cols-1">
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <Input
+              id="email"
+              label="Email"
+              error={errors?.email}
+              {...field}
+            />
+          )}
         />
       </div>
     </div>

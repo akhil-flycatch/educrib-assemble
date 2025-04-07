@@ -97,19 +97,19 @@ export default function Map() {
     <>
       {/* Load Google Maps API Script */}
       <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places`}
+        src={`https://maps.googleapis.com/maps/api/js?key=AIzaSyDHZpyQ2TrhRsUVRcI5DR28ZXOhu8XV-vs&libraries=places`}
         strategy="lazyOnload"
         onLoad={() => setIsLoaded(true)} // Ensure script is loaded
       />
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="flex justify-between w-full gap-4 p-4 bg-white rounded-md shadow-sm">
         <div className="flex flex-col col-span-3 space-y-2">
-          <input
+          {/* <input
             type="text"
             id="google-places-autocomplete"
             className="relative w-full"
             placeholder="Locate your college"
-          />
+          /> */}
           {country && (
             <div className="flex items-center px-4 py-2 space-x-1 text-xs rounded-md text-dark bg-secondary/20">
               {route && <span>{`${route},`}</span>}
@@ -125,9 +125,8 @@ export default function Map() {
           )}
         </div>
 
-        <div id="google-map" className="w-full col-span-2 rounded-md h-96" />
 
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-between w-full">
           <div className="px-4 py-2 bg-white rounded-md">
             <Text label="Country" icon={MapPin} direction="vertical">
               {country || NOT_AVAILABLE}
@@ -154,6 +153,8 @@ export default function Map() {
             </Text>
           </div>
         </div>
+                <div id="google-map" className="w-full col-span-2 rounded-md h-96" />
+
       </div>
     </>
   );

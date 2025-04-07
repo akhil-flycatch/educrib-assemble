@@ -285,25 +285,6 @@ export async function upsertProfileProgramNew(formData: CourseFormValues) {
     const supabase = createRouteHandlerClient({ cookies: () => cookieStore });
     const user = await supabase.auth.getUser();
     const profileSlug = user.data.user?.user_metadata.profileId;
-    const test = {
-      courseId: "1b0eeefc-63c4-481f-b181-cd4b1b0cebb1",
-      levelId: "c41a04c5-f539-44ae-a0a1-69b99189854b",
-      specializationId: "a753035f-7ac2-4d18-8aef-871a36e96090",
-      intakeId: "feb4354d-6050-4c93-9c60-707e9305343e",
-      duration: 23,
-      capacity: 23,
-      durationType: "9b5aad03-7619-4aef-99bc-a3b996eb17cd",
-      mode: "86b35fb8-8fbb-4205-a822-287dfe3bb6ac",
-      fee: [
-        {
-          amount: 60000,
-          description: "this is the annual fee for test course 2",
-          frequencyId: "db2bb10a-a792-41a0-9c89-44c4bda74fdf",
-          title: "Annaual Fee",
-          id: "bcf76e21-f285-42d6-a299-270be9040be3",
-        },
-      ],
-    };
     const id = formData.id ?? null;
     const courseId = formData.courseId;
     const specializationId = formData.specializationId;
@@ -319,10 +300,10 @@ export async function upsertProfileProgramNew(formData: CourseFormValues) {
       where: {
         OR: [
           {
-            slug: "clrpz6nnn000mlf08dy5aqjdm",
+            slug: profileSlug,
           },
           {
-            id: "clrpz6nnn000mlf08dy5aqjdm",
+            id: profileSlug,
           },
         ],
       },

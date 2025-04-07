@@ -1,13 +1,10 @@
 "use client";
-"use client";
 import DashboardIntroSectionWrapper from "@/components/dashboard/Introduction/sectionWrapper";
 import { useEffect, useState } from "react";
 import Modal from "@/elements/modal";
 import React from "react";
 import OverviewItem from "./overviewItem";
-import { getProfileById, getProfileFacilitiesByProfileId } from "@/api";
-import { title } from "process";
-import FacilitiesForm from "@/elements/entry/forms/facilities";
+import { getProfileById, getProfileFacilitiesByProfileId, upsertProfile } from "@/api";
 import OverviewForm, { overviewFormSchema, OverviewFormValues } from "./overviewForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -15,35 +12,80 @@ import { useForm } from "react-hook-form";
 const Overview: React.FC = () => {
   const [isOverViewEditVisible, setIsOverViewEditVisible] = useState(false);
   const [profile, setProfile] = useState(null);
+  console.log(profile, "the profile");
   const [facilitiesProfile, setFacilitiesProfile] = useState(null);
-    useEffect(() => {
-      const fetchData = async () => {
-        const profileData = await getProfileById("clrpz6nnn000mlf08dy5aqjdm");
-        const facilitiesProfileData = await getProfileFacilitiesByProfileId(
-          "cm7ircicd0004fydcim7denka",
-          { active: true }
-        );
-        setProfile(profileData);
-        setFacilitiesProfile(facilitiesProfileData);
-      };
-  
-      fetchData();
-    }, []);
 
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-    } = useForm<OverviewFormValues>({
-      resolver: zodResolver(overviewFormSchema),
-    });
-  
-    const onOverviewFormSubmit = async (data: OverviewFormValues) => {
-      console.log(data);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    control,
+    formState: { errors },
+  } = useForm<OverviewFormValues>({
+    resolver: zodResolver(overviewFormSchema),
+  });
+
+  console.log(errors, "the errors");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const profileData = await getProfileById();
+      console.log("Profile Data:", profileData); // Debug profile data
+      const facilitiesProfileData = await getProfileFacilitiesByProfileId();
+      console.log("Facilities Profile Data:", facilitiesProfileData); // Debug facilities data
+      setProfile(profileData);
+      setFacilitiesProfile(facilitiesProfileData);
+
+      if (profileData) {
+        reset({
+          title: profileData?.title || "",
+          university: profileData?.university?.id || "",
+          management: profileData?.management?.title || "",
+          establishedYear: profileData?.establishedYear?.toString() || undefined,
+          code: profileData?.code || "",
+          accreditation: profileData?.accreditation?.id || "",
+          type: profileData?.type?.id || "",
+          email: profileData?.email || "",
+          phone: profileData?.phone || "",
+        });
+      }
+    };
+
+    fetchData();
+  }, [reset]);
+
+  const onOverviewFormSubmit = async (data: OverviewFormValues) => {
+
+    console.log("the data in overview form", data, getValues());
+    const formData = new FormData();
+
+    formData.append("id", profile.id || ""); // Ensure this is a valid unique identifier
+    formData.append("title", data.title || "");
+    formData.append("universityId", data.university || "");
+    formData.append("managementId", data.management || "");
+    formData.append("establishedYear", data.establishedYear || "");
+    formData.append("code", data.code || "");
+    formData.append("accreditationId", data.accreditation || "");
+    formData.append("typeId", data.type || "");
+    formData.append("email", data.email || "");
+    formData.append("phone", data.phone || "");
+    formData.append("website",data.website || "")
+
+    try {
+      if (!profile?.id) {
+        throw new Error("Profile ID is missing. Cannot perform upsert operation.");
+      }
+
+      await upsertProfile(formData);
+
+      console.log("Profile updated successfully");
       reset();
       setIsOverViewEditVisible(false);
-    };
+    } catch (error) {
+      console.error("Failed to update profile", error);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -68,23 +110,21 @@ const Overview: React.FC = () => {
               value={profile?.management?.title || "---"}
             />
             <OverviewItem label="Established year" value={profile?.establishedYear || "---"} />
-            <OverviewItem label="College Code" value={profile?.code|| "---"} />
+            <OverviewItem label="College Code" value={profile?.code || "---"} />
             <OverviewItem label="Accreditation" value={profile?.accreditation?.title || "---"} />
             <OverviewItem label="Type" value={profile?.type?.title || "---"} />
-            {/* it was told in the meeting only one email and phone number is required for now. Change the UI otherwise */}
             <OverviewItem label="email" value={profile?.email || "---"} />
             <OverviewItem label="Phone Number" value={profile?.phone || "---"} />
           </div>
         </div>
       </DashboardIntroSectionWrapper>
       <Modal
-        visible={isOverViewEditVisible} 
+        visible={isOverViewEditVisible}
         onClose={() => setIsOverViewEditVisible(false)}
-        onSave={() => {handleSubmit(onOverviewFormSubmit)()}}
+        onSave={() => { handleSubmit(onOverviewFormSubmit)() }}
         title="Edit Basic Informations"
       >
-        <OverviewForm errors={errors} register={register} />
-        {/* <>Test Content</> */}
+        <OverviewForm errors={errors} register={register} control={control} />
       </Modal>
     </React.Fragment>
   );

@@ -37,12 +37,14 @@ export default function DashboardLayout({
   const [verticalById, setVerticalById] = useState<any>(null);
   const [navItems, setNavItems] = useState([]);
 
+
+  
   useEffect(() => {
     const fetchData = async () => {
-      const profileData = await getProfileById("clrpz6nnn000mlf08dy5aqjdm");
+      const profileData = await getProfileById();
       const facilitiesProfileData = await getProfileFacilitiesByProfileId(
-        "cm7ircicd0004fydcim7denka",
-        { active: true }
+       
+        // { active: true }
       );
       setProfile(profileData);
       setFacilitiesProfile(facilitiesProfileData);
@@ -67,7 +69,7 @@ export default function DashboardLayout({
 
     formData.append("title", profile?.title);
     await publishProfile(formData);
-    window.location.reload();
+    // window.location.reload();
   };
   const submit = async (formData: FormData) => {
     const image = formData.get("image") as string;
@@ -76,16 +78,17 @@ export default function DashboardLayout({
     await updateProfileImage(formData);
     setModal(false);
 
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleSubmit = async (formData: FormData) => {
+console.log("profileId inside", profile?.id);
     const image = formData.get("image") as string;
     formData.append("id", profile?.id);
     formData.append("avatar", image);
     await updateavatarImage(formData);
     setProModal(false);
-    window.location.reload();
+    // window.location.reload();
   };
 
   return (
