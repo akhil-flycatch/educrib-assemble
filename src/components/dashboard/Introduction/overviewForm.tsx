@@ -28,7 +28,6 @@ const OverviewForm: React.FC<Props> = ({ errors, control }) => {
   const [universities, setUniversities] = useState([]);
   const [accreditations, setAccreditations] = useState([]);
   const[types,setTypes]=useState([]);
-  console.log(types,"the types");
 
   useEffect(() => {
     const fetchUniversities = async () => {
@@ -36,8 +35,6 @@ const OverviewForm: React.FC<Props> = ({ errors, control }) => {
       const accredition = await getAllAccreditations();
       const types=await getAllTypes();
       setTypes(types);
-
-      console.log("accreditation", accredition);
       setUniversities(university);
       setAccreditations(accredition);
     };
@@ -66,7 +63,6 @@ const OverviewForm: React.FC<Props> = ({ errors, control }) => {
           name="university"
           control={control}
           render={({ field }) => {
-            console.log("Field value:", field.value); // Debug field value
             return (
               <Select
                 id="university"
@@ -77,7 +73,6 @@ const OverviewForm: React.FC<Props> = ({ errors, control }) => {
                 }))}
                 value={field.value}
                 onChange={(value) => {
-                  console.log("Selected value:", value); // Debug selected value
                   field.onChange(value);
                 }}
                 error={errors?.university}
@@ -130,7 +125,6 @@ const OverviewForm: React.FC<Props> = ({ errors, control }) => {
               id="type"
               label="Type"
               options={types?.map((type: any) => {
-                console.log("Mapped Type:", { label: type.title, value: type.id }); // Debugging the mapped values
                 return {
                   label: type.title, // Display the title in the dropdown
                   value: type.id,    // Use the id as the value

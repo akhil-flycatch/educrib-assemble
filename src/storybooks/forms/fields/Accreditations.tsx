@@ -13,7 +13,6 @@ const Accreditations = ({
   label?: boolean;
   error?: string;
 }) => {
-  console.log("the acarer", defaultValue)
   return (
     <Field>
       {label && <Label htmlFor="accreditations">Accreditation</Label>}

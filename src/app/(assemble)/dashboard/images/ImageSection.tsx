@@ -29,8 +29,6 @@ const ImageSection: React.FC<any> = ({isAlbumEmpty}:any) => {
   const [allImages, setAllImages] = useState([...imageLinks]);
 
   const uploadimages = (images: any) => {
-    console.log("Uploaded images:", images);
-
     // Extract all URLs and push them into imageLinks
     const newImageUrls = images.map((img: any) => img.url);
     imageLinks.push(...newImageUrls);

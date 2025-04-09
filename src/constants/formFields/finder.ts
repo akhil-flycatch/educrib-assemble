@@ -6,7 +6,6 @@ export const formFiledsFinder = async (
 ) => {
   const profile = await getProfile();
   if (!profile) return defaultFields;
-  console.log("the profile", profile);
   const category = profile?.vertical?.slug ?? "";
   return fieldMapping[category] || defaultFields;
 };

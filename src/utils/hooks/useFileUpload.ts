@@ -40,7 +40,6 @@ const useFileUpload = () => {
           const { data, error } = await supabase.storage
             .from(bucket)
             .upload(fileName, file);
-          console.log("the er", error);
 
           if (error) {
             setFilesData((prevFilesData) => {
@@ -56,7 +55,6 @@ const useFileUpload = () => {
             const resUrlData = await supabase.storage
               .from(bucket)
               .getPublicUrl(data.path);
-            console.log("the value in url", resUrlData);
             const publicUrl = resUrlData.data.publicUrl;
 
             setFilesData((prevFilesData) => {

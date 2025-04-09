@@ -6,12 +6,8 @@ import { useState } from "react";
 
 
 export default function Social({
-	media, profile, lookup
+	media
 }: any) {
-	const [
-		visible, setVisible
-	] = useState(false);
-	console.log("the media", media)
 	return (
 		<div>
         {media?.length > 0 ? (

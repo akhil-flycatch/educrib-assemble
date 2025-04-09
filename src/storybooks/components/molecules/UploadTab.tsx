@@ -65,7 +65,6 @@ const UploadTab: React.FC<UploadTabProps> = ({
   setDefaultFiles,
   url,
 }) => {
-  console.log("the data", data);
   return (
     <>
       <FilePicker

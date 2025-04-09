@@ -8,9 +8,7 @@ import { useState } from "react";
 
 export default function SignIn() {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const sentOTP = async (event: any) => {
-    console.log("the eve", event.target.value);
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     // formData.append("email", email);
@@ -21,7 +19,6 @@ export default function SignIn() {
         body: formData,
       });
 
-      console.log("the resrponse", response);
       if (response.ok) {
         window.location.href = response.url;
       }

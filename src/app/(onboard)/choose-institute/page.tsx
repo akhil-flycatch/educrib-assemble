@@ -26,7 +26,6 @@ const page = () => {
           notClaimed: true,
         });
         setloading(false)
-        console.log("testData", data);
         return data;
       }}
       verticalId={verticalId}

@@ -78,7 +78,6 @@ export async function upsertProfileHostel(formData: FormData, avatar:any) {
       },
     });
     if (!profile) return { message: "profileSlug is invalid" };
-    console.log("the vlae", hostelTypeId, avatar)
     const profileHostel = await prisma.profileHostel.upsert({
       where: {
         id:id ? id : "",

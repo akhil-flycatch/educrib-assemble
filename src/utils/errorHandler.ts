@@ -5,9 +5,8 @@ export function errorMessageGenerator(e: any) {
   let errMessage = "";
   console.log(">>>>>>>>>>>>>>>>>>>",e);
   // eslint-disable-next-line no-console
-  process.env.NODE_ENV === "development" && console.log(e);
+  process.env.NODE_ENV === "development"
   if (e.code) {
-    // console.log("here",e.code);
     errMessage = prismaClientKnownError(e);
   }
   return { errMessage };
@@ -18,7 +17,6 @@ function prismaClientKnownError(e: Prisma.PrismaClientKnownRequestError) {
     case "P2002":
       // handle unique constraint error
       // handle the slug case
-      // console.log("here",e.meta?.target);
       const target: string[] = (e.meta?.target as string[]) || [];
       const fieldNames = target.join(", ");
       const fieldName =

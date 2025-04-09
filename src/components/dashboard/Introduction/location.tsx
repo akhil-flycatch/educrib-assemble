@@ -18,8 +18,6 @@ const Location: React.FC = () => {
   const [isLocationMosdalVisible, setIsLocationModalVisible] = useState(false);
   const [cordinates, setCordinates] = useState<{ lat: number; lng: number } | null>(null);
 
-  console.log(cordinates, "the cordinates");
-
   const {
     register,
     handleSubmit,
@@ -43,10 +41,8 @@ const Location: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const profileData = await getProfile();
-      console.log("Profile map Data:", profileData?.mapUrl); // Debug profile data
       if (profileData?.mapUrl) {
         const coordinates = extractCoordinatesFromUrl(profileData.mapUrl);
-      console.log("Cordinates Data:", cordinates); // Debug profile data
       setCordinates(coordinates);
       }
     };
@@ -55,7 +51,6 @@ const Location: React.FC = () => {
   }, []);
 
   const onLocationFormSubmit = async (data: LocationFormValues) => {
-    console.log(data);
     reset();
     setIsLocationModalVisible(false);
   };

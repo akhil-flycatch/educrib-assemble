@@ -20,8 +20,7 @@ export default function CourseItem({
   category,
 }: any) {
   const [visible, setVisible] = useState(false);
-
-  console.log("the courses", course, speicalization);
+  
   return (
     <div className="relative flex flex-col justify-between rounded-md shadow rounded-t-md bg-light group">
       <div className="flex flex-col p-4 space-y-2">

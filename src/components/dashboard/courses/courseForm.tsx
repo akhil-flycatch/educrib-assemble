@@ -164,7 +164,6 @@ const CourseForm: React.FC<Props> = ({ errors, register, control }) => {
       );
 
       const frequencies = await searchFrequencies("", { active: true });
-      console.log(frequencies);
       setFrequencyOptions(
         frequencies.map((frequency) => ({
           label: frequency.title ?? "",

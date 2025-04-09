@@ -13,7 +13,6 @@ const ContactType = ({
   label?: boolean;
   error?: string;
 }) => {
-  console.log("the vale", defaultValue);
   return (
     <Field>
       {label && <Label htmlFor="contactTypeId">Contact Type</Label>}

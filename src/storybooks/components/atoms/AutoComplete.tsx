@@ -1,14 +1,12 @@
 "use client";
 import debounce from "lodash.debounce";
 import AsyncSelect from "react-select/async";
-import AsyncCreatableSelect from "react-select/async-creatable";
 
 import { AutoCompleteProps, callback } from "./type";
 import { University } from "lucide-react";
 
 const CustomOption = (props:any) => {
   const { data, innerRef, innerProps } = props;
-  console.log(props, "data");
   return (
     data.isNav ?
     <a href={data?.value}> 
@@ -46,12 +44,10 @@ const AutoComplete = ({
   selectedOptions = [], // Add selectedOptions prop to filter out selected options
   ...props
 }: AutoCompleteProps) => {
-  console.log("the deaf",defaultValue)
   const loadOptions = debounce((inputValue: string, callback: callback) => {
     
     if (inputValue.length >= 2 || inputValue.length === 0) {
       searchFn(inputValue).then((options) => {
-        console.log("the value insera", inputValue)
         if (options) {
           // Filter out the selected options
           const filteredOptions = options

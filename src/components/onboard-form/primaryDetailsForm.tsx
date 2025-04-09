@@ -31,8 +31,6 @@ const PrimaryDetailsForm: React.FC<Props> = ({ errors, register, currentVertical
     fetchData();
   }, []);
 
-  console.log(universities, "accreditations");
-
   const fieldToComponentMapping = new Map([
     [
       [

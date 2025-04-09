@@ -11,7 +11,6 @@ const CreateProfile = () => {
   const router = useRouter();
   const submit = async (formData: FormData) => {
    const metaUser= await updateUser(formData);
-   console.log(metaUser,"metaUser")
    if(metaUser?.profileId){
     router.push("/thank-you");  
   }else{

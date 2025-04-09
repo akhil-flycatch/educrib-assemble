@@ -79,14 +79,12 @@ export default function Facilities({ facilities }: any) {
 
   const saveEditFacilities = async () => {
     let facilitiesIds: any[] = [];
-    console.log("the deket", facilitieslist)
     // Iterate over the facilities list
     facilitieslist?.forEach((data: any) => {
       // Find all matching profiles (not just the first match)
       const matchingProfiles = allProfiles?.filter(
         (allData: any) => allData.title === data.label
       );
-      console.log("the uds", allProfiles)
       if (matchingProfiles && matchingProfiles.length > 0) {
         // Push all the matching profile IDs into the facilitiesIds array
         matchingProfiles.forEach((profile: any) => {
@@ -130,7 +128,6 @@ export default function Facilities({ facilities }: any) {
 
   // Callback function to receive the updated facilities
   const handleFacilitiesChange = (updatedFacilities: any[]) => {
-    console.log("the update faiclites", updatedFacilities)
     setFacilities(updatedFacilities); // Store the updated facilities
   };
   return (

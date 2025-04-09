@@ -20,13 +20,10 @@ const ContactForm = ({
   contact?: any;
 }) => {
   //   const { register, handleSubmit } = useForm();
-  console.log("the contct", contact);
   const handleSubmit = async (data: any) => {
-    console.log("on submit", data);
   };
 
   const formAction = async (formData: FormData) => {
-    console.log("the form actios", formData.get("contactTypeId"));
 
     // Add profileId to formData for update logic
     formData.append("profileId", contact.profileId);

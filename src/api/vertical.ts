@@ -64,8 +64,6 @@ export async function getFoundationVerticals(filter:{active:boolean} = {active:f
       isFoundation: true,
     },
   });
-
-  console.log(verticals, "the verticals in foundation verticals");
   return verticals;
 }
 

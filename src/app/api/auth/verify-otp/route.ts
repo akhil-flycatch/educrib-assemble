@@ -32,7 +32,6 @@ export async function POST(request: Request) {
       token: otp,
       type: "email",
     });
-    console.log("user_metadata: ", data?.user);
     if (error) {
       console.error("OTP verification error: ", error);
       return NextResponse.json(
@@ -43,7 +42,6 @@ export async function POST(request: Request) {
     let redirectTo = "";
     if (data?.user?.user_metadata?.profileId) {
       const loggedInprofile = await  getProfile();
-      console.log("the logged in progeile", loggedInprofile);
       if(loggedInprofile?.verified){
         redirectTo = "/dashboard"
       }

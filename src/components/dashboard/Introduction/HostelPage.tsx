@@ -5,10 +5,7 @@ import React, { useEffect, useState } from "react";
 import Modal from "@/elements/modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  FieldValues,
-  RegisterOptions,
   useForm,
-  UseFormRegisterReturn,
 } from "react-hook-form";
 import HostelPageForm, {
   HostelFormValues,
@@ -17,14 +14,8 @@ import HostelPageForm, {
 import {
   getAllFacilities,
   getProfileHostelsByProfileId,
-  searchFacilities,
 } from "@/api";
 import { deleteProfileHostel, getAllHostelTypes, upsertProfileHostel } from "@/api/profileHostel";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import useFileUpload from "@/utils/hooks/useFileUpload";
-import FileUpload from "@/components/hookForm/fileUpload";
-// import { Input } from "postcss";
-import Input from "@/components/hookForm/input";
 
 const HostelPage: React.FC = () => {
   const isEmpty = true;
@@ -60,14 +51,7 @@ const HostelPage: React.FC = () => {
   });
   const [imageUrlHostel, setImageUrlHostel] = useState<any>();
 
-  console.log("the id", allamenities?.map((data) => allHostelByIdDetails?.map((details) => {
-    if(details.facilities.includes(data.id)){
-      return data;
-    }
-  })))
-
   const searchingAmenitiesInModal = async (keyword: any) => {
-    console.log("Search term:", keyword);
     const allFacility = await getAllFacilities(); // Get all facilities
     const alreadySelectedFacilityIds = getValues("facilityId") || [];
 
@@ -79,7 +63,6 @@ const HostelPage: React.FC = () => {
       (facility) => facility.id === keyword.value
     );
 
-    console.log("Search term:", alreadyPresent, filteredAmenities);
     // Update the state with filtered amenities
     await setAllAmenities((prevAmenities) => [
       ...alreadyPresent,
@@ -116,7 +99,6 @@ reset({
 
 
   const openEditModal = async(details:any) => {
-    console.log("detals on edit",details)
     await reset(
       {
         hostelTypeId: details.hostelType,
@@ -137,7 +119,6 @@ reset({
   }
 
   const onLocationFormSubmit = async (data: HostelFormValues) => {
-    console.log("Form Data before submission", errors);
     //  let data = getValues()
     // Convert the form data to FormData object
     const formData = new FormData();
@@ -165,7 +146,6 @@ reset({
     }
 
     // Log or send formData to your API endpoint
-    console.log("Form Data as FormData", formData, imageUrlHostel);
     // Reset the form and close the modal after submission
     reset({
       hostelTypeId: "",
@@ -181,8 +161,7 @@ reset({
       facilityId: [],
     });
     // // For demo, we'll create an object URL
-    // console.log("the value" ,value)
-    const response = await upsertProfileHostel(formData,imageUrlHostel);
+    await upsertProfileHostel(formData,imageUrlHostel);
  const allHostelById = await getProfileHostelsByProfileId();
       const allHostelTypes = await getAllHostelTypes({ active: true });
       const allFacility = await getAllFacilities();
@@ -211,7 +190,6 @@ reset({
 
   const deleteHostelDetails = async(details:any) => {
     const repsonse =  await deleteProfileHostel(details.id)
-    console.log(">>>>on delete", repsonse)
    const allHostelById = await getProfileHostelsByProfileId();
       const allHostelTypes = await getAllHostelTypes({ active: true });
       const allFacility = await getAllFacilities()
@@ -376,7 +354,6 @@ reset({
                       <div className="flex flex-wrap gap-[12px]">
                         {allamenities?.map((amenities: any) => {
                           if (hostelDetails?.facilities?.includes(amenities.id)) {
-                            console.log("the vale>>>", amenities)
                             return (
                               <>
                                 <div className="flex items-center p-[12px] gap-[12px] h-[56px]  border border-[#DFE2E6] rounded-[8px]">
@@ -392,9 +369,6 @@ reset({
                                 </div>
                               </>
                             );
-                          }
-                          else{
-                            console.log("the vale", hostelDetails.facilities, typeof(amenities.id))
                           }
                         })}
                       </div>

@@ -12,7 +12,6 @@ export async function POST(request: Request) {
   const supabase = createRouteHandlerClient<any>({
     cookies: () => cookieStore,
   });
-  console.log("the route", requestUrl.origin);
 
   if (!email) {
     return NextResponse.redirect(`${requestUrl.origin}/error`, {

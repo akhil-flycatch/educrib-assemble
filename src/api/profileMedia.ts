@@ -18,8 +18,7 @@ export async function upsertProfileMedia(formData: FormData) {
     const mediaId = (formData.get("mediaId") as string) || undefined;
     const isSocialLink = formData.get("isSocialLink") as string || undefined;
     const ismediaVideoType = formData.get("ismediaVideoType") as string || undefined;
-
-    console.log("the value", mediaId);
+    
 
     // Step 1: Check if the profile and media entry already exists
     const existingProfileMedia = await prisma.profileMedia.findFirst({

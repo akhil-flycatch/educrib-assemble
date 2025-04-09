@@ -8,7 +8,6 @@ import cuid from "cuid";
 import CourseItem from "./item";
 
 export default function CoursesList({ courses }: any) {
-  console.log("The corrs", courses);
   return (
     <div className="grid grid-cols-2 gap-4">
       {courses &&

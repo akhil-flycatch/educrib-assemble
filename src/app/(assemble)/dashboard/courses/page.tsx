@@ -64,7 +64,7 @@ export default function Courses() {
         queryParams.append("page", currentPage.toString());
         queryParams.append("limit", itemsPerPage.toString());
       }
-      const response = await fetch(`/api/profiles?${queryParams.toString()}`);
+      const response = await fetch(`/api/courses?${queryParams.toString()}`);
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }

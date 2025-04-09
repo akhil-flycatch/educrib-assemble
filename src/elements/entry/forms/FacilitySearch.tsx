@@ -50,7 +50,6 @@ const FacilitySearch = ({
         const slug = formData.get("keyword") as string;
         const isNew = formData.get("new-option") as string;
         formData.append("verticalId", verticalId);
-        console.log("isNew", Boolean(isNew));
         if (onboarding) {
             await selectProfile(formData);
             router.push(`/create-profile`);

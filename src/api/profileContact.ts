@@ -9,7 +9,6 @@ import { errorMessageGenerator } from "@/utils/errorHandler";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
 export async function upsertProfileContact(formData: FormData) {
-  console.log("entered formData", formData);
   try {
     const id = formData.get("id") as string;
     const title = (formData.get("title") as string) || "NA";
@@ -34,7 +33,6 @@ export async function upsertProfileContact(formData: FormData) {
         ],
       },
     });
-    console.log(">>>>>>>ehetre", profileSlug, profile);
     if (!profile) return { message: "profileSlug is invalid" };
 
     await prisma.profileContact.upsert({
@@ -68,8 +66,6 @@ export async function upsertProfileContact(formData: FormData) {
 }
 
 export async function addProfileContact(formData: FormData) {
-
-  console.log("entered here")
   try {
     const title = (formData.get("title") as string) || "NA";
     const status = formData.get("status") === "on";
@@ -79,8 +75,6 @@ export async function addProfileContact(formData: FormData) {
     const contactTypeId = (formData.get("type") as string) || undefined;
     const profileSlug = (formData.get("profileId") as string) || undefined;
     const avatar = formData.get("avatar") as string;
-
-    console.log("final avatar", avatar);
 
     // Find the profile by slug or ID
     const profile = await prisma.profile.findFirst({
@@ -97,13 +91,8 @@ export async function addProfileContact(formData: FormData) {
     });
 
     if (!profile) {
-      console.log(`Profile not found for slug: ${profileSlug}`);
-
       return { message: "Invalid profileSlug or profile not found" };
     }
-
-    console.log(`Profile found: ${profile.id}`);
-    console.log(`Profile found: ${contactTypeId}`);
     // Create a new contact
   const data=  await prisma.profileContact.create({
       data: {
@@ -117,8 +106,6 @@ export async function addProfileContact(formData: FormData) {
         avatar: avatar || undefined,
       },
     });
-
-    console.log("Contact added successfully", data);
 
     // Revalidate the path to update the cache
     revalidatePath("/profileContacts");

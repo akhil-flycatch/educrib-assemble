@@ -81,8 +81,6 @@ const FacilitySearch = ({
     }
   };
 
-  console.log("teh adad", addedFacilities)
-
   const handleSelectOption = (selectedOption: any, index: any) => {
     if (
       addedFacilities.some(
@@ -94,7 +92,6 @@ const FacilitySearch = ({
     }
     
     setAddedFacilities((prevAddedFacilities:any) => {
-      // console.log("rhwe value")
       const newFacilities = [
         ...prevAddedFacilities.slice(0, index),
         selectedOption, // Replace the item at the specified index with the selectedOption

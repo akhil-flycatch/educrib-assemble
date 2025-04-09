@@ -61,7 +61,6 @@ const OnboardForm: React.FC = () => {
     const fetchVerticals = async () => {
       const response = await fetch("/api/my/vertical");
       const { data } = await response.json();
-      console.log("data", data);
       setCurrentVertical(data);
     };
     fetchVerticals();
@@ -91,7 +90,6 @@ const OnboardForm: React.FC = () => {
     //   body: JSON.stringify(data),
     // });
     // const responseData = await response.json();
-    // console.log(response, "responseData");
   };
 
   return (

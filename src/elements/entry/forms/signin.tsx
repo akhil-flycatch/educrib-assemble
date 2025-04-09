@@ -34,7 +34,6 @@ const SigninForm = () => {
 			// 	email
 			// });
 			// if (error) throw error;
-			console.log('email', email);
 			router.push('magiclink');
 		} catch (error: any) {
 			router.push('signin?error=auth');

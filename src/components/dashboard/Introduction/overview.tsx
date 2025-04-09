@@ -12,7 +12,6 @@ import { useForm } from "react-hook-form";
 const Overview: React.FC = () => {
   const [isOverViewEditVisible, setIsOverViewEditVisible] = useState(false);
   const [profile, setProfile] = useState(null);
-  console.log(profile, "the profile");
   const [facilitiesProfile, setFacilitiesProfile] = useState(null);
 
   const {
@@ -26,14 +25,10 @@ const Overview: React.FC = () => {
     resolver: zodResolver(overviewFormSchema),
   });
 
-  console.log(errors, "the errors");
-
   useEffect(() => {
     const fetchData = async () => {
       const profileData = await getProfileById();
-      console.log("Profile Data:", profileData); // Debug profile data
       const facilitiesProfileData = await getProfileFacilitiesByProfileId();
-      console.log("Facilities Profile Data:", facilitiesProfileData); // Debug facilities data
       setProfile(profileData);
       setFacilitiesProfile(facilitiesProfileData);
 
@@ -56,8 +51,6 @@ const Overview: React.FC = () => {
   }, [reset]);
 
   const onOverviewFormSubmit = async (data: OverviewFormValues) => {
-
-    console.log("the data in overview form", data, getValues());
     const formData = new FormData();
 
     formData.append("id", profile.id || ""); // Ensure this is a valid unique identifier
@@ -78,8 +71,6 @@ const Overview: React.FC = () => {
       }
 
       await upsertProfile(formData);
-
-      console.log("Profile updated successfully");
       reset();
       setIsOverViewEditVisible(false);
     } catch (error) {

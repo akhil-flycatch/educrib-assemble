@@ -5,8 +5,6 @@ import { Loader2 } from "lucide-react";
 
 const LinksForm: React.FC<any> = ({ errors, register, mediaLookup, media }) => {
 
-  console.log("the media lookup in links", media);
-
   return (
     <div className="w-full flex justify-between">
       <div className="flex-1 max-w-[794px] gap-6">

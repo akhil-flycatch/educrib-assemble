@@ -56,7 +56,6 @@ const HostelPageForm: React.FC<Props> = ({
     return URL.createObjectURL(file);
   };
   const ImageUrlChange = (url: any) => {
-    console.log("the value in image form", url);
     setImageUrlHostelChange(url);
   };
 

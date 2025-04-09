@@ -34,7 +34,6 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [isPublishModalOpen, setIsPublishModalOpen] = useState<boolean>(false);
   const isEmpty = !profile || !facilitiesProfile;
-  const [verticalById, setVerticalById] = useState<any>(null);
   const [navItems, setNavItems] = useState([]);
 
 
@@ -49,14 +48,15 @@ export default function DashboardLayout({
       setProfile(profileData);
       setFacilitiesProfile(facilitiesProfileData);
       const vertical = await getVerticalById();
-      setVerticalById(vertical);
+      console.log(vertical, "the vertical got");
+      const fetchedNavItems =
+      DASHBOARD_NAV[vertical?.slug] || [  ];
+    setNavItems(fetchedNavItems);
+    fetchedNavItems.forEach((item) => router.prefetch(item.url));
     };
 
     fetchData();
-    const fetchedNavItems =
-      DASHBOARD_NAV[verticalById?.title] || DASHBOARD_NAV["colleges"];
-    setNavItems(fetchedNavItems);
-    fetchedNavItems.forEach((item) => router.prefetch(item.url));
+    
   }, []);
 
   const [modal, setModal] = useState(false);
@@ -82,7 +82,6 @@ export default function DashboardLayout({
   };
 
   const handleSubmit = async (formData: FormData) => {
-console.log("profileId inside", profile?.id);
     const image = formData.get("image") as string;
     formData.append("id", profile?.id);
     formData.append("avatar", image);

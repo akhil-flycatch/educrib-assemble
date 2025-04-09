@@ -35,7 +35,6 @@ const FileUpload: React.FC<FileUploadProps> = ({
   const [defaultFiles, setDefaultFiles] = useState<string[]>([]);
   const { globalLoading, filesData, uploadFilesToStorage, removeFile } =
     useFileUpload();
-  console.log("the vale", filesData);
   useEffect(() => {
     if (defaultValue) {
       if (defaultValue.startsWith("http")) {

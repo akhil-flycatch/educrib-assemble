@@ -1,6 +1,5 @@
 import Image from "next/image";
 const CapsuleWithIcons = ({ name, onEdit, onDelete, id }: any) => {
-  console.log("the alue")
   return (
     <div
       className="relative group flex items-center   py-2 px-4 rounded-facilities cursor-pointer"

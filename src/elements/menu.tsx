@@ -50,9 +50,7 @@ const Menu: FC<MenuProps> = ({
     const [collapsedMenu, setCollapsedMenu] = useState(() => collapsed);
     const [mounted, setMounted] = useState(false);
     const router = useRouter();
-	console.log(router,"router");
 	const splited=router?.pathname.split('/');
-	console.log(splited,"splited");
 
     useEffect(() => {
         setMounted(true);

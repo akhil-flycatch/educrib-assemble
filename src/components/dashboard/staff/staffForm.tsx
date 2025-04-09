@@ -37,7 +37,6 @@ const StaffForm: React.FC<Props> = ({ errors, register, control, setValue, getVa
     return URL.createObjectURL(file);
   };
   const ImageUrlChange = (url: any) => {
-    console.log("the value in image form", url);
     setImageUrlChange(url);
   };
 

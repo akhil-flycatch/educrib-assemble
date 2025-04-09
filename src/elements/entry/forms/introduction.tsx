@@ -1,15 +1,6 @@
 "use client";
 
 import { Form } from "@/storybooks/components/atoms";
-// import Form from '@elements/entry/form';
-// import Accreditation from '@entry/fields/accreditation';
-// import Code from '@entry/fields/code';
-// import Type from '@entry/fields/collegetype';
-// import EstablishedYear from '@entry/fields/establishedYear';
-// import Management from '@entry/fields/management';
-// import University from '@entry/fields/university';
-// import { useForm } from "react-hook-form";
-// import Title from '../fields/title';
 import { upsertProfile } from "@/api/profile";
 import {
   Accreditations,
@@ -27,7 +18,6 @@ interface IntroductionFormProps {
 }
 
 const IntroductionForm = ({ profileId, profile }: IntroductionFormProps) => {
-  console.log("the profie", profile);
   //   const { register, handleSubmit } = useForm();
   var accredition: any = [];
   profile.profileAccreditations?.map((accred: any) =>
@@ -38,7 +28,6 @@ const IntroductionForm = ({ profileId, profile }: IntroductionFormProps) => {
   );
 
   const handleSubmit = async (data: any) => {
-    console.log("on submit", data.target.value);
   };
 
   const formAction = async (data: any) => {
@@ -49,11 +38,9 @@ const IntroductionForm = ({ profileId, profile }: IntroductionFormProps) => {
     // Add profileId to formData for update logic
     formData.append("id", profile.id);
     // formData.append("title",)
-    console.log("the title", formData.get("universityId"));
 
     try {
       const result = await upsertProfile(formData);
-      // console.log(">>>>", result);
     } catch (error) {
       console.error("Failed to upsert profile", error);
     }

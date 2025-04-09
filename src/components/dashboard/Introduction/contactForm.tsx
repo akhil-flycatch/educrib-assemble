@@ -41,7 +41,6 @@ const ContactForm: React.FC<Props> = ({ control, errors, setValue, defaultValues
   };
 
   const [contactType, setContactType] = useState<{ id: string; title: string }[]>([]);
-console.log(defaultValues, "the default values in contact form");
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -54,7 +53,6 @@ console.log(defaultValues, "the default values in contact form");
     fetchData();
   }, []);
   const ImageUrlChange = (url: string) => {
-    console.log("Image URL received:", url); // Debugging log
     setValue("avatar", url, { shouldValidate: true }); // Update the avatar field
   };
 
@@ -68,7 +66,6 @@ console.log(defaultValues, "the default values in contact form");
           error={errors.avatar}
           ImageUrlChange={ImageUrlChange} // Pass the ImageUrlChange function
           // onChange={(url) => {
-          //   console.log("onChange URL:", url); // Debugging log
           //   setValue("avatar", url, { shouldValidate: true }); // Update the avatar field
           // }}
         />

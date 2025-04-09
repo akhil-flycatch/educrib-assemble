@@ -65,7 +65,6 @@ const Select = forwardRef<HTMLSelectElement, SelectProps>(
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      console.log("Selected value:", e.target.value); // Debugging log
       setSelectedValue(e.target.value);
       if (onChange) onChange(e);
     };

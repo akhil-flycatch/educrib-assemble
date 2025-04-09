@@ -71,9 +71,6 @@ const Contacts: React.FC = () => {
   }, [defaultValue, reset]);
 
   const onContactFormSubmit = async (data: ContactFormValues) => {
-
-    console.log("entered here");
-    console.log("the data in contact form", data);
     const formData = new FormData();
     formData.append("title", data.name);
     formData.append("email", data.email);
@@ -81,7 +78,6 @@ const Contacts: React.FC = () => {
     formData.append("type", data.type);
     formData.append("profileId", profile?.id);
     formData.append("avatar", data?.avatar || "");
-    console.log("the data in contact formdata", formData);
 
     await addProfileContact(formData);
     reset();

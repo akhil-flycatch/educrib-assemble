@@ -77,12 +77,10 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
           .upload(fileName, file);
 
         if (error) {
-          console.log("the er", error);
         } else {
           const resUrlData = await supabase.storage
             .from("educrib-test")
             .getPublicUrl(data.path);
-          console.log("the value in url", resUrlData);
           const publicUrl = resUrlData.data.publicUrl;
           await ImageUrlChange(publicUrl)
         }
@@ -92,7 +90,6 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
           "educrib-test",
           supabase
         );
-        console.log(">>>>>>>vlaues", value);
         setIsUploading(true);
         setUploadError("");
         const objectUrl = URL.createObjectURL(file);

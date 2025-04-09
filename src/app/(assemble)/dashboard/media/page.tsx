@@ -39,7 +39,6 @@ export default function Media({
      
     };
     fetchData();
-    // console.log("the proileDAta ", profileData);
   }, []);
   const {
     register,
@@ -91,7 +90,6 @@ export default function Media({
         formData.append("isSocialLink", String(isSocialLink));
         formData.append("ismediaVideoType", String(ismediaVideoType));
         const response = await upsertProfileMedia(formData);
-        console.log("API Response:", response);
         formData = new FormData()
         const profileData = await getProfileMediasByProfileId();
         setMedia(profileData);
@@ -122,7 +120,6 @@ export default function Media({
         formData.append("isSocialLink", String(isSocialLink));
         formData.append("ismediaVideoType", String(ismediaVideoType));
         const response = await upsertProfileMedia(formData);
-        console.log("API Response:", response);
         formData = new FormData()
         const profileData = await getProfileMediasByProfileId();
         setMedia(profileData);

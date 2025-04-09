@@ -4,7 +4,6 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(request: Request) {
   const body = await request.json();
-  console.log("request body", body);
 
   const cookieStore = await cookies();
   const supabase = createRouteHandlerClient<any>({
@@ -19,8 +18,6 @@ export async function POST(request: Request) {
     if (userError) {
       throw new Error(`Authentication error: ${userError.message}`);
     }
-
-    console.log("user", user);
 
     const { title } = body;
 

@@ -68,7 +68,6 @@ const ProgrammeForm = ({
   const handleSubmit = async (event: any) => {
     profileProgrammeValidation(event, setError);
   };
-  console.log("the valie", fields);
   const postAction = async () => {
     // const program = await getProfilePrograms();
     if (setOpen) {
@@ -189,7 +188,6 @@ const ProgrammeForm = ({
   const formFields = fields.map((field: string, i: number) => (
     <Fragment key={i}>{fieldMapping[field]}</Fragment>
   ));
-  console.log("the form fields", formFields);
   return (
     <>
       {formFields.length > 0 ? (

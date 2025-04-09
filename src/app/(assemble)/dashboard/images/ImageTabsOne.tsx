@@ -45,8 +45,6 @@ const ImageTabsOne = ({ setShowAll, imageLinks, isAlbumEmpty }: any) => {
   const handleAlbumModalClose = () => setIsAlbumModalOpen(false);
 
   const handleAlbumCreate = () => {
-    console.log("Album Created", selectedImages,albumName);
-    // Close modal after creation
     setIsAlbumModalOpen(false);
   };
 
@@ -69,7 +67,6 @@ const ImageTabsOne = ({ setShowAll, imageLinks, isAlbumEmpty }: any) => {
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
-      console.log("the array",event.target.files)
       // Simulating upload progress
       filesArray.forEach((fileData, index) => {
         let progress = 0;
@@ -94,8 +91,6 @@ const ImageTabsOne = ({ setShowAll, imageLinks, isAlbumEmpty }: any) => {
           const { data, error } = await supabase.storage
             .from('educrib-test')
             .upload(fileName, fileData.file);
-          console.log("the er", error);
-
           if (error) {
             setSelectedImages((prevFilesData) => {
               const updatedFilesData = [...prevFilesData];
@@ -110,7 +105,6 @@ const ImageTabsOne = ({ setShowAll, imageLinks, isAlbumEmpty }: any) => {
             const resUrlData = await supabase.storage
               .from('educrib-test')
               .getPublicUrl(data.path);
-            console.log("the value in url", resUrlData);
             publicUrl = resUrlData.data.publicUrl;
             // const lastPart = publicUrl
             setSelectedImages((prevImages) =>
