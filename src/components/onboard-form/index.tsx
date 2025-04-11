@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import AddressContactForm from "./addressContactForm";
 import PrimaryDetailsForm from "./primaryDetailsForm";
+import { institutionOnboard } from "@/api/profile";
 
 const OnboardForm: React.FC = () => {
   const commonFormSchema = z.object({
@@ -72,9 +73,13 @@ const OnboardForm: React.FC = () => {
     for (var key in data) {
       form_data.append(key, data[key]);
     }
+
+    form_data.append("accreditationId","4b7a6aeb-f204-4bb8-b3eb-515797de9034");
+    form_data.append("universityId","3c4f5b01-efec-4312-83cb-bf59381fd281");
+
     upsertAction(
       form_data,
-      upsertProfileOfUser,
+      institutionOnboard,
       "Profile saved successfully",
       () => {
         router.push("/");
@@ -104,7 +109,7 @@ const OnboardForm: React.FC = () => {
           </span>
         </div>
         <div className="flex gap-4">
-          <button className="py-3 px-4 rounded-lg border-primary bg-white text-primary hover:bg-light font-medium">
+          <button className="py-3 px-4 rounded-lg border-primary bg-white text-primary hover:bg-light font-medium" onClick={() => router.push("/dashboard")}>
             Skip to Dashboard
           </button>
           <button

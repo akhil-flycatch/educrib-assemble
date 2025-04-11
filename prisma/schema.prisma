@@ -384,6 +384,7 @@ model profile {
   accreditationId       String?
   website               String?
   mapUrl                String?
+  album                 album[]
   location              location?
   accreditation         accreditation?         @relation(fields: [accreditationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curriculum            curriculum?            @relation(fields: [curriculumId], references: [id])
@@ -1002,4 +1003,26 @@ model programmeStudyMode {
   title            String?
   slug             String?
   profileProgramme profileProgramme[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model album {
+  id          String   @id @default(dbgenerated("gen_random_uuid()"))
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  title       String?
+  description String?
+  slug        String?
+  profileId   String?
+  profile     profile? @relation(fields: [profileId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  image       image[]
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model image {
+  id         String   @id @default(dbgenerated("gen_random_uuid()"))
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+  url        String?
+  albumId    String?
+  slug       String?
+  album      album?   @relation(fields: [albumId], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }

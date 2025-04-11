@@ -58,9 +58,9 @@ export async function upsertProfile(formData: any) {
     const recommended = formData.get("recommended") === "on";
     const verified = formData.get("verified") === "on";
     const published = formData.get("published") === "on";
-    const phone=formData.get("phone")
-    const website=formData.get("website")
-const email =formData.get("email")
+    const phone = formData.get("phone");
+    const website = formData.get("website");
+    const email = formData.get("email");
     // // Validate that the typeId exists
     // const typeExists = await prisma.type.findUnique({
     //   where: { id: typeId },
@@ -71,8 +71,7 @@ const email =formData.get("email")
     // }
     const profile = await prisma.profile.upsert({
       where: {
-        id
-
+        id,
       },
       create: {
         // yearsOfExperience,
@@ -98,7 +97,7 @@ const email =formData.get("email")
         accreditationId,
         phone,
         email,
-        website
+        website,
       },
       update: {
         yearsOfExperience: "1",
@@ -124,7 +123,7 @@ const email =formData.get("email")
         accreditationId,
         phone,
         email,
-        website
+        website,
       },
     });
     // await updateActivity(profile.id);
@@ -168,7 +167,6 @@ export async function upsertProfileOfUser(formData: FormData) {
       (formData.get("registrationNumber") as string) || undefined;
     const state = (formData.get("state") as string) || undefined;
     const website = (formData.get("website") as string) || undefined;
-
 
     // Validate that the typeId exists
     const typeExists = await prisma.type.findUnique({
@@ -444,10 +442,9 @@ export async function getProfileById(id?: string) {
   const user = await supabase.auth.getUser();
   const profile = await prisma.profile.findUnique({
     where: {
-      id:user.data.user?.user_metadata.profileId || id,
+      id: user.data.user?.user_metadata.profileId || id,
     },
     include: {
-      
       vertical: true,
       management: true,
       university: true,
@@ -549,5 +546,116 @@ export async function deleteProfile(formData: FormData) {
   } catch (e: any) {
     const { errMessage } = errorMessageGenerator(e);
     return { message: errMessage || "Failed to delete profile" };
+  }
+}
+
+export async function institutionOnboard(formData: FormData) {
+  try {
+    const website = (formData.get("website") as string) || undefined;
+    const address = (formData.get("address") as string) || undefined;
+    const city = (formData.get("city") as string) || undefined;
+    const district = (formData.get("district") as string) || undefined;
+    const state = (formData.get("state") as string) || undefined;
+    const pincode = (formData.get("pincode") as string) || undefined;
+    const phone = (formData.get("phone") as string) || undefined;
+    const email = (formData.get("email") as string) || undefined;
+    const title = (formData.get("title") as string) || "NA";
+    const establishedYear = formData.get("establishedYear")
+      ? parseInt(formData.get("establishedYear") as string)
+      : undefined;
+    const accreditationId =
+      (formData.get("accreditationId") as string) || undefined;
+    const universityId = (formData.get("universityId") as string) || undefined;
+    const status = true;
+    const type = (formData.get("type") as string) || undefined;
+    const typeId = "42f1177a-872f-43a4-bb88-ad77cac0fd50";
+    const published = false;
+    const verified = true;
+    const featured = true;
+    const recommended = true;
+    const slug = title.toLowerCase().split(" ").join("-");
+
+    // Validate that the typeId exists
+    // const typeExists = await prisma.type.findUnique({
+    //   where: { id: typeId },
+    // });
+
+    // if (!typeExists) {
+    //   throw new Error(`Invalid typeId: ${typeId}. It does not exist.`);
+    // }
+
+    const supabase = createServerActionClient({ cookies });
+    const user = await supabase.auth.getUser();
+    const verticalId = user?.data.user?.user_metadata?.verticalId;
+    const userId = user?.data.user?.id;
+
+    // console.log(
+    //   "###################",
+    //   {
+    //     website,
+    //     address,
+    //     city,
+    //     district,
+    //     state,
+    //     pincode,
+    //     phone,
+    //     email,
+    //     title,
+    //     establishedYear,
+    //     accreditationId,
+    //     universityId,
+    //     status,
+    //     typeId,
+    //     published,
+    //     verified,
+    //     featured,
+    //     recommended,
+    //     verticalId,
+    //     userId,
+    //     slug,
+    //   },
+    //   "###################"
+    // );
+
+    const profile = await prisma.profile.create({
+      data: {
+        website,
+        address,
+        city,
+        district,
+        state,
+        pincode,
+        phone,
+        email,
+        title,
+        establishedYear,
+        accreditationId,
+        universityId,
+        status,
+        typeId,
+        published,
+        verified,
+        featured,
+        recommended,
+        verticalId,
+        userId,
+        slug,
+      },
+    });
+
+    await supabase.auth.updateUser({
+      data: {
+        ...user.data.user?.user_metadata,
+        profileId: profile.id,
+      },
+    });
+    //const f = new FormData();
+    //f.set("keyword", profile.id);
+    // await selectProfile(f);
+    // await updateActivity(profile.id);
+    // revalidatePath(ROUTES.PROFILES);
+  } catch (e: any) {
+    const { errMessage } = errorMessageGenerator(e);
+    return { message: errMessage || "Failed to upsert profile" };
   }
 }
