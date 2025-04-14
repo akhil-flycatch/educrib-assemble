@@ -21,6 +21,7 @@ export const ROUTES = {
   TYPES: '/types',
   UNIVERSITIES: '/universities',
   VERTICALS: '/verticals',
+  IMAGES:"dashboard/images",
 } as const
 
 export const DISCOVER_BASE = "https://www.educrib.com/kerala"

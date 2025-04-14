@@ -7,10 +7,12 @@ interface Props {
   wrapperClass?: string;
   title: React.ReactNode;
   secondaryComponent?: React.ReactNode;
+  count?: number;
   primaryButton?: {
     text?: string;
     type: ButtonType;
     onClick: () => void;
+
   };
 }
 const DashboardIntroSectionWrapper: React.FC<Props> = ({
@@ -19,6 +21,7 @@ const DashboardIntroSectionWrapper: React.FC<Props> = ({
   title,
   primaryButton,
   secondaryComponent,
+  count
 }) => {
   return (
     <div
@@ -27,7 +30,7 @@ const DashboardIntroSectionWrapper: React.FC<Props> = ({
       <div className="flex flex-col border-b border-division pb-4 px-6 gap-3">
         <div className="flex items-center justify-between">
           <div className="font-medium text-xl text-heading capitalize">
-            {title}
+            {title} {count && <span className="text-[#505F79] bg-[#EAEBEE] text-[20px] font-medium pl-[11px] pr-[11px] pt-[3px] pb-[3px] rounded-[45px]">{count}</span>}
           </div>
           {primaryButton && (
             <EditAddDeleteButton

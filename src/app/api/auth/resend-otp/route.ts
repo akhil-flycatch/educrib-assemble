@@ -25,12 +25,15 @@ export async function POST(request: Request) {
   }
 
   try {
+    console.time("Resending OTP");
     const { data, error } =  await supabase.auth.signInWithOtp({
       email,
       options: {
         emailRedirectTo: `${requestUrl.origin}/api/auth/callback`,
       },
     });
+    console.timeEnd("Resending OTP");
+
     
     if (error) {
       console.error("OTP resnend error: ", error);

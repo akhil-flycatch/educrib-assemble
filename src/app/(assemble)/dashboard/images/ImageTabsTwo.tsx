@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
+import { uploadFileToSupabase } from "@/utils/supabaseUpload";
 
 interface ImageFile {
   url: string;
@@ -14,19 +15,23 @@ const ImageTabsTwo = ({
   setShowAll,
   allImages,
   setSelectedImageIndex,
+  albumId,
+  setAllImages
 }: any) => {
   const [selectedImages, setSelectedImages] = useState<ImageFile[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+console.log(selectedImages, "selectedImages");
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      const filesArray = Array.from(event.target.files).map((file) => ({
-        url: URL.createObjectURL(file),
-        name: file.name,
-        size: (file.size / 1024).toFixed(2) + " KB",
-        status: "uploading",
-        progress: 0,
-      }));
+      const filesArray = await Promise.all(
+        Array.from(event.target.files).map(async (file) => ({
+          url: await uploadFileToSupabase("educrib-test", file),
+          name: file.name,
+          size: (file.size / 1024).toFixed(2) + " KB",
+          status: "uploading",
+          progress: 0,
+        }))
+      );
 
       setSelectedImages((prev) => [...prev, ...filesArray]);
 
@@ -52,7 +57,7 @@ const ImageTabsTwo = ({
             );
 
             // Call uploadimages **only when progress reaches 100%**
-            uploadimages([{ url: file.url }]);
+            uploadimages({ fileUrl: file.url, albumId });
           }
         }, 200);
       });
@@ -84,7 +89,9 @@ const ImageTabsTwo = ({
             alt="icon"
             width={24}
             height={24}
-            onClick={() => setShowAll(false)}
+            onClick={() => {setShowAll(false)
+              setAllImages(null)
+            }}
             className="cursor-pointer"
           />
           <h1 className="text-xl" style={{fontWeight:500}}>Album Name</h1>
@@ -121,7 +128,7 @@ const ImageTabsTwo = ({
         }}
       >
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[24px] pt-[16px] pr-[24px] pb-[16px] pl-[24px]">
-          {allImages.map((img, index) => (
+          {allImages?.map((img, index) => (
             <div
               key={index}
               // className="border rounded-lg p-2 cursor-pointer transition-transform transform hover:scale-105"
@@ -129,7 +136,7 @@ const ImageTabsTwo = ({
               onClick={() => setSelectedImageIndex(index)}
             >
               <Image
-                src={img}
+                src={img?.url}
                 alt={`Image ${index + 1}`}
                 width={190}
                 height={172}
@@ -138,7 +145,8 @@ const ImageTabsTwo = ({
               <div className="flex items-center justify-between">
                 <div className="p-2">
                   <p className="text-[14px] text-[#15294B] font-medium truncate max-w-[120px]">
-                    {img?.split("/").pop()}
+                    {/* {img?.split("/").pop()} */}
+                    {img?.url}
                   </p>
                   <p className="text-xs text-gray-500">
                     {new Date().toDateString()}

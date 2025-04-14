@@ -1,196 +1,151 @@
 "use client";
-import React from "react";
-import Button from "@elements/button";
-import Cta from "@elements/cta";
+import React, { useState, useRef, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { useState, useRef } from "react";
 import Modal from "@elements/modal";
-import { Plus } from "lucide-react";
-
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import useFileUpload from "@/utils/hooks/useFileUpload";
 import DashboardIntroSectionWrapper from "@/components/dashboard/Introduction/sectionWrapper";
-import { deleteCourse } from "@/api";
-import course from "@/elements/entry/forms/course";
+import { uploadFileToSupabase } from "../../../../utils/supabaseUpload";
+// import { deleteAlbumById, getLatestProfileAlbums, upsertProfileAlbum, upsertProfileAlbumTitle } from "@/api/profileAlbum";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { v4 as uuidv4 } from "uuid";
+import { deleteAlbumById, getLatestProfileAlbums, createProfileAlbum, upsertProfileAlbumTitle } from "@/api/profileAlbum";
 
-const supabase = createClientComponentClient();
+// Zod schema for form validation
+const albumSchema = z.object({
+  albumName: z.string().min(1, "Album name is required").max(50, "Album name must be less than 50 characters"),
+  images: z.array(z.any()).optional(),
+});
 
-interface ImageFile {
-  url: string;
-  name: string;
-  size: string;
-  status: any;
-  progress: number;
-  uploadedSize?:any;
-  error?:any
-  publicUrl?:any;
-  file?:any
-}
+type AlbumFormData = z.infer<typeof albumSchema>;
 
-const ImageTabsOne = ({ setShowAll, imageLinks, isAlbumEmpty }: any) => {
-  const { globalLoading, filesData, uploadFilesToStorage, removeFile } =
-    useFileUpload();
-
+const ImageTabsOne = ({ setShowAll, imageLinks, isAlbumEmpty,setSelectedId }: any) => {
   const [isAlbumModalOpen, setIsAlbumModalOpen] = useState(false);
-  const [albumName, setAlbumName] = useState<any>("")
-  const [selectedImages, setSelectedImages] = useState<ImageFile[]>([]);
+  const [isAlbumEditOpen, setIsAlbumEditOpen] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<any[]>([]);
+  const [albums, setAlbums] = useState<any[]>([]);
+  const [editId, setEditId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleAlbumModalClose = () => setIsAlbumModalOpen(false);
-
-  const handleAlbumCreate = () => {
-    setIsAlbumModalOpen(false);
+  const fetchAlbums = async () => {
+    const fetchedAlbums = await getLatestProfileAlbums();
+    setAlbums(fetchedAlbums);
   };
 
-  const handleImageUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<AlbumFormData>({
+    resolver: zodResolver(albumSchema),
+    defaultValues: {
+      albumName: "",
+      images: [],
+    },
+  });
+
+  const images = watch("images");
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-      
       const filesArray = Array.from(event.target.files).map((file) => ({
         url: URL.createObjectURL(file),
         name: file.name,
         size: (file.size / 1024).toFixed(2) + " KB",
         status: "uploading",
         progress: 0,
-        file: file, // Store the actual file for Supabase upload
+        file: file,
       }));
 
       setSelectedImages((prevImages) => [...prevImages, ...filesArray]);
+      setValue("images", [...images, ...filesArray]);
 
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
-      // Simulating upload progress
-      filesArray.forEach((fileData, index) => {
-        let progress = 0;
-        const totalSize = fileData.file.size;
-        const interval = setInterval(async () => {
-          progress += 10;
-          const uploadedSize = (totalSize * progress) / 100; // Calculate uploaded size in bytes
-        const uploadedSizeKB = (uploadedSize / 1024).toFixed(2); // Convert uploaded size to KB
-
-        setSelectedImages((prevImages) =>
-          prevImages.map((img) =>
-            img.url === fileData.url
-              ? { ...img, progress, uploadedSize: uploadedSizeKB }
-              : img
-          )
-        )
-
-        let publicUrl:any;
-        const uuid = uuidv4().replace(/-/g, "");
-        const fileName = `${uuid}_${fileData.file.name}`;
-        try {
-          const { data, error } = await supabase.storage
-            .from('educrib-test')
-            .upload(fileName, fileData.file);
-          if (error) {
-            setSelectedImages((prevFilesData) => {
-              const updatedFilesData = [...prevFilesData];
-              updatedFilesData[index] = {
-                ...updatedFilesData[index],
-                status: "Failed",
-                error: error.message,
-              };
-              return updatedFilesData;
-            });
-          } else {
-            const resUrlData = await supabase.storage
-              .from('educrib-test')
-              .getPublicUrl(data.path);
-            publicUrl = resUrlData.data.publicUrl;
-            // const lastPart = publicUrl
-            setSelectedImages((prevImages) =>
-              prevImages.map((img) =>
-                img.url === fileData.url
-                  ? { ...img, status: 'success',
-                    publicUrl: publicUrl}
-                  : img
-              )
-            );
-
-            // setSelectedImages((prevFilesData) => {
-            //   const updatedFilesData = [...prevFilesData];
-            //   const lastPart = publicUrl
-            //   // const lastPart = publicUrl.split("/").pop();
-            //   updatedFilesData[index] = {
-            //     ...updatedFilesData[index],
-            //     status: 'success',
-            //     publicUrl: lastPart,
-            //   };
-            //   return updatedFilesData;
-            // });
-            
-          }
-        } catch (error:any) {
-          setSelectedImages((prevImages) =>
-                  prevImages.map((img) =>
-                    img.url === fileData.url
-                      ? { ...img, status: "Failed",
-                        error: error.message}
-                      : img
-                  )
-                );
-          // setSelectedImages((prevFilesData) => {
-          //   const updatedFilesData = [...prevFilesData];
-          //   updatedFilesData[index] = {
-          //     ...updatedFilesData[index],
-          //     status: "Failed",
-          //     error: error.message,
-          //   };
-          //   return updatedFilesData;
-          // });
-        }
-        // clearInterval(interval);
-          if (progress >= 100 && publicUrl) {
-            clearInterval(interval);
-
-            // // Upload file to Supabase Storage
-            // uploadFilesToStorage([fileData.file], "educrib-test", supabase)
-            //   .then(() => {
-            //     setSelectedImages((prevImages) =>
-            //       prevImages.map((img) =>
-            //         img.url === fileData.url
-            //           ? { ...img, status: "success" }
-            //           : img
-            //       )
-            //     );
-            //   })
-            //   .catch((error) => {
-            //     console.error("Upload error:", error);
-            //   });
-          }
-        }, 200);
-      });
     }
   };
 
-  // const removeImage = (url: string) => {
-  // 	setSelectedImages((prevImages) => prevImages.filter((img) => img.url !== url));
-  // };
+  const removeImage = (url: string) => {
+    setSelectedImages((prevImages) => prevImages.filter((img) => img.url !== url));
+    setValue(
+      "images",
+      images.filter((img: any) => img.url !== url)
+    );
+  };
 
-  const removeImage = async (url: string, fileName: string) => {
+  const onSubmit = async (data: AlbumFormData) => {
     try {
-      await removeFile("educrib-test", fileName, supabase);
-      setSelectedImages((prevImages) =>
-        prevImages.filter((img) => img.url !== url)
-      );
+      const formData = new FormData();
+      formData.append("title", data.albumName);
+
+      const uploadedImages: string[] = [];
+      for (const image of data.images || []) {
+        const bucketName = "educrib-test";
+        const uploadedPath = await uploadFileToSupabase(bucketName, image?.file);
+        if (uploadedPath) {
+          uploadedImages.push(uploadedPath);
+        } else {
+          console.error("Failed to upload image:", image.name);
+        }
+      }
+
+      formData.append("images", uploadedImages);
+      await createProfileAlbum(formData);
+      console.log("Album Created:", { albumName: data.albumName });
     } catch (error) {
-      console.error("Error removing file:", error);
+      console.error("Error creating album:", error);
+    } finally {
+      setIsAlbumModalOpen(false);
+fetchAlbums();
+    }
+  };
+
+  const onEditSubmited = async (data: AlbumFormData) => {
+    try {
+      if (!editId) {
+        console.error("No album ID provided for editing");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("id", editId);
+      formData.append("title", data.albumName);
+
+      await upsertProfileAlbumTitle(formData);
+      console.log("Album Updated:", { albumName: data.albumName });
+    } catch (error) {
+      console.error("Error updating album:", error);
+    } finally {
+      setEditId(null);
+      setIsAlbumEditOpen(false);
+fetchAlbums();
+    }
+  };
+
+  useEffect(() => {
+   
+    fetchAlbums();
+  }, []);
+
+  const handleDelete = async (albumId: string) => {
+    try {
+      await deleteAlbumById(albumId);
+fetchAlbums();    } catch (error) {
+      console.error("Error deleting album:", error);
     }
   };
 
   return (
     <div>
       <DashboardIntroSectionWrapper
-        wrapperClass="w-full"
+        wrapperClass="w-full  "
         primaryButton={{
           type: "Add",
           onClick: () => {
@@ -198,118 +153,120 @@ const ImageTabsOne = ({ setShowAll, imageLinks, isAlbumEmpty }: any) => {
           },
           text: "Create Album",
         }}
-        title="Images"
+        title={`Images `}
+        count={albums?.length || 0}
       >
-        {isAlbumEmpty ? (
-          <>
-            <div className="h-[260px] flex justify-between">
-              <div className="flex flex-col items-center justify-center flex-1">
-                <Image
-                  src="/images/gallery-import.png"
-                  alt="images"
-                  width={44}
-                  height={44}
-                />
-                <span className="text-[15px] leading-6 text-center text-label mt-4">
-                  This gallery is empty.
-                </span>
+        <div className="flex flex-wrap gap-5">
+        {albums?.map((album: any, index: number) => (
+          <div key={index} className="flex pt-[16px] pr-[24px] pb-[16px] pl-[24px] gap-5">
+            <div>
+              <div
+                className="flex flex-wrap w-[192px] gap-2 border rounded-[8px] pt-[28px] pb-[14px] pl-[14px] cursor-pointer"
+                onClick={() => {setShowAll(true)
+                  setSelectedId(album.id)
+                }}
+              >
+                {album?.image?.slice(0, 3).map((img: any, index: any) => (
+                  <div key={index} className="w-[80px] h-[80px]">
+                    <Image
+                      src={img?.url}
+                      alt={`Image ${index + 1}`}
+                      width={80}
+                      height={80}
+                      className="rounded-md"
+                    />
+                  </div>
+                ))}
+                <div className="w-[80px] h-[80px] flex items-center justify-center rounded-md">
+                 {album?.image?.length>=3&& <span className="text-[#6129FE] bg-[#EFEAFF] text-[20px] font-medium pl-[11px] pr-[11px] pt-[3px] pb-[3px] rounded-[45px]">
+                 {`+${album?.image?.length-3}`}   
+                  </span>}
+                </div>
               </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="flex pt-[16px] pr-[24px] pb-[16px] pl-[24px] gap-5">
-              <div >
-                <div className="flex flex-wrap w-[192px] gap-2 border rounded-[8px] pt-[28px] pb-[14px] pl-[14px] cursor-pointer" onClick={() => setShowAll(true)}>
-                  {imageLinks.slice(0, 3).map((img, index) => (
-                    <div key={index} className="w-[80px] h-[80px]">
+              <div className="flex justify-between mt-3">
+                <div>
+                  <p className="font-medium text-[#15294B]">{album.title}</p>
+                  <p className="text-[14px] text-[#5D6B82]">
+                    {album.image?.length || 0} images
+                  </p>
+                </div>
+                <div className="cursor-pointer">
+                  <Popover>
+                    <PopoverTrigger asChild>
                       <Image
-                        src={img}
-                        alt={`Image ${index + 1}`}
-                        width={80}
-                        height={80}
-                        className="rounded-md"
+                        src="/images/more.png"
+                        alt="images"
+                        width={33}
+                        height={33}
                       />
-                    </div>
-                  ))}
-                  <div className="w-[80px] h-[80px] flex items-center justify-center rounded-md">
-                    <span className="text-[#6129FE] bg-[#EFEAFF] text-[20px] font-medium pl-[11px] pr-[11px] pt-[3px] pb-[3px] rounded-[45px]">
-                      +{imageLinks.length - 3}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex justify-between mt-3">
-                  <div>
-                    <p className="font-medium text-[#15294B]">Album Name</p>
-                    <p className="text-[14px] text-[#5D6B82]">
-                      {imageLinks.length} images
-                    </p>
-                  </div>
-                  <div className="cursor-pointer">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Image
-                          src="/images/more.png"
-                          alt="images"
-                          width={33}
-                          height={33}
-                        />
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[160px] p-0" align="end">
-                        <div className="px-4 py-3">
-                          <div className="w-full rounded-lg flex items-center h-9 gap-3 text-[#354764] p-3 cursor-pointer hover:bg-light"
-                          
-                          onClick={() => setIsAlbumModalOpen(true)}>
-                            <Image
-                              src="/images/edit-gray.svg"
-                              alt="edit"
-                              width={20}
-                              height={20}
-                            />
-                            <span>Edit</span>
-                          </div>
-                          <div
-                            className="w-full rounded-lg flex items-center gap-3 h-9 text-[#E9755D] p-3 cursor-pointer hover:bg-light"
-                            // onClick={() => deleteCourse(course.id)}
-                          >
-                            <Image
-                              src="/images/delete.svg"
-                              alt="delete"
-                              width={20}
-                              height={20}
-                            />
-                            <span>Delete</span>
-                          </div>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[160px] p-0" align="end">
+                      <div className="px-4 py-3">
+                        <div
+                          className="w-full rounded-lg flex items-center h-9 gap-3 text-[#354764] p-3 cursor-pointer hover:bg-light"
+                          onClick={() => {
+                            setIsAlbumEditOpen(true);
+                            setEditId(album.id);
+                          }}
+                        >
+                          <Image
+                            src="/images/edit-gray.svg"
+                            alt="edit"
+                            width={20}
+                            height={20}
+                          />
+                          <span>Edit</span>
                         </div>
-                      </PopoverContent>
-                    </Popover>
-                  </div>
+                        <div
+                          className="w-full rounded-lg flex items-center gap-3 h-9 text-[#E9755D] p-3 cursor-pointer hover:bg-light"
+                          onClick={() => handleDelete(album.id)}
+                        >
+                          <Image
+                            src="/images/delete.svg"
+                            alt="delete"
+                            width={20}
+                            height={20}
+                          />
+                          <span>Delete</span>
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
             </div>
-          </>
-        )}
+          </div>
+        ))}
+        </div>
+       
 
         {/* Modal for creating an album */}
         <Modal
           visible={isAlbumModalOpen}
-          onClose={handleAlbumModalClose}
-          onSave={handleAlbumCreate}
+          onClose={() => setIsAlbumModalOpen(false)}
           title="Create Album"
+          onSave={handleSubmit(onSubmit)}
         >
-          <div className="mt-1">
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mt-1">
+              <Controller
+                name="albumName"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    type="text"
+                    id="album-name"
+                    placeholder="Album name"
+                    className="text-[14px] block h-[50px] w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none transition duration-150 ease-in-out"
+                  />
+                )}
+              />
+              {errors.albumName && (
+                <p className="text-red-500 text-sm mt-1">{errors.albumName.message}</p>
+              )}
+            </div>
             <input
-              type="text"
-              id="album-name"
-              name="album-name"
-              placeholder="Album name"
-              onChange={(e) => setAlbumName(e.target.value)}
-              className="text-[14px] block h-[50px] w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none transition duration-150 ease-in-out"
-            />
-          </div>
-
-          {/* Hidden file input */}
-          <input
             type="file"
             multiple
             accept="image/*"
@@ -403,7 +360,37 @@ const ImageTabsOne = ({ setShowAll, imageLinks, isAlbumEmpty }: any) => {
                 )}
               </div>
             ))}
-          </div>
+            </div>
+          </form>
+        </Modal>
+
+        {/* Modal for editing an album */}
+        <Modal
+          visible={isAlbumEditOpen}
+          onClose={() => setIsAlbumEditOpen(false)}
+          title="Edit Album"
+          onSave={handleSubmit(onEditSubmited)}
+        >
+          <form onSubmit={handleSubmit(onEditSubmited)}>
+            <div className="mt-1">
+              <Controller
+                name="albumName"
+                control={control}
+                render={({ field }) => (
+                  <input
+                    {...field}
+                    type="text"
+                    id="album-name"
+                    placeholder="Album name"
+                    className="text-[14px] block h-[50px] w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none transition duration-150 ease-in-out"
+                  />
+                )}
+              />
+              {errors.albumName && (
+                <p className="text-red-500 text-sm mt-1">{errors.albumName.message}</p>
+              )}
+            </div>
+          </form>
         </Modal>
       </DashboardIntroSectionWrapper>
     </div>

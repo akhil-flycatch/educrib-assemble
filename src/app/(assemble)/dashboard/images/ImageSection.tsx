@@ -4,58 +4,99 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import ImageTabsTwo from "./ImageTabsTwo";
 import ImageTabsOne from "./ImageTabsOne";
+import { addImageByAlbumId, deleteImageById, getImagesByAlbumId } from "@/api/profileImages";
 
-let imageLinks = [
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//3e3a17cd2fcc463f8949a71c8bc97562_back.jpg",
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//192750e5799e4cb997069f9312263e2b_necklace.png",
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//2ba5a7a929184e72b5e50268f9f37791_news.jpg",
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//075bedd6be1f44b4ba5c6e63cec65e1a_images.png",
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//2ba5a7a929184e72b5e50268f9f37791_news.jpg",
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//3e3a17cd2fcc463f8949a71c8bc97562_back.jpg",
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//075bedd6be1f44b4ba5c6e63cec65e1a_images.png",
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//192750e5799e4cb997069f9312263e2b_necklace.png",
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//2ba5a7a929184e72b5e50268f9f37791_news.jpg",
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//192750e5799e4cb997069f9312263e2b_necklace.png",
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//2ba5a7a929184e72b5e50268f9f37791_news.jpg",
-  "https://vrhpopcshfgabaunvpht.supabase.co/storage/v1/object/public/educrib-test//3e3a17cd2fcc463f8949a71c8bc97562_back.jpg",
-];
-
-const ImageSection: React.FC<any> = ({isAlbumEmpty}:any) => {
+const ImageSection: React.FC<any> = ({ isAlbumEmpty }: any) => {
   const [showAll, setShowAll] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
     null
   );
+  const [allImages, setAllImages] = useState<any>([]);
 
-  const [allImages, setAllImages] = useState([...imageLinks]);
 
-  const uploadimages = (images: any) => {
-    // Extract all URLs and push them into imageLinks
-    const newImageUrls = images.map((img: any) => img.url);
-    imageLinks.push(...newImageUrls);
+  console.log(allImages[0]?.url,"allImages");
+  const fetchImages = async () => {
+    if (selectedId) {
+      const res = await fetch(`/api/images?albumId=${selectedId}`);
+      const data = await res.json();
+      console.log("images NEEDED", data);
 
-    // Update state with new images
-    setAllImages((prev) => [...prev, ...newImageUrls]);
+      setAllImages(data?.data);
+    }
   };
 
+  useEffect(() => {
+   
+    fetchImages();
+  }, [selectedId,selectedImageIndex]);
+  const handleUpload = async (image: any) => {
+    if (!selectedId) {
+      console.error("No album selected");
+      return;
+    }
+
+    
+
+    const formData = new FormData();
+    formData.append("albumId", selectedId);
+    formData.append("imageUrl", image);
+
+    try {
+      const response = await fetch("/api/images", {
+        method: "POST",
+        body: JSON.stringify({
+          albumId: selectedId,
+          imageUrl: image,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Image uploaded successfully:", data);
+        fetchImages(); // Fetch images again to update the list
+
+      } else {
+        console.error("Failed to upload image:", data.message);
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  console.log(selectedId, "selectedId");
+
+
+
+  console.log(allImages[selectedImageIndex],"data to be deleted")
   return (
     <div>
       <div className="relative">
-        
         {!showAll ? (
-          <div>
-            <div>
-              <ImageTabsOne setShowAll={setShowAll} imageLinks={imageLinks} isAlbumEmpty={isAlbumEmpty} />
+          <div >
+            <div >
+              <ImageTabsOne
+                setShowAll={setShowAll}
+                imageLinks={allImages}
+                isAlbumEmpty={isAlbumEmpty}
+                setSelectedId={setSelectedId}
+              />
             </div>
           </div>
         ) : (
           <div>
             <div>
               <ImageTabsTwo
-                uploadimages={uploadimages}
+                uploadimages={handleUpload}
                 setShowAll={setShowAll}
                 allImages={allImages}
                 setSelectedImageIndex={setSelectedImageIndex}
-                
+                albumId={selectedId}
+                setAllImages={setAllImages}
               />
             </div>
           </div>
@@ -70,7 +111,7 @@ const ImageSection: React.FC<any> = ({isAlbumEmpty}:any) => {
             <div className="p-4 bg-[#303030] shadow-lg w-[1440px] h-[68px]">
               <div className="flex justify-end gap-3">
                 {/* Close Button */}
-                <button onClick={() => setSelectedImageIndex(null)}>
+                <button onClick={() => deleteImageById(allImages[selectedImageIndex]?.id)}>
                   <Image
                     src="/images/delete-icon.png"
                     alt="images"
@@ -97,8 +138,8 @@ const ImageSection: React.FC<any> = ({isAlbumEmpty}:any) => {
                 className="relative w-full"
                 data-carousel="static"
               >
-                <div className="relative pb-[400px] overflow-hidden rounded-lg">
-                  {allImages.map((img, index) => (
+             { allImages.length>0 &&  <div className="relative pb-[400px] overflow-hidden rounded-lg">
+                  { allImages.map((img, index) => (
                     <div
                       key={index}
                       className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${
@@ -108,16 +149,21 @@ const ImageSection: React.FC<any> = ({isAlbumEmpty}:any) => {
                       }`}
                       data-carousel-item
                     >
-                      <Image
-                        src={img}
-                        alt={`Slide ${index}`}
-                        width={500}
-                        height={500}
-                        className="rounded-md"
-                      />
+                      {
+                        img?.url&&(
+                          <Image
+                            src={img.url|| null}
+                            alt={`Slide ${index}`}
+                            width={500}
+                            height={500}
+                            className="rounded-md"
+                          />
+                        )
+                      }
+                      
                     </div>
                   ))}
-                </div>
+                </div>}
 
                 {/* Carousel Controls */}
                 <button
@@ -128,7 +174,7 @@ const ImageSection: React.FC<any> = ({isAlbumEmpty}:any) => {
                     setSelectedImageIndex((prev) =>
                       prev !== null
                         ? prev === 0
-                          ? imageLinks.length - 1
+                          ? allImages.length - 1
                           : prev - 1
                         : 0
                     );
@@ -148,7 +194,7 @@ const ImageSection: React.FC<any> = ({isAlbumEmpty}:any) => {
                     e.stopPropagation();
                     setSelectedImageIndex((prev) =>
                       prev !== null
-                        ? prev === imageLinks.length - 1
+                        ? prev === allImages.length - 1
                           ? 0
                           : prev + 1
                         : 0
