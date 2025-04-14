@@ -1,28 +1,61 @@
 "use client";
-import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import {
+  FieldErrors,
+  FieldValues,
+  UseFormRegister,
+  Control,
+  Controller,
+} from "react-hook-form";
 import Input from "../hookForm/input";
-import { InstitutionOnboardFieldMapping, LabelMapping } from "@/constants/formFields/institutionOnboard";
+import {
+  InstitutionOnboardFieldMapping,
+  LabelMapping,
+} from "@/constants/formFields/institutionOnboard";
 import Select from "@/components/hookForm/select";
 import { useEffect, useState } from "react";
-import { getAllAccreditations, getAllTypes, getLatestUniversities } from "@/api";
+import {
+  getAllAccreditations,
+  getAllCountries,
+  getAllCurriculums,
+  getAllTypes,
+  getLatestUniversities,
+} from "@/api";
 
 interface Props {
   errors: FieldErrors<FieldValues>;
   register: UseFormRegister<FieldValues>;
+  control: Control<FieldValues>;
   currentVertical: string;
 }
 
-const PrimaryDetailsForm: React.FC<Props> = ({ errors, register, currentVertical }) => {
+interface OptionsState {
+  title: string;
+  id: string;
+  slug: string;
+}
+
+const PrimaryDetailsForm: React.FC<Props> = ({
+  errors,
+  register,
+  currentVertical,
+  control,
+}) => {
   const [accreditations, setAccreditations] = useState(null);
   const [universities, setUniversities] = useState(null);
+  const [countries, setCountries] = useState<Array<OptionsState>>([]);
+  const [curriculums, setCurriculums] = useState<Array<OptionsState>>([]);
   const [types, setTypes] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const accreditationsData = await getAllAccreditations();
 
-      const university= await getLatestUniversities();
-      const type= await getAllTypes();
+      const university = await getLatestUniversities();
+      const type = await getAllTypes();
+      const countryOptionsData = await getAllCountries();
+      const curriculumOptionsData = await getAllCurriculums();
+      setCountries(countryOptionsData);
+      setCurriculums(curriculumOptionsData);
       setAccreditations(accreditationsData);
       setTypes(type);
       setUniversities(university);
@@ -35,19 +68,15 @@ const PrimaryDetailsForm: React.FC<Props> = ({ errors, register, currentVertical
     [
       [
         "title",
-        "agencyName",
         "tutorName",
         "companyName",
         "type",
         "registrationNumber",
-        "curiculum",
         "courseType",
-        "universityAffliation",
         "qaulification",
         "mode",
         "availability",
         "eligibility",
-        "countries",
         "services",
         "subjects",
         "description",
@@ -78,43 +107,127 @@ const PrimaryDetailsForm: React.FC<Props> = ({ errors, register, currentVertical
     [
       ["accreditationId"],
       (fieldId: string) => (
-        <Select
-          id={fieldId}
-          label={LabelMapping[currentVertical][fieldId]}
-          options={
-            accreditations
-              ? accreditations.map((item: any) => ({
-                  label: item.title,
-                  value: item.id,
-                }))
-              : []
-          }
-          error={errors[fieldId]}
-          {...register(fieldId)}
+        <Controller
+          name={fieldId}
+          control={control}
+          render={({ field }) => (
+            <Select
+              id={fieldId}
+              label={LabelMapping[currentVertical][fieldId]}
+              options={
+                accreditations
+                  ? accreditations?.map((option: any) => {
+                      return {
+                        label: option.title, // Display the title in the dropdown
+                        value: option.id, // Use the id as the value
+                      };
+                    })
+                  : []
+              }
+              error={errors[fieldId]}
+              required
+              defaultValue={""}
+              {...field}
+            />
+          )}
         />
       ),
     ],
     [
       ["universityId"],
       (fieldId: string) => (
-        <Select
-          id={fieldId}
-          label={LabelMapping[currentVertical][fieldId]}
-          options={
-            universities
-              ? universities.map((item: any) => ({
-                  label: item.title,
-                  value: item.id,
-                }))
-              : []
-          }
-          error={errors[fieldId]}
-          {...register(fieldId)}
+        <Controller
+          name={fieldId}
+          control={control}
+          render={({ field }) => (
+            <Select
+              id={fieldId}
+              label={LabelMapping[currentVertical][fieldId]}
+              options={
+                universities
+                  ? universities?.map((option: any) => {
+                      return {
+                        label: option.title, // Display the title in the dropdown
+                        value: option.id, // Use the id as the value
+                      };
+                    })
+                  : []
+              }
+              error={errors[fieldId]}
+              required
+              defaultValue={""}
+              {...field}
+            />
+          )}
+        />
+
+        // <Select
+        //   id={fieldId}
+        //   label={LabelMapping[currentVertical][fieldId]}
+        //   options={
+        //     universities
+        //       ? universities.map((item: any) => ({
+        //           label: item.title,
+        //           value: item.id,
+        //         }))
+        //       : []
+        //   }
+        //   error={errors[fieldId]}
+        //   {...register(fieldId)}
+        // />
+      ),
+    ],
+    [
+      ["countryId"],
+      (fieldId: string) => (
+        <Controller
+          name={fieldId}
+          control={control}
+          render={({ field }) => (
+            <Select
+              id={fieldId}
+              label={LabelMapping[currentVertical][fieldId]}
+              options={countries?.map((option: any) => {
+                return {
+                  label: option.title, // Display the title in the dropdown
+                  value: option.id, // Use the id as the value
+                };
+              })}
+              error={errors[fieldId]}
+              required
+              defaultValue={""}
+              {...field}
+            />
+          )}
+        />
+      ),
+    ],
+    [
+      ["curriculumId"],
+      (fieldId: string) => (
+        <Controller
+          name={fieldId}
+          control={control}
+          render={({ field }) => (
+            <Select
+              id={fieldId}
+              label={LabelMapping[currentVertical][fieldId]}
+              options={curriculums?.map((option: any) => {
+                return {
+                  label: option.title, // Display the title in the dropdown
+                  value: option.id, // Use the id as the value
+                };
+              })}
+              error={errors[fieldId]}
+              required
+              defaultValue={""}
+              {...field}
+            />
+          )}
         />
       ),
     ],
   ]);
-
 
   function extractComponent(fieldId: string) {
     for (let [keys, component] of fieldToComponentMapping) {

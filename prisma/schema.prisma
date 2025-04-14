@@ -64,10 +64,10 @@ model type {
 }
 
 model country {
-  id        String     @id @default(cuid())
+  id        String     @id @default(dbgenerated("gen_random_uuid()"))
   status    Boolean    @default(true)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime   @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  updatedAt DateTime   @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @db.Timestamptz(6)
   title     String     @unique
   slug      String     @unique
   alias     String?
@@ -76,6 +76,7 @@ model country {
   currency  String?
   flag      String?
   locations location[]
+  profile   profile[]
 }
 
 model location {
@@ -133,10 +134,10 @@ model contactType {
 }
 
 model curriculum {
-  id        String    @id @default(cuid())
+  id        String    @id @default(dbgenerated("gen_random_uuid()"))
   status    Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime  @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @db.Timestamptz(6)
+  updatedAt DateTime  @default(dbgenerated("(now() AT TIME ZONE 'utc'::text)")) @updatedAt @db.Timestamptz(6)
   title     String    @unique
   slug      String    @unique
   icon      String?
@@ -364,10 +365,10 @@ model profile {
   updatedById           String?
   userId                String?
   registrationNumber    String?
-  countryId             String[]
-  services              String[]
+  countryId             String?
+  services              String?
   yearsOfExperience     String?
-  subjects              String[]
+  subjects              String?
   qualifications        String?
   modeOfClassess        String?
   availability          String?
@@ -387,6 +388,7 @@ model profile {
   album                 album[]
   location              location?
   accreditation         accreditation?         @relation(fields: [accreditationId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  country               country?               @relation(fields: [countryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   curriculum            curriculum?            @relation(fields: [curriculumId], references: [id])
   management            management?            @relation(fields: [managementId], references: [id])
   type                  type?                  @relation(fields: [typeId], references: [id])

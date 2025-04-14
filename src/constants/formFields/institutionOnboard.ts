@@ -7,14 +7,14 @@ export const InstitutionOnboardFieldMapping: { [key: string]: string[] } = {
     "establishedYear",
     "registrationNumber",
     "type",
-    "curiculum",
+    "curriculumId",
   ],
   playschool: [
     "title",
     "establishedYear",
     "registrationNumber",
     "type",
-    "curiculum",
+    "curriculumId",
   ],
   institutes: [
     "title",
@@ -23,11 +23,11 @@ export const InstitutionOnboardFieldMapping: { [key: string]: string[] } = {
     "type",
     "universityId",
   ],
-  consulatants: [
+  consultants: [
     "title",
     "establishedYear",
     "accreditationId",
-    "countries",
+    "countryId",
     "services",
   ],
   tutors: [
@@ -69,14 +69,14 @@ export const LabelMapping = {
     establishedYear: "Established Year",
     registrationNumber: "License/Registration Number",
     type: "School Type",
-    curiculum: "Curriculum",
+    curriculumId: "Curriculum",
   },
   playschool: {
     title: "Playschool Name",
     establishedYear: "Established Year",
     registrationNumber: "License/Registration Number",
     type: "Type Of Playschool",
-    curiculum: "Curriculum",
+    curriculumId: "Curriculum",
   },
   institutes: {
     title: "Institute Name",
@@ -85,11 +85,11 @@ export const LabelMapping = {
     type: "Course Type",
     universityId: "University Affiliation",
   },
-  consulatants: {
+  consultants: {
     title: "Agency Name",
     establishedYear: "Established Year",
     accreditationId: "Accreditation",
-    countries: "Countries Specialized In",
+    countryId: "Countries Specialized In",
     services: "Services Offered",
   },
   tutors: {
@@ -140,7 +140,7 @@ export const ZodValidations = {
       .optional(),
     registrationNumber: z.string().optional(),
     type: z.string().optional().nullable(),
-    curiculum: z.string().optional(),
+    curriculumId: z.string().optional(),
   }),
   playschool: z.object({
     title: z.string().optional(),
@@ -151,7 +151,7 @@ export const ZodValidations = {
       .optional(),
     registrationNumber: z.string().optional(),
     type: z.string().optional().nullable(),
-    curiculum: z.string().optional(),
+    curriculumId: z.string().optional(),
   }),
   institutes: z.object({
     title: z.string().optional(),
@@ -165,7 +165,7 @@ export const ZodValidations = {
     type: z.string().optional(),
     universityId: z.string().optional(),
   }),
-  consulatants: z.object({
+  consultants: z.object({
     title: z.string().optional(),
     establishedYear: z
       .number()
@@ -173,7 +173,7 @@ export const ZodValidations = {
       .max(new Date().getFullYear(), "Year must not be in the future")
       .optional(),
     accreditationId: z.string().optional(),
-    countries: z.string().optional(),
+    countryId: z.string().optional(),
     services: z.string().optional(),
   }),
   tutors: z.object({
@@ -217,8 +217,8 @@ export const unique = [
   "type",
   "universityId",
   "registrationNumber",
-  "curiculum",
-  "countries",
+  "curriculumId",
+  "countryId",
   "services",
   "experience",
   "subjects",

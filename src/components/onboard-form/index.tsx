@@ -47,6 +47,7 @@ const OnboardForm: React.FC = () => {
     register,
     handleSubmit,
     formState: { errors },
+    control
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -68,21 +69,19 @@ const OnboardForm: React.FC = () => {
   }, []);
 
   const onFormSubmit = async (data: any) => {
+    
     var form_data = new FormData();
 
     for (var key in data) {
       form_data.append(key, data[key]);
     }
 
-    form_data.append("accreditationId","4b7a6aeb-f204-4bb8-b3eb-515797de9034");
-    form_data.append("universityId","3c4f5b01-efec-4312-83cb-bf59381fd281");
-
     upsertAction(
       form_data,
       institutionOnboard,
       "Profile saved successfully",
       () => {
-        router.push("/");
+        router.push("/dashboard");
       }
     );
 
@@ -108,10 +107,10 @@ const OnboardForm: React.FC = () => {
             Complete Your College Profile
           </span>
         </div>
-        <div className="flex gap-4">
-          <button className="py-3 px-4 rounded-lg border-primary bg-white text-primary hover:bg-light font-medium" onClick={() => router.push("/dashboard")}>
+        <div className="flex gap-4 justify-end">
+          {/* <button className="py-3 px-4 rounded-lg border-primary bg-white text-primary hover:bg-light font-medium" onClick={() => router.push("/dashboard")}>
             Skip to Dashboard
-          </button>
+          </button> */}
           <button
             className="py-3 px-4 rounded-lg bg-primary text-white  hover:bg-secondary font-medium"
             onClick={handleSubmit(onFormSubmit)}
@@ -130,6 +129,7 @@ const OnboardForm: React.FC = () => {
               register={register}
               errors={errors}
               currentVertical={currentVertical?.slug}
+              control={control}
             />
           </div>
           <div className="border border-secondary my-12" />

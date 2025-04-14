@@ -560,20 +560,24 @@ export async function institutionOnboard(formData: FormData) {
     const phone = (formData.get("phone") as string) || undefined;
     const email = (formData.get("email") as string) || undefined;
     const title = (formData.get("title") as string) || "NA";
+    const services = (formData.get("services") as string) || undefined;
     const establishedYear = formData.get("establishedYear")
       ? parseInt(formData.get("establishedYear") as string)
       : undefined;
     const accreditationId =
       (formData.get("accreditationId") as string) || undefined;
     const universityId = (formData.get("universityId") as string) || undefined;
+    const curriculumId = (formData.get("curriculumId") as string) || undefined;
+    const countryId = (formData.get("countryId") as string) || undefined;
     const status = true;
     const type = (formData.get("type") as string) || undefined;
-    const typeId = "42f1177a-872f-43a4-bb88-ad77cac0fd50";
+    const typeId = type ? "42f1177a-872f-43a4-bb88-ad77cac0fd50" : undefined;
     const published = false;
     const verified = true;
     const featured = true;
     const recommended = true;
     const slug = title.toLowerCase().split(" ").join("-");
+    const registrationNumber = (formData.get("registrationNumber") as string) || undefined;
 
     // Validate that the typeId exists
     // const typeExists = await prisma.type.findUnique({
@@ -640,6 +644,10 @@ export async function institutionOnboard(formData: FormData) {
         verticalId,
         userId,
         slug,
+        countryId,
+        services,
+        curriculumId,
+        registrationNumber
       },
     });
 
