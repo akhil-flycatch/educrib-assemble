@@ -15,7 +15,6 @@ const ImageSection: React.FC<any> = ({ isAlbumEmpty }: any) => {
   const [allImages, setAllImages] = useState<any>([]);
 
 
-  console.log(allImages[0]?.url,"allImages");
   const fetchImages = async () => {
     if (selectedId) {
       const res = await fetch(`/api/images?albumId=${selectedId}`);
