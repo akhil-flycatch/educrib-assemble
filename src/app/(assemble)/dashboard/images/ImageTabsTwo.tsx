@@ -90,7 +90,7 @@ console.log(selectedImages, "selectedImages");
             width={24}
             height={24}
             onClick={() => {setShowAll(false)
-              setAllImages(null)
+              // setAllImages(null)
             }}
             className="cursor-pointer"
           />
