@@ -3,25 +3,56 @@ import Image from "next/image";
 import DashboardIntroSectionWrapper from "./sectionWrapper";
 import React, { useEffect, useState } from "react";
 import Modal from "@/elements/modal";
-import LocationForm, {
-  locationFormSchema,
-  LocationFormValues,
-} from "./locationForm";
+import LocationForm from "./locationForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import Map from "@/elements/map";
 import MyGoogleMap from "./map";
-import { getProfile } from "@/api";
+import { getProfile, getProfileById, upsertProfile } from "@/api";
+import { z } from "zod";
+import GoogleMapsProvider from "@/utils/googleMapProvider";
+
+export const locationFormSchema = z.object({
+  mapUrl: z
+    .string()
+    .url("Please enter a valid Google Map URL")
+    .optional(), // URL is optional
+  address: z
+    .string()
+    .min(1, "Address is required")
+    .max(255, "Address must be less than 255 characters"),
+  city: z
+    .string()
+    .min(1, "City is required")
+    .max(100, "City must be less than 100 characters"),
+  district: z
+    .string()
+    .min(1, "District is required")
+    .max(100, "District must be less than 100 characters"),
+  pinCode: z
+    .string()
+    .regex(/^\d{5,6}$/, "Pin Code must be 5 or 6 digits")
+    .min(5, "Pin Code must be at least 5 digits")
+    .max(6, "Pin Code must be at most 6 digits"),
+  state: z
+    .string()
+    .min(1, "State is required")
+    .max(100, "State must be less than 100 characters"),
+});
+
+export type LocationFormValues = z.infer<typeof locationFormSchema>;
 
 const Location: React.FC = () => {
+  const [profile, setProfile] = useState(null);
   const isEmpty = false;
-  const [isLocationMosdalVisible, setIsLocationModalVisible] = useState(false);
-  const [cordinates, setCordinates] = useState<{ lat: number; lng: number } | null>(null);
+  const [isLocationModalVisible, setIsLocationModalVisible] = useState(false);
+  const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
+    control,
     formState: { errors },
   } = useForm<LocationFormValues>({
     resolver: zodResolver(locationFormSchema),
@@ -40,10 +71,32 @@ const Location: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const profileData = await getProfileById();
+      console.log("Profile Data:location", profileData); // Debug profile data
+      setProfile(profileData);
+
+      if (profileData) {
+        reset({
+          city: profileData?.city || "",
+          mapUrl: profileData?.mapUrl || "",
+          state: profileData?.state || "",
+          district: profileData?.district || "",
+          address: profileData?.address || "",
+          pinCode: profileData?.pincode || "",
+        });
+      }
+    };
+
+    fetchData(); // <-- This was missing
+  }, [reset]);
+
+  useEffect(() => {
+    const fetchData = async () => {
       const profileData = await getProfile();
       if (profileData?.mapUrl) {
         const coordinates = extractCoordinatesFromUrl(profileData.mapUrl);
-      setCordinates(coordinates);
+        console.log("Coordinates Data:", coordinates); // Debug coordinates
+        setCoordinates(coordinates);
       }
     };
 
@@ -51,8 +104,28 @@ const Location: React.FC = () => {
   }, []);
 
   const onLocationFormSubmit = async (data: LocationFormValues) => {
-    reset();
-    setIsLocationModalVisible(false);
+    const formData = new FormData();
+    console.log("Form Data Submitted:", data);
+    formData.append("id", profile?.id || ""); // Ensure this is a valid unique identifier
+    formData.append("mapUrl", data.mapUrl || "");
+    formData.append("address", data.address || "");
+    formData.append("city", data.city || "");
+    formData.append("district", data.district || "");
+    formData.append("state", data.state || "");
+    formData.append("pincode", data.pinCode || "");
+    try {
+      if (!profile?.id) {
+        throw new Error("Profile ID is missing. Cannot perform upsert operation.");
+      }
+
+   const response=await upsertProfile(formData);
+
+      console.log("Profile updated successfully",response);
+      reset();
+      setIsLocationModalVisible(false);
+    } catch (error) {
+      console.error("Failed to update profile", error);
+    }
   };
 
   return (
@@ -95,54 +168,45 @@ const Location: React.FC = () => {
             <React.Fragment>
               <div className="flex flex-col capitalize text-heading w-full">
                 <span className="text-label mb-2">Address</span>
-                <span>Amal Jyothi College of Engineering</span>
-                <span>Kanjirappally, Koovappally (P.O)</span>
-                <span>Kottayam</span>
-                <span>647 382</span>
-                <span>Kerala</span>
+                <span>{profile?.title}</span>
+                <span>{profile?.address},{profile?.city} (P.O)</span>
+                <span>{profile?.district}</span>
+                <span>{profile?.pincode}</span>
+                <span>{profile?.state}</span>
               </div>
-              <div className="flex-1 bg-[url('/images/mocks/map.png')] bg-cover bg-center min-h-[260px] max-w-[750px]" />
-<MyGoogleMap lat={cordinates?.lat} lng={cordinates?.lng} />
-              
+              <div className="flex-1">
+                {coordinates ? (
+                  <MyGoogleMap lat={coordinates.lat} lng={coordinates.lng} />
+                  // <>Map Goes Here</>
+                ) : (
+                  <p>Loading map...</p>
+                )}
+              </div>
             </React.Fragment>
           )}
         </div>
       </DashboardIntroSectionWrapper>
       <Modal
-        visible={isLocationMosdalVisible}
+        visible={isLocationModalVisible}
         onClose={() => setIsLocationModalVisible(false)}
-        onSave={handleSubmit(onLocationFormSubmit)}
+        onSave={handleSubmit(onLocationFormSubmit)} // Form submission handler
         title="Add Location"
       >
-        <div className="w-[964px]">
-          <div className="relative flex items-center w-full flex-1">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="absolute w-5 h-5 top-2.5 left-2.5 text-slate-600"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z"
-                clipRule="evenodd"
-              />
-            </svg>
-
-            <input
-              style={{ width: "100%" }}
-              className="bg-white placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-10 pr-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-              placeholder="Search Location"
-            />
-          </div>
+        <form onSubmit={handleSubmit(onLocationFormSubmit)} className="w-[964px]">
+          <div className="relative flex items-center w-full flex-1"></div>
           <div className="w-full flex gap-4 mt-4">
-            <LocationForm register={register} errors={errors} />
-            {/* integrate maps after getting api key */}
-            <div className="flex-1 flex items-center justify-center bg-light-200 rounded-2xl">
-                Google map goes here
-            </div>
+            {/* <GoogleMapsProvider> */}
+
+            
+            <LocationForm
+            control={control}
+              errors={errors}
+              register={register}
+              setValue={setValue}
+            />
+            {/* </GoogleMapsProvider> */}
           </div>
-        </div>
+        </form>
       </Modal>
     </React.Fragment>
   );

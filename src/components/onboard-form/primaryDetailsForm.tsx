@@ -73,7 +73,7 @@ const PrimaryDetailsForm: React.FC<Props> = ({
         "type",
         "registrationNumber",
         "courseType",
-        "qaulification",
+        "qualifications",
         "mode",
         "availability",
         "eligibility",

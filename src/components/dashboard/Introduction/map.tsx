@@ -4,7 +4,7 @@ import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { useMemo } from "react";
 
 const containerStyle = {
-  width: "100%",
+  width: "600px",
   height: "400px",
 };
 
@@ -25,8 +25,10 @@ export default function MyGoogleMap({ lat, lng }: MyGoogleMapProps) {
   if (!isLoaded) return <p>Loading map...</p>;
 
   return (
+    <>
     <GoogleMap mapContainerStyle={containerStyle} center={mapCenter} zoom={10}>
       <Marker position={mapCenter} />
     </GoogleMap>
+    </>
   );
 }

@@ -367,13 +367,13 @@ model profile {
   registrationNumber    String?
   countryId             String?
   services              String?
-  yearsOfExperience     String?
+  yearsOfExperience     Int?                   @db.SmallInt
   subjects              String?
   qualifications        String?
   modeOfClassess        String?
   availability          String?
   companyName           String?
-  eligibilty            String?
+  eligibility           String?
   stipend               Decimal?               @db.Decimal
   address               String?
   city                  String?

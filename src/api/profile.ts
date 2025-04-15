@@ -58,9 +58,15 @@ export async function upsertProfile(formData: any) {
     const recommended = formData.get("recommended") === "on";
     const verified = formData.get("verified") === "on";
     const published = formData.get("published") === "on";
-    const phone = formData.get("phone");
-    const website = formData.get("website");
-    const email = formData.get("email");
+    const phone=formData.get("phone")
+    const website=formData.get("website")
+const email =formData.get("email")
+const address = (formData.get("address") as string) || undefined;
+const city = (formData.get("city") as string) || undefined;
+const district = (formData.get("district") as string) || undefined;
+const pincode = (formData.get("pincode") as string) || undefined;
+const mapUrl= (formData.get("mapUrl") as string) || undefined;
+const state = (formData.get("state") as string) || undefined;
     // // Validate that the typeId exists
     // const typeExists = await prisma.type.findUnique({
     //   where: { id: typeId },
@@ -98,9 +104,16 @@ export async function upsertProfile(formData: any) {
         phone,
         email,
         website,
+        address,
+        city,
+        district,
+        pincode,
+        mapUrl,
+        state,
+
       },
       update: {
-        yearsOfExperience: "1",
+        // yearsOfExperience: "1",
         title,
         slug: slugify(title),
         thumbnail,
@@ -124,6 +137,12 @@ export async function upsertProfile(formData: any) {
         phone,
         email,
         website,
+        address,
+        city,
+        district,
+        pincode,
+        mapUrl,
+        state,
       },
     });
     // await updateActivity(profile.id);
@@ -578,6 +597,15 @@ export async function institutionOnboard(formData: FormData) {
     const recommended = true;
     const slug = title.toLowerCase().split(" ").join("-");
     const registrationNumber = (formData.get("registrationNumber") as string) || undefined;
+    const companyName = (formData.get("companyName") as string) || undefined;
+    const description = (formData.get("description") as string) || undefined;
+    const eligibility = (formData.get("eligibility") as string) || undefined;
+    const stipend = parseFloat(formData.get("stipend")?.toString() ?? '');
+    const availability = (formData.get("availability") as string) || undefined;
+    const yearsOfExperience = parseInt(formData.get("experience")?.toString() ?? '0');
+    const subjects = (formData.get("subjects") as string) || undefined;
+    const modeOfClassess = (formData.get("mode") as string) || undefined;
+    const qualifications = (formData.get("qualifications") as string) || undefined;
 
     // Validate that the typeId exists
     // const typeExists = await prisma.type.findUnique({
@@ -647,7 +675,16 @@ export async function institutionOnboard(formData: FormData) {
         countryId,
         services,
         curriculumId,
-        registrationNumber
+        registrationNumber,
+        description,
+        companyName,
+        eligibility,
+        stipend,
+        availability,
+        yearsOfExperience,
+        subjects,
+        modeOfClassess,
+        qualifications
       },
     });
 
