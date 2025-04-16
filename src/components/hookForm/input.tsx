@@ -81,7 +81,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       if (onChange) onChange(e);
     };
 
-    const isActive = isFocused || Boolean(inputValue);
+    const isActive = isFocused || Boolean(inputValue) || (type === "number" && inputValue === 0);
 
     // Handle error from react-hook-form or string
     const errorMessage =

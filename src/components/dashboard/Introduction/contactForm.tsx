@@ -4,7 +4,6 @@ import { getAllContactTypes } from "@/api";
 import FileUpload from "@/components/hookForm/fileUpload";
 import Input from "@/components/hookForm/input";
 import Select from "@/components/hookForm/select";
-import useFileUpload from "@/utils/hooks/useFileUpload";
 import { useEffect, useState } from "react";
 import {
   Controller,
@@ -12,6 +11,7 @@ import {
   FieldValues,
   UseFormSetValue,
   Control,
+  UseFormGetValues,
 } from "react-hook-form";
 import * as z from "zod";
 
@@ -21,6 +21,7 @@ export const contactFormSchema = z.object({
   type: z.string(),
   phone: z.string(),
   email: z.string().email("Invalid email address"),
+  id: z.string().optional().nullable(),
 });
 
 export type ContactFormValues = z.infer<typeof contactFormSchema>;
@@ -29,18 +30,25 @@ interface Props {
   errors: FieldErrors<FieldValues>;
   control: Control<ContactFormValues>;
   setValue: UseFormSetValue<ContactFormValues>;
-  defaultValues?: Partial<ContactFormValues>;
-  watch?: any;
-
+  getValues: UseFormGetValues<ContactFormValues>;
+  setImageUrlChange: (url: string) => void;
 }
 
-const ContactForm: React.FC<Props> = ({ control, errors, setValue, defaultValues,watch }) => {
+const ContactForm: React.FC<Props> = ({
+  control,
+  errors,
+  setValue,
+  getValues,
+  setImageUrlChange,
+}) => {
   const uploadFile = async (file: File): Promise<string> => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return URL.createObjectURL(file);
   };
 
-  const [contactType, setContactType] = useState<{ id: string; title: string }[]>([]);
+  const [contactType, setContactType] = useState<
+    { id: string; title: string }[]
+  >([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -52,22 +60,21 @@ const ContactForm: React.FC<Props> = ({ control, errors, setValue, defaultValues
     };
     fetchData();
   }, []);
-  const ImageUrlChange = (url: string) => {
-    setValue("avatar", url, { shouldValidate: true }); // Update the avatar field
+
+  const ImageUrlChange = (url: any) => {
+    setImageUrlChange(url);
   };
 
   return (
     <div className="flex-1 w-[756px] flex flex-col gap-6">
       <div className="w-full grid grid-cols-2">
         <FileUpload
-          value={watch("avatar")} // Watch the avatar field for changes
+          value={getValues("avatar") ?? undefined}
           id="avatar"
-          onUpload={uploadFile} // Handle file upload
+          onUpload={uploadFile}
           error={errors.avatar}
-          ImageUrlChange={ImageUrlChange} // Pass the ImageUrlChange function
-          // onChange={(url) => {
-          //   setValue("avatar", url, { shouldValidate: true }); // Update the avatar field
-          // }}
+          ImageUrlChange={ImageUrlChange}
+          onChange={(url) => setValue("avatar", url, { shouldValidate: true })}
         />
       </div>
 
@@ -90,7 +97,6 @@ const ContactForm: React.FC<Props> = ({ control, errors, setValue, defaultValues
         <Controller
           control={control}
           name="type"
-          defaultValue={defaultValues?.type || ""}
           render={({ field }) => (
             <Select
               id="type"
@@ -111,7 +117,6 @@ const ContactForm: React.FC<Props> = ({ control, errors, setValue, defaultValues
         <Controller
           control={control}
           name="phone"
-          defaultValue={defaultValues?.phone || ""}
           render={({ field }) => (
             <Input
               id="phone"
@@ -128,7 +133,6 @@ const ContactForm: React.FC<Props> = ({ control, errors, setValue, defaultValues
         <Controller
           control={control}
           name="email"
-          defaultValue={defaultValues?.email || ""}
           render={({ field }) => (
             <Input
               id="email"

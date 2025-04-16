@@ -94,14 +94,70 @@ export async function addProfileContact(formData: FormData) {
       return { message: "Invalid profileSlug or profile not found" };
     }
     // Create a new contact
-  const data=  await prisma.profileContact.create({
+    const data = await prisma.profileContact.create({
       data: {
         title,
         status,
         phone,
         email,
         website,
-        contactTypeId:contactTypeId,
+        contactTypeId: contactTypeId,
+        profileId: profile.id,
+        avatar: avatar || undefined,
+      },
+    });
+
+    // Revalidate the path to update the cache
+    revalidatePath("/profileContacts");
+
+    return { message: "Contact added successfully" };
+  } catch (e: any) {
+    const { errMessage } = errorMessageGenerator(e);
+    return { message: errMessage || "Failed to add profileContact" };
+  }
+}
+
+export async function editProfileContact(formData: FormData) {
+  try {
+    const title = (formData.get("title") as string) || "NA";
+    const status = formData.get("status") === "on";
+    const phone = (formData.get("phone") as string) || undefined;
+    const email = (formData.get("email") as string) || undefined;
+    const website = (formData.get("website") as string) || undefined;
+    const contactTypeId = (formData.get("type") as string) || undefined;
+    const profileSlug = (formData.get("profileId") as string) || undefined;
+    const avatar = formData.get("avatar") as string;
+    const id = formData.get("id") as string;
+
+    // Find the profile by slug or ID
+    const profile = await prisma.profile.findFirst({
+      where: {
+        OR: [
+          {
+            slug: profileSlug,
+          },
+          {
+            id: profileSlug,
+          },
+        ],
+      },
+    });
+
+    if (!profile) {
+      return { message: "Invalid profileSlug or profile not found" };
+    }
+    // Create a new contact
+    const data = await prisma.profileContact.update({
+      where: {
+        id,
+      },
+      data: {
+        title,
+        status,
+        phone,
+        email,
+        website,
+        contactTypeId: contactTypeId,
         profileId: profile.id,
         avatar: avatar || undefined,
       },

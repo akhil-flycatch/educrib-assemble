@@ -8,6 +8,7 @@ import { getProfileById, getProfileFacilitiesByProfileId, upsertProfile } from "
 import OverviewForm, { overviewFormSchema, OverviewFormValues } from "./overviewForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { updateProfileOverview } from "@/api/profile";
 
 const Overview: React.FC = () => {
   const [isOverViewEditVisible, setIsOverViewEditVisible] = useState(false);
@@ -25,29 +26,29 @@ const Overview: React.FC = () => {
     resolver: zodResolver(overviewFormSchema),
   });
 
+  const fetchData = async () => {
+    const profileData = await getProfileById();
+    const facilitiesProfileData = await getProfileFacilitiesByProfileId();
+    setProfile(profileData);
+    setFacilitiesProfile(facilitiesProfileData);
+
+    if (profileData) {
+      reset({
+        title: profileData?.title || "",
+        university: profileData?.university?.id || "",
+        management: profileData?.management?.title || "",
+        establishedYear: profileData?.establishedYear?.toString() || undefined,
+        code: profileData?.code || "",
+        accreditation: profileData?.accreditation?.id || "",
+        type: profileData?.type?.id || "",
+        email: profileData?.email || "",
+        phone: profileData?.phone || "",
+        website: profileData?.website || "",
+      });
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const profileData = await getProfileById();
-      const facilitiesProfileData = await getProfileFacilitiesByProfileId();
-      setProfile(profileData);
-      setFacilitiesProfile(facilitiesProfileData);
-
-      if (profileData) {
-        reset({
-          title: profileData?.title || "",
-          university: profileData?.university?.id || "",
-          management: profileData?.management?.title || "",
-          establishedYear: profileData?.establishedYear?.toString() || undefined,
-          code: profileData?.code || "",
-          accreditation: profileData?.accreditation?.id || "",
-          type: profileData?.type?.id || "",
-          email: profileData?.email || "",
-          phone: profileData?.phone || "",
-        });
-      }
-    };
-
-    fetchData();
+fetchData();
   }, [reset]);
 
   const onOverviewFormSubmit = async (data: OverviewFormValues) => {
@@ -56,7 +57,6 @@ const Overview: React.FC = () => {
     formData.append("id", profile.id || ""); // Ensure this is a valid unique identifier
     formData.append("title", data.title || "");
     formData.append("universityId", data.university || "");
-    formData.append("managementId", data.management || "");
     formData.append("establishedYear", data.establishedYear || "");
     formData.append("code", data.code || "");
     formData.append("accreditationId", data.accreditation || "");
@@ -70,9 +70,10 @@ const Overview: React.FC = () => {
         throw new Error("Profile ID is missing. Cannot perform upsert operation.");
       }
 
-      await upsertProfile(formData);
+      await updateProfileOverview(formData);
       reset();
       setIsOverViewEditVisible(false);
+      fetchData(); // Fetch updated data after submission
     } catch (error) {
       console.error("Failed to update profile", error);
     }

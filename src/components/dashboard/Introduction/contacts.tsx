@@ -10,20 +10,47 @@ import ConatctForm, {
   contactFormSchema,
   ContactFormValues,
 } from "./contactForm";
-import { getProfile, getProfileContactsByProfileId, upsertProfileContact } from "@/api";
-import { addProfileContact } from "@/api/profileContact";
+import {
+  getProfile,
+  getProfileContactsByProfileId,
+  upsertProfileContact,
+} from "@/api";
+import { addProfileContact, editProfileContact } from "@/api/profileContact";
+
+const defaultValues: ContactFormValues = {
+  avatar: "",
+  name: "",
+  type: "",
+  phone: "",
+  email: "",
+  id: null,
+};
 
 const Contacts: React.FC = () => {
   const isEmpty = false;
-
-  const [defaultValue, setDefaultValue] = useState<ContactFormValues | null>(null);
   const [visible, setVisible] = useState<"Add" | "Edit" | string | null>(null);
   const [contacts, setContacts] = useState<any[]>([]);
   const [profile, setProfile] = useState<any>(null);
+  const [imageUrl, setImageUrl] = useState<any>();
+
+  const {
+    handleSubmit,
+    reset,
+    setValue,
+    getValues,
+    control,
+
+    formState: { errors },
+  } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues
+  });
 
   const handleEdit = (data: any) => {
     setVisible("Edit");
-    setDefaultValue({
+    setImageUrl(data.avatar);
+    reset({
+      id: data.id,
       name: data.title,
       email: data.email,
       phone: data.phone,
@@ -32,43 +59,16 @@ const Contacts: React.FC = () => {
     });
   };
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    setValue,
-    control,
-    watch,
-    
-    formState: { errors },
-  } = useForm<ContactFormValues>({
-    resolver: zodResolver(contactFormSchema),
-    defaultValues: {
-      phone: defaultValue?.phone || "",
-      name: defaultValue?.name || "",
-      type: defaultValue?.type || "",
-      email: defaultValue?.email || "",
-    },
-  });
-
   useEffect(() => {
     const fetchData = async () => {
-      if (defaultValue) {
-        reset({
-          phone: defaultValue?.phone || "",
-          name: defaultValue?.name || "",
-          type: defaultValue?.type || "",
-          email: defaultValue?.email || "",
-        });
-      }
       const profile = await getProfile();
       setProfile(profile);
-      const data = await getProfileContactsByProfileId(profile?.id);
+      const data = await getProfileContactsByProfileId(profile?.id!);
       setContacts(data);
     };
 
     fetchData();
-  }, [defaultValue, reset]);
+  }, []);
 
   const onContactFormSubmit = async (data: ContactFormValues) => {
     const formData = new FormData();
@@ -77,15 +77,20 @@ const Contacts: React.FC = () => {
     formData.append("phone", data.phone);
     formData.append("type", data.type);
     formData.append("profileId", profile?.id);
-    formData.append("avatar", data?.avatar || "");
-
-    await addProfileContact(formData);
-    reset();
+    formData.append("avatar", imageUrl);
+    if (data.id) {
+      formData.append("id", data.id);
+      await editProfileContact(formData);
+    } else await addProfileContact(formData);
     setVisible(null);
+    setImageUrl(null);
     // Refresh contacts after submission
+    reset(defaultValues);
     const updatedContacts = await getProfileContactsByProfileId(profile?.id);
     setContacts(updatedContacts);
   };
+
+  const setImageUrlChange = (url: string) => setImageUrl(url);
 
   return (
     <React.Fragment>
@@ -96,7 +101,6 @@ const Contacts: React.FC = () => {
           type: "Add",
           onClick: () => {
             setVisible("Add");
-            setDefaultValue(null); // Reset default values for "Add" mode
           },
         }}
       >
@@ -132,18 +136,21 @@ const Contacts: React.FC = () => {
       </DashboardIntroSectionWrapper>
       <Modal
         visible={Boolean(visible)}
-        onClose={() => setVisible(null)}
+        onClose={() => {
+          setVisible(null);
+          setImageUrl(null);
+          reset(defaultValues)
+        }}
         onSave={handleSubmit(onContactFormSubmit)}
         title={`${visible === "Add" ? "Add" : "Edit"} Contact`}
       >
         <form className="w-full" onSubmit={handleSubmit(onContactFormSubmit)}>
           <ConatctForm
-            register={register}
             errors={errors}
             setValue={setValue}
-            defaultValues={defaultValue || {}} // Pass default values to the form
             control={control}
-            watch={watch}
+            getValues={getValues}
+            setImageUrlChange={setImageUrlChange}
           />
         </form>
       </Modal>

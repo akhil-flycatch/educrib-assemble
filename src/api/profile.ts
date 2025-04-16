@@ -53,34 +53,25 @@ export async function upsertProfile(formData: any) {
       (formData.get("accreditationId") as string) || undefined;
     const typeId = (formData.get("typeId") as string) || undefined;
     const curriculumId = (formData.get("curriculumId") as string) || undefined;
-    // const profileImages = (formData.get("profileImages") as unknown as string[]) || undefined;
     const featured = formData.get("featured") === "on";
     const recommended = formData.get("recommended") === "on";
     const verified = formData.get("verified") === "on";
     const published = formData.get("published") === "on";
-    const phone=formData.get("phone")
-    const website=formData.get("website")
-const email =formData.get("email")
-const address = (formData.get("address") as string) || undefined;
-const city = (formData.get("city") as string) || undefined;
-const district = (formData.get("district") as string) || undefined;
-const pincode = (formData.get("pincode") as string) || undefined;
-const mapUrl= (formData.get("mapUrl") as string) || undefined;
-const state = (formData.get("state") as string) || undefined;
-    // // Validate that the typeId exists
-    // const typeExists = await prisma.type.findUnique({
-    //   where: { id: typeId },
-    // });
+    const phone = formData.get("phone");
+    const website = formData.get("website");
+    const email = formData.get("email");
+    const address = (formData.get("address") as string) || undefined;
+    const city = (formData.get("city") as string) || undefined;
+    const district = (formData.get("district") as string) || undefined;
+    const pincode = (formData.get("pincode") as string) || undefined;
+    const mapUrl = (formData.get("mapUrl") as string) || undefined;
+    const state = (formData.get("state") as string) || undefined;
 
-    // if (!typeExists) {
-    //   throw new Error(`Invalid typeId: ${typeId}. It does not exist.`);
-    // }
     const profile = await prisma.profile.upsert({
       where: {
         id,
       },
       create: {
-        // yearsOfExperience,
         title,
         slug: slugify(title),
         thumbnail,
@@ -95,7 +86,6 @@ const state = (formData.get("state") as string) || undefined;
         universityId,
         typeId,
         curriculumId,
-        // profileImages,
         featured,
         recommended,
         verified,
@@ -110,10 +100,8 @@ const state = (formData.get("state") as string) || undefined;
         pincode,
         mapUrl,
         state,
-
       },
       update: {
-        // yearsOfExperience: "1",
         title,
         slug: slugify(title),
         thumbnail,
@@ -128,7 +116,6 @@ const state = (formData.get("state") as string) || undefined;
         universityId,
         typeId,
         curriculumId,
-        // profileImages,
         featured,
         recommended,
         verified,
@@ -145,7 +132,6 @@ const state = (formData.get("state") as string) || undefined;
         state,
       },
     });
-    // await updateActivity(profile.id);
     revalidatePath(ROUTES.PROFILES);
   } catch (e: any) {
     const { errMessage } = errorMessageGenerator(e);
@@ -168,10 +154,8 @@ export async function upsertProfileOfUser(formData: FormData) {
       : undefined;
     const verticalId = (formData.get("verticalId") as string) || undefined;
     const managementId = (formData.get("managementId") as string) || undefined;
-    // const universityId = (formData.get("universityId") as string) || undefined;
     const typeId = (formData.get("typeId") as string) || undefined;
     const curriculumId = (formData.get("curriculumId") as string) || undefined;
-    // const profileImages = (formData.get("profileImages") as unknown as string[]) || undefined;
     const featured = formData.get("featured") === "on";
     const recommended = formData.get("recommended") === "on";
     const verified = formData.get("verified") === "on";
@@ -187,7 +171,6 @@ export async function upsertProfileOfUser(formData: FormData) {
     const state = (formData.get("state") as string) || undefined;
     const website = (formData.get("website") as string) || undefined;
 
-    // Validate that the typeId exists
     const typeExists = await prisma.type.findUnique({
       where: { id: typeId },
     });
@@ -215,10 +198,8 @@ export async function upsertProfileOfUser(formData: FormData) {
         establishedYear,
         verticalId,
         managementId,
-        // universityId,
         typeId,
         curriculumId,
-        // profileImages,
         featured,
         recommended,
         verified,
@@ -246,10 +227,8 @@ export async function upsertProfileOfUser(formData: FormData) {
         establishedYear,
         verticalId,
         managementId,
-        // universityId,
         typeId,
         curriculumId,
-        // profileImages,
         featured,
         recommended,
         verified,
@@ -322,7 +301,6 @@ export const updateProfileImage = async (formData: any) => {
       },
       data: {
         thumbnail: formData.get("cover") as string,
-        // example: avatar: formData.get('avatar') as string,
       },
     });
 
@@ -349,7 +327,6 @@ export const updateavatarImage = async (formData: any) => {
       },
       data: {
         avatar: formData.get("avatar") as string,
-        // example: avatar: formData.get('avatar') as string,
       },
     });
 
@@ -357,6 +334,76 @@ export const updateavatarImage = async (formData: any) => {
   } catch (e: any) {
     const { errMessage } = errorMessageGenerator(e);
     return { message: errMessage || "Failed to publish profile" };
+  }
+};
+
+export const updateProfileLocation = async (formData: any) => {
+  const id = formData.get("id") as string;
+  try {
+    const profile = await prisma.profile.findUnique({
+      where: { id: id },
+    });
+
+    if (!profile) {
+      return { message: "Profile not found" };
+    }
+
+    const updatedProfile = await prisma.profile.update({
+      where: {
+        id: id,
+      },
+      data: {
+        address: formData.get("address") as string,
+        city: formData.get("city") as string,
+        district: formData.get("district") as string,
+        state: formData.get("state") as string,
+        pincode: formData.get("pincode") as string,
+        mapUrl: formData.get("mapUrl") as string,
+      },
+    });
+
+    return updatedProfile;
+  } catch (e: any) {
+    const { errMessage } = errorMessageGenerator(e);
+    return { message: errMessage || "Failed to update profile location" };
+  }
+};
+
+export const updateProfileOverview = async (formData: any) => {
+  const id = formData.get("id") as string;
+
+  try {
+    const profile = await prisma.profile.findUnique({
+      where: { id: id },
+    });
+
+    if (!profile) {
+      return { message: "Profile not found" };
+    }
+
+    const updatedProfile = await prisma.profile.update({
+      where: {
+        id: id,
+      },
+      data: {
+        title: formData.get("title") as string,
+        universityId: formData.get("universityId") as string,
+        establishedYear: formData.get("establishedYear")
+          ? parseInt(formData.get("establishedYear") as string)
+          : null,
+        code: formData.get("code") as string,
+        accreditationId: formData.get("accreditationId") as string,
+        typeId: formData.get("typeId") as string,
+        email: formData.get("email") as string,
+        phone: formData.get("phone") as string,
+        website: formData.get("website") as string,
+      },
+    });
+
+    return updatedProfile;
+  } catch (e: any) {
+    const { errMessage } = errorMessageGenerator(e);
+    return { message: errMessage || "Failed to update profile overview" };
   }
 };
 
@@ -410,7 +457,6 @@ export async function getProfile() {
   const user = await supabase.auth.getUser();
   const profile = await prisma.profile.findUnique({
     where: {
-      // id: "2",
       id: user.data.user?.user_metadata.profileId || "",
     },
     include: {
@@ -469,14 +515,9 @@ export async function getProfileById(id?: string) {
       university: true,
       type: true,
       curriculum: true,
-      // profileAccreditations: { include: { accreditation: true } },
       accreditation: true,
       profileProgrammes: { include: { course: true } },
       profileContacts: true,
-      // address:true,
-      // district:true,
-      // city:true,
-      // state:true,
     },
   });
   profile;
@@ -596,58 +637,25 @@ export async function institutionOnboard(formData: FormData) {
     const featured = true;
     const recommended = true;
     const slug = title.toLowerCase().split(" ").join("-");
-    const registrationNumber = (formData.get("registrationNumber") as string) || undefined;
+    const registrationNumber =
+      (formData.get("registrationNumber") as string) || undefined;
     const companyName = (formData.get("companyName") as string) || undefined;
     const description = (formData.get("description") as string) || undefined;
     const eligibility = (formData.get("eligibility") as string) || undefined;
-    const stipend = parseFloat(formData.get("stipend")?.toString() ?? '');
+    const stipend = parseFloat(formData.get("stipend")?.toString() ?? "");
     const availability = (formData.get("availability") as string) || undefined;
-    const yearsOfExperience = parseInt(formData.get("experience")?.toString() ?? '0');
+    const yearsOfExperience = parseInt(
+      formData.get("experience")?.toString() ?? "0"
+    );
     const subjects = (formData.get("subjects") as string) || undefined;
     const modeOfClassess = (formData.get("mode") as string) || undefined;
-    const qualifications = (formData.get("qualifications") as string) || undefined;
-
-    // Validate that the typeId exists
-    // const typeExists = await prisma.type.findUnique({
-    //   where: { id: typeId },
-    // });
-
-    // if (!typeExists) {
-    //   throw new Error(`Invalid typeId: ${typeId}. It does not exist.`);
-    // }
+    const qualifications =
+      (formData.get("qualifications") as string) || undefined;
 
     const supabase = createServerActionClient({ cookies });
     const user = await supabase.auth.getUser();
     const verticalId = user?.data.user?.user_metadata?.verticalId;
     const userId = user?.data.user?.id;
-
-    // console.log(
-    //   "###################",
-    //   {
-    //     website,
-    //     address,
-    //     city,
-    //     district,
-    //     state,
-    //     pincode,
-    //     phone,
-    //     email,
-    //     title,
-    //     establishedYear,
-    //     accreditationId,
-    //     universityId,
-    //     status,
-    //     typeId,
-    //     published,
-    //     verified,
-    //     featured,
-    //     recommended,
-    //     verticalId,
-    //     userId,
-    //     slug,
-    //   },
-    //   "###################"
-    // );
 
     const profile = await prisma.profile.create({
       data: {
@@ -684,7 +692,7 @@ export async function institutionOnboard(formData: FormData) {
         yearsOfExperience,
         subjects,
         modeOfClassess,
-        qualifications
+        qualifications,
       },
     });
 
@@ -694,11 +702,6 @@ export async function institutionOnboard(formData: FormData) {
         profileId: profile.id,
       },
     });
-    //const f = new FormData();
-    //f.set("keyword", profile.id);
-    // await selectProfile(f);
-    // await updateActivity(profile.id);
-    // revalidatePath(ROUTES.PROFILES);
   } catch (e: any) {
     const { errMessage } = errorMessageGenerator(e);
     return { message: errMessage || "Failed to upsert profile" };

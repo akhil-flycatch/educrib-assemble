@@ -22,6 +22,7 @@ import {
   updateProfileImage,
 } from "@/api/profile";
 import Link from "next/link";
+import PreviewModal from "@/components/dashboard/preview/previewModal";
 
 export default function DashboardLayout({
   children,
@@ -33,27 +34,29 @@ export default function DashboardLayout({
   const router = useRouter();
   const pathname = usePathname();
   const [isPublishModalOpen, setIsPublishModalOpen] = useState<boolean>(false);
+  const [isPreviewModal, setIsPreviewhModal] = useState<boolean>(false);
+
   const isEmpty = !profile || !facilitiesProfile;
   const [navItems, setNavItems] = useState([]);
 
-
+  const fetchData = async () => {
+    const profileData = await getProfileById();
+    const facilitiesProfileData = await getProfileFacilitiesByProfileId(
+     
+      // { active: true }
+    );
+    setProfile(profileData);
+    setFacilitiesProfile(facilitiesProfileData);
+    const vertical = await getVerticalById();
+    console.log(vertical, "the vertical got");
+    const fetchedNavItems =
+    DASHBOARD_NAV[vertical?.slug] || [  ];
+  setNavItems(fetchedNavItems);
+  fetchedNavItems.forEach((item) => router.prefetch(item.url));
+  };
   
   useEffect(() => {
-    const fetchData = async () => {
-      const profileData = await getProfileById();
-      const facilitiesProfileData = await getProfileFacilitiesByProfileId(
-       
-        // { active: true }
-      );
-      setProfile(profileData);
-      setFacilitiesProfile(facilitiesProfileData);
-      const vertical = await getVerticalById();
-      console.log(vertical, "the vertical got");
-      const fetchedNavItems =
-      DASHBOARD_NAV[vertical?.slug] || [  ];
-    setNavItems(fetchedNavItems);
-    fetchedNavItems.forEach((item) => router.prefetch(item.url));
-    };
+    
 
     fetchData();
     
@@ -69,6 +72,8 @@ export default function DashboardLayout({
 
     formData.append("title", profile?.title);
     await publishProfile(formData);
+    await fetchData();
+    setIsPublishModalOpen(false);
     // window.location.reload();
   };
   const submit = async (formData: FormData) => {
@@ -77,6 +82,7 @@ export default function DashboardLayout({
     formData.append("cover", image);
     await updateProfileImage(formData);
     setModal(false);
+    fetchData();
 
     // window.location.reload();
   };
@@ -87,6 +93,7 @@ export default function DashboardLayout({
     formData.append("avatar", image);
     await updateavatarImage(formData);
     setProModal(false);
+    fetchData();
     // window.location.reload();
   };
 
@@ -159,7 +166,7 @@ export default function DashboardLayout({
               </span>
             </div>
             <div className="flex items-center gap-4">
-              <button className="py-3 px-4 rounded-lg border border-primary bg-white text-primary hover:bg-light hover:border-[#B3B9C4] font-medium flex items-center gap-2.5">
+              <button onClick={()=>setIsPreviewhModal(true)} className="py-3 px-4 rounded-lg border border-primary bg-white text-primary hover:bg-light hover:border-[#B3B9C4] font-medium flex items-center gap-2.5">
                 <Image
                   src="/images/eye.svg"
                   alt="preview"
@@ -169,12 +176,12 @@ export default function DashboardLayout({
                 <span>Preview</span>
               </button>
               <button
-                // disabled={!profile?.verified}
+                disabled={profile?.published}
 
                 // disabled={isEmpty}
-                className={`py-3 px-4 rounded-lg text-white font-medium flex items-center gap-2.5 ${profile?.published
+                className={`py-3 px-4 rounded-lg text-white font-medium flex items-center gap-2.5  ${profile?.published
                     ? "cursor-not-allowed bg-[#A6AEBB]"
-                    : "cursor-pointer hover:bg-secondary "
+                    : "cursor-pointer bg-secondary "
                   }`}
                 onClick={() => setIsPublishModalOpen(true)}
               >
@@ -184,7 +191,7 @@ export default function DashboardLayout({
                   width={24}
                   height={24}
                 />
-                <span> {profile?.published ? "Unpublish" : "Publish"}</span>
+                <span> Publish</span>
               </button>
             </div>
           </div>
@@ -245,6 +252,14 @@ export default function DashboardLayout({
           </Form>
         </Modal>
       )}
+      {isPreviewModal && <Modal
+        footerVisible={false}
+        visible={isPreviewModal}
+        onClose={() => setIsPreviewhModal(false)}
+        title=" Profile Preview"
+      >
+        <PreviewModal profile={profile}/>
+            </Modal>}
     </React.Fragment>
   );
 }

@@ -10,6 +10,7 @@ import MyGoogleMap from "./map";
 import { getProfile, getProfileById, upsertProfile } from "@/api";
 import { z } from "zod";
 import GoogleMapsProvider from "@/utils/googleMapProvider";
+import { updateProfileLocation } from "@/api/profile";
 
 export const locationFormSchema = z.object({
   mapUrl: z
@@ -69,39 +70,32 @@ const Location: React.FC = () => {
     return null;
   }
 
+  const fetchData = async () => {
+    const profileData = await getProfileById();
+    console.log("Profile Data:location", profileData); // Debug profile data
+    if (profileData?.mapUrl) {
+      const coordinates = extractCoordinatesFromUrl(profileData.mapUrl);
+      console.log("Coordinates Data:", coordinates); // Debug coordinates
+      setCoordinates(coordinates);
+    }
+    setProfile(profileData);
+
+    if (profileData) {
+      reset({
+        city: profileData?.city || "",
+        mapUrl: profileData?.mapUrl || "",
+        state: profileData?.state || "",
+        district: profileData?.district || "",
+        address: profileData?.address || "",
+        pinCode: profileData?.pincode || "",
+      });
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      const profileData = await getProfileById();
-      console.log("Profile Data:location", profileData); // Debug profile data
-      setProfile(profileData);
-
-      if (profileData) {
-        reset({
-          city: profileData?.city || "",
-          mapUrl: profileData?.mapUrl || "",
-          state: profileData?.state || "",
-          district: profileData?.district || "",
-          address: profileData?.address || "",
-          pinCode: profileData?.pincode || "",
-        });
-      }
-    };
-
-    fetchData(); // <-- This was missing
+    fetchData(); 
   }, [reset]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const profileData = await getProfile();
-      if (profileData?.mapUrl) {
-        const coordinates = extractCoordinatesFromUrl(profileData.mapUrl);
-        console.log("Coordinates Data:", coordinates); // Debug coordinates
-        setCoordinates(coordinates);
-      }
-    };
 
-    fetchData();
-  }, []);
 
   const onLocationFormSubmit = async (data: LocationFormValues) => {
     const formData = new FormData();
@@ -118,11 +112,12 @@ const Location: React.FC = () => {
         throw new Error("Profile ID is missing. Cannot perform upsert operation.");
       }
 
-   const response=await upsertProfile(formData);
+   const response=await updateProfileLocation(formData);
 
       console.log("Profile updated successfully",response);
       reset();
       setIsLocationModalVisible(false);
+      fetchData()
     } catch (error) {
       console.error("Failed to update profile", error);
     }

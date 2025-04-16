@@ -248,6 +248,7 @@ const CourseForm: React.FC<Props> = ({ errors, register, control }) => {
             <Input
               id="duration"
               type="number"
+              min={1}
               label="Duration"
               {...field}
               error={errors?.duration}
@@ -279,6 +280,7 @@ const CourseForm: React.FC<Props> = ({ errors, register, control }) => {
             <Input
               id="capacity"
               type="number"
+              min={1}
               label="Number of Seats"
               {...field}
               error={errors?.capacity}
@@ -312,6 +314,7 @@ const CourseForm: React.FC<Props> = ({ errors, register, control }) => {
                 <Input
                   id={`fee[${index}].amount`}
                   type="number"
+                  min={1}
                   label={`Amount ${index + 1}`}
                   {...field}
                   error={errors?.fee?.[index]?.amount}

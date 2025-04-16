@@ -141,9 +141,11 @@ export default function Courses() {
       intakeId: "",
       mode: "",
       durationType: "",
+      duration: 0,
+      capacity: 0,
       fee: [
         {
-          amount: "",
+          amount: 0,
           description: "",
           frequencyId: "",
           title: "",
@@ -200,7 +202,25 @@ export default function Courses() {
         upsertProfileProgramNew,
         "Profile programme updated successfully",
         () => {
-          reset();
+          reset({
+            courseId: "",
+            levelId: "",
+            specializationId: "",
+            intakeId: "",
+            mode: "",
+            durationType: "",
+            duration: 0,
+            capacity: 0,
+            fee: [
+              {
+                amount: 0,
+                description: "",
+                frequencyId: "",
+                title: "",
+                id: uuidv4(),
+              },
+            ],
+          });
           setVisible(false);
           setToEdit(null);
           fetchProfileProgrammes();
@@ -212,7 +232,25 @@ export default function Courses() {
         upsertProfileProgramNew,
         "Profile programme saved successfully",
         () => {
-          reset();
+          reset({
+            courseId: "",
+            levelId: "",
+            specializationId: "",
+            intakeId: "",
+            mode: "",
+            durationType: "",
+            duration: 0,
+            capacity: 0,
+            fee: [
+              {
+                amount: 0,
+                description: "",
+                frequencyId: "",
+                title: "",
+                id: uuidv4(),
+              },
+            ],
+          });
           setVisible(false);
           fetchProfileProgrammes();
         }
@@ -375,7 +413,25 @@ export default function Courses() {
         onClose={() => {
           setVisible(false);
           setToEdit(null);
-          reset();
+          reset({
+            courseId: "",
+            levelId: "",
+            specializationId: "",
+            intakeId: "",
+            mode: "",
+            durationType: "",
+            duration: 0,
+            capacity: 0,
+            fee: [
+              {
+                amount: 0,
+                description: "",
+                frequencyId: "",
+                title: "",
+                id: uuidv4(),
+              },
+            ],
+          });
         }}
         onSave={() => {
           handleSubmit(onCourseFormSubmit)();
