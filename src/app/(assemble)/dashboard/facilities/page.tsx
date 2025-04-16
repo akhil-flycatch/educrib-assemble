@@ -192,16 +192,16 @@ export default function Facilities({ facilities }: any) {
           <div style={{ height: "150px" }}>
             <div className="flex flex-col items-center justify-center flex-1">
               <Image
-                src="/images/book.svg"
-                alt="hostel"
+                src="/images/facilities-placeholder.svg"
+                alt="facilities"
                 width={44}
                 height={44}
               />
               <span className="text-[15px] leading-6 text-center text-label">
-                No courses added yet. Please add
+                No facilities added yet. Add and manage the
               </span>
               <span className="text-[15px] leading-6 text-center text-label">
-                make them available for users.
+                facilities your organisation provides.
               </span>
             </div>
           </div>

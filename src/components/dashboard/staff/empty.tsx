@@ -9,8 +9,7 @@ const EmptyStaffPage: React.FC = () => (
       height={44}
     />
     <div className="max-w-[344px] text-center">
-      No courses added yet. Please add new courses to make them available for
-      users
+      No staffs added yet. Please add new members to keep directory updated.
     </div>
   </div>
 );

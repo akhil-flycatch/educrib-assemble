@@ -173,7 +173,7 @@ const FacilitySearch = ({
           type="button"
           className="w-[160px] border text-[#313957] py-[8px] px-[14px] mt-[16px] rounded-[8px]"
           onClick={handleAddField}
-          disabled={addedFacilities?.length === 0 ? true : false}
+          disabled={addedFacilities?.length === 0 || (!addedFacilities[addedFacilities.length-1]?.value.length)}
         >
           + Add Facility
         </button>
@@ -181,7 +181,7 @@ const FacilitySearch = ({
         {/* Show capsules with icons for each added facility */}
         {addedFacilities.length > 0 && (
           <div className="mt-4">
-            {addedFacilities.map((facility: any, index: number) => (
+            {addedFacilities.filter((facility:{label: string; value: string;}) => !!facility.value.length).map((facility: any, index: number) => (
               <CapsuleWithIcons
                 key={index}
                 name={facility?.label || facility?.value}

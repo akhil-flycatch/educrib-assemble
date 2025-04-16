@@ -24,6 +24,7 @@ export default function Media({
   const [profile, setProfile] = useState<any>();
   const [mediaLookup, setMediaLookup] = useState<any>()
   const [visible, setVisible] = useState<any>(false);
+  const [mediaLookupLoading, setMediaLookupLoading] = useState<any>(true)
   const [visibleSocialModal, setvisibleSocialModal] = useState<any>(false)
  
   useEffect(() => {
@@ -32,10 +33,12 @@ export default function Media({
         
       );
       const profileDetails = await getProfileById();
+      setMediaLookupLoading(true);
       const lookup = await getAllMedia()
       setProfile(profileDetails);
       setMedia(profileData);
       setMediaLookup(lookup)
+      setMediaLookupLoading(false);
      
     };
     fetchData();
@@ -164,7 +167,7 @@ export default function Media({
         </div>
       </DashboardIntroSectionWrapper>
     </div><Modal visible={visible} onSave={() => submitLinks(getValues())} onClose={() => setVisible(false)} title={isEmptyMultimediaResources ? "Add Multimedia Resources " : "Edit Multimedia Resources"}>
-        <LinksForm mediaLookup={mediaLookup} register={register}  media={media}/>
+        <LinksForm mediaLookup={mediaLookup} register={register}  media={media} loading={mediaLookupLoading}/>
       </Modal>
       <Modal visible={visibleSocialModal} onSave={() => submitSocialLinks(getValuesSocial())} onClose={() => setvisibleSocialModal(false)} title={isEmptySocialLink ? "Add Social Link " : "Edit Social Link"}>
         <SocialForm mediaLookup={mediaLookup} register={registerSocial}  media={media}/>

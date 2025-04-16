@@ -2,7 +2,7 @@ import { getAllAccreditations, getAllTypes, getAllUniversities } from "@/api";
 import Input from "@/components/hookForm/input";
 import Select from "@/components/hookForm/select";
 import { useEffect, useState } from "react";
-import { Controller, FieldErrors, FieldValues, UseFormControl } from "react-hook-form";
+import { Controller, FieldErrors, FieldValues, Control } from "react-hook-form";
 import * as z from "zod";
 
 export const overviewFormSchema = z.object({
@@ -11,10 +11,12 @@ export const overviewFormSchema = z.object({
   accreditation: z.any(),
   type: z.any(),
   establishedYear: z.string(),
-  website: z.string().regex(
-    /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/
-  ),
-  phone: z.string(),
+  website: z
+    .string()
+    .regex(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/),
+  phone: z.string().regex(/^\d{10}$/, {
+    message: "Invalid Phone Number",
+  }),
   email: z.string().email("Invalid email address"),
 });
 
@@ -22,18 +24,18 @@ export type OverviewFormValues = z.infer<typeof overviewFormSchema>;
 
 interface Props {
   errors: FieldErrors<FieldValues>;
-  control: UseFormControl<FieldValues>;
+  control: Control<FieldValues>;
 }
 const OverviewForm: React.FC<Props> = ({ errors, control }) => {
   const [universities, setUniversities] = useState([]);
   const [accreditations, setAccreditations] = useState([]);
-  const[types,setTypes]=useState([]);
+  const [types, setTypes] = useState([]);
 
   useEffect(() => {
     const fetchUniversities = async () => {
       const university = await getAllUniversities();
       const accredition = await getAllAccreditations();
-      const types=await getAllTypes();
+      const types = await getAllTypes();
       setTypes(types);
       setUniversities(university);
       setAccreditations(accredition);
@@ -127,7 +129,7 @@ const OverviewForm: React.FC<Props> = ({ errors, control }) => {
               options={types?.map((type: any) => {
                 return {
                   label: type.title, // Display the title in the dropdown
-                  value: type.id,    // Use the id as the value
+                  value: type.id, // Use the id as the value
                 };
               })}
               error={errors?.type}
@@ -174,12 +176,7 @@ const OverviewForm: React.FC<Props> = ({ errors, control }) => {
           name="email"
           control={control}
           render={({ field }) => (
-            <Input
-              id="email"
-              label="Email"
-              error={errors?.email}
-              {...field}
-            />
+            <Input id="email" label="Email" error={errors?.email} {...field} />
           )}
         />
       </div>

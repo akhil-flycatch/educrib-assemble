@@ -16,7 +16,9 @@ export const staffFormSchema = z.object({
   avatar: z.string().optional().nullable(),
   designation: z.string(),
   email: z.string().email(),
-  phone: z.string().min(10, { message: "invalid phone number" }),
+  phone: z.string().regex(/^\d{10}$/, {
+    message: "Invalid Phone Number",
+  }),
   title: z.string(),
 });
 
@@ -28,10 +30,17 @@ interface Props {
   control: Control<FieldValues>;
   setValue: UseFormSetValue<StaffFormValues>;
   getValues: UseFormGetValues<StaffFormValues>;
-  setImageUrlChange: (url: string) => void
+  setImageUrlChange: (url: string) => void;
 }
 
-const StaffForm: React.FC<Props> = ({ errors, register, control, setValue, getValues, setImageUrlChange }) => {
+const StaffForm: React.FC<Props> = ({
+  errors,
+  register,
+  control,
+  setValue,
+  getValues,
+  setImageUrlChange,
+}) => {
   const uploadFile = async (file: File): Promise<string> => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return URL.createObjectURL(file);

@@ -3,8 +3,13 @@ import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import Input from "../../../components/hookForm/input";
 import { Loader2 } from "lucide-react";
 
-const LinksForm: React.FC<any> = ({ errors, register, mediaLookup, media }) => {
-
+const LinksForm: React.FC<any> = ({
+  errors,
+  register,
+  mediaLookup,
+  media,
+  loading,
+}) => {
   return (
     <div className="w-full flex justify-between">
       <div className="flex-1 max-w-[794px] gap-6">
@@ -15,7 +20,9 @@ const LinksForm: React.FC<any> = ({ errors, register, mediaLookup, media }) => {
               // Check if the link is not a social link
               if (!lookup.isSocialLink) {
                 // Find the matching profileMedia from the media array
-                const profileMedia = media.find((profile: any) => profile.media.id === lookup.id);
+                const profileMedia = media.find(
+                  (profile: any) => profile.media.id === lookup.id
+                );
 
                 // If profileMedia is found, use its link as default value
                 const defaultValue = profileMedia ? profileMedia.link : "";
@@ -45,9 +52,12 @@ const LinksForm: React.FC<any> = ({ errors, register, mediaLookup, media }) => {
               return null; // Skip if it's a social link
             })}
           </>
-        ) : (
-          // Show loader while mediaLookup is empty
+        ) : loading ? (
           <Loader2 />
+        ) : (
+          <div className="text-center">
+            No media lookups added. Contact admin to add them and continue.
+          </div>
         )}
       </div>
     </div>
