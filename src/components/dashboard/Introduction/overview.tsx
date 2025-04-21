@@ -4,22 +4,22 @@ import { useEffect, useState } from "react";
 import Modal from "@/elements/modal";
 import React from "react";
 import OverviewItem from "./overviewItem";
-import { getProfileById, getProfileFacilitiesByProfileId, upsertProfile } from "@/api";
-import OverviewForm, { overviewFormSchema, OverviewFormValues } from "./overviewForm";
+import { getProfileById } from "@/api";
+import OverviewForm, {
+  overviewFormSchema,
+  OverviewFormValues,
+} from "./overviewForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { updateProfileOverview } from "@/api/profile";
 
 const Overview: React.FC = () => {
   const [isOverViewEditVisible, setIsOverViewEditVisible] = useState(false);
-  const [profile, setProfile] = useState(null);
-  const [facilitiesProfile, setFacilitiesProfile] = useState(null);
+  const [profile, setProfile] = useState<any>(null);
 
   const {
-    register,
     handleSubmit,
     reset,
-    getValues,
     control,
     formState: { errors },
   } = useForm<OverviewFormValues>({
@@ -28,17 +28,13 @@ const Overview: React.FC = () => {
 
   const fetchData = async () => {
     const profileData = await getProfileById();
-    const facilitiesProfileData = await getProfileFacilitiesByProfileId();
     setProfile(profileData);
-    setFacilitiesProfile(facilitiesProfileData);
 
     if (profileData) {
       reset({
         title: profileData?.title || "",
         university: profileData?.university?.id || "",
-        management: profileData?.management?.title || "",
         establishedYear: profileData?.establishedYear?.toString() || undefined,
-        code: profileData?.code || "",
         accreditation: profileData?.accreditation?.id || "",
         type: profileData?.type?.id || "",
         email: profileData?.email || "",
@@ -47,33 +43,35 @@ const Overview: React.FC = () => {
       });
     }
   };
+
   useEffect(() => {
-fetchData();
+    fetchData();
   }, [reset]);
 
   const onOverviewFormSubmit = async (data: OverviewFormValues) => {
     const formData = new FormData();
 
-    formData.append("id", profile.id || ""); // Ensure this is a valid unique identifier
+    formData.append("id", profile.id || "");
     formData.append("title", data.title || "");
     formData.append("universityId", data.university || "");
     formData.append("establishedYear", data.establishedYear || "");
-    formData.append("code", data.code || "");
     formData.append("accreditationId", data.accreditation || "");
     formData.append("typeId", data.type || "");
     formData.append("email", data.email || "");
     formData.append("phone", data.phone || "");
-    formData.append("website",data.website || "")
+    formData.append("website", data.website || "");
 
     try {
       if (!profile?.id) {
-        throw new Error("Profile ID is missing. Cannot perform upsert operation.");
+        throw new Error(
+          "Profile ID is missing. Cannot perform upsert operation."
+        );
       }
 
       await updateProfileOverview(formData);
       reset();
       setIsOverViewEditVisible(false);
-      fetchData(); // Fetch updated data after submission
+      fetchData();
     } catch (error) {
       console.error("Failed to update profile", error);
     }
@@ -87,7 +85,7 @@ fetchData();
         primaryButton={{
           type: "Edit",
           onClick: () => {
-            setIsOverViewEditVisible(true);
+            setIsOverViewEditVisible(true);// need to be disabled until profile details are fetched
           },
         }}
       >
@@ -101,22 +99,44 @@ fetchData();
               label="Management"
               value={profile?.management?.title || "---"}
             />
-            <OverviewItem label="Established year" value={profile?.establishedYear || "---"} />
+            <OverviewItem
+              label="Established year"
+              value={profile?.establishedYear || "---"}
+            />
             <OverviewItem label="College Code" value={profile?.code || "---"} />
-            <OverviewItem label="Accreditation" value={profile?.accreditation?.title || "---"} />
+            <OverviewItem
+              label="Accreditation"
+              value={profile?.accreditation?.title || "---"}
+            />
             <OverviewItem label="Type" value={profile?.type?.title || "---"} />
             <OverviewItem label="email" value={profile?.email || "---"} />
-            <OverviewItem label="Phone Number" value={profile?.phone || "---"} />
+            <OverviewItem
+              label="Phone Number"
+              value={profile?.phone || "---"}
+            />
           </div>
         </div>
       </DashboardIntroSectionWrapper>
       <Modal
         visible={isOverViewEditVisible}
-        onClose={() => setIsOverViewEditVisible(false)}
-        onSave={() => { handleSubmit(onOverviewFormSubmit)() }}
+        onClose={() => {
+          setIsOverViewEditVisible(false);
+          console.log("close");
+          reset({
+            title: profile?.title || "",
+            university: profile?.university?.id || "",
+            establishedYear: profile?.establishedYear?.toString() || undefined,
+            accreditation: profile?.accreditation?.id || "",
+            type: profile?.type?.id || "",
+            email: profile?.email || "",
+            phone: profile?.phone || "",
+            website: profile?.website || "",
+          });
+        }}
+        onSave={() => handleSubmit(onOverviewFormSubmit)()}
         title="Edit Basic Informations"
       >
-        <OverviewForm errors={errors} register={register} control={control} />
+        <OverviewForm errors={errors} control={control} />
       </Modal>
     </React.Fragment>
   );

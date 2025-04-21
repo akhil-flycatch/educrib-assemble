@@ -42,13 +42,13 @@ const page = () => {
   return (
     <div className="bg-white">
       <form
-        className="bg-white flex flex-col justify-center items-center gap-[28px]"
+        className="bg-white flex flex-col justify-center items-center gap-[10px]"
         action={handleSubmit}
       >
-        <p className=" font-semibold text-[36px] leading-[57.6px] tracking-[0.01em] text-center text-[#354764]">
+        <p className=" font-semibold text-[30px] leading-[50.6px] tracking-[0.01em] text-center text-[#354764]">
           Select category
         </p>
-        <p className=" font-normal text-[20px] leading-[32px] tracking-[0.01em] text-center text-[#505F79]">
+        <p className=" font-normal text-[15px] leading-[32px] tracking-[0.01em] text-center text-[#505F79]">
           Please select your institution{" "}
         </p>
         {!categories.length && loading === "FETCH" ? (
@@ -56,7 +56,7 @@ const page = () => {
             <Loader2 className="animate-spin text-primary" />
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-8 items-center justify-center max-h-[470px] overflow-y-scroll ">
+          <div className="grid grid-cols-2 gap-8 items-center justify-center max-h-[350px] overflow-y-scroll ">
             {categories.map((category) => (
               <div key={category.id}>
                 <input

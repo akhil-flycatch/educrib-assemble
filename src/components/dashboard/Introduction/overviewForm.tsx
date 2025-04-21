@@ -23,8 +23,8 @@ export const overviewFormSchema = z.object({
 export type OverviewFormValues = z.infer<typeof overviewFormSchema>;
 
 interface Props {
-  errors: FieldErrors<FieldValues>;
-  control: Control<FieldValues>;
+  errors: FieldErrors<OverviewFormValues>;
+  control: Control<OverviewFormValues>;
 }
 const OverviewForm: React.FC<Props> = ({ errors, control }) => {
   const [universities, setUniversities] = useState([]);
